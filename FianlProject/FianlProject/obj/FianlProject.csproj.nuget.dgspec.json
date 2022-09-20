@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\source\\repos\\FianlProject\\FianlProject\\FianlProject.csproj": {}
+    "F:\\1.1.FinalProject\\FianlProject\\FianlProject\\FianlProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\source\\repos\\FianlProject\\FianlProject\\FianlProject.csproj": {
+    "F:\\1.1.FinalProject\\FianlProject\\FianlProject\\FianlProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\FianlProject\\FianlProject\\FianlProject.csproj",
+        "projectUniqueName": "F:\\1.1.FinalProject\\FianlProject\\FianlProject\\FianlProject.csproj",
         "projectName": "FianlProject",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\FianlProject\\FianlProject\\FianlProject.csproj",
+        "projectPath": "F:\\1.1.FinalProject\\FianlProject\\FianlProject\\FianlProject.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\source\\repos\\FianlProject\\FianlProject\\obj\\",
+        "outputPath": "F:\\1.1.FinalProject\\FianlProject\\FianlProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,19 +44,23 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.29, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[3.1.28, )"
+              "version": "[3.1.29, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[3.1.28, )"
+              "version": "[3.1.29, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.28, )"
+              "version": "[3.1.29, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",

@@ -1,4 +1,6 @@
 ﻿using FianlProject.Models.Base;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FianlProject.Models
 {
@@ -6,5 +8,5 @@ namespace FianlProject.Models
     {
         public string Key { get; set; }
         public string Value { get; set; }
-    }
+	}
 }

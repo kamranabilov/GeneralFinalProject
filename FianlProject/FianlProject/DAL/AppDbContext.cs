@@ -1,5 +1,6 @@
 ﻿using FianlProject.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using System.Linq;
 
 namespace FianlProject.DAL
@@ -12,8 +13,15 @@ namespace FianlProject.DAL
         }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Furniture> Furnitures { get; set; }
+        public DbSet<Furnitureimage> Furnitureimages { get; set; }
+		public DbSet<FurnitureDescription> FurnitureDescriptions { get; set; }
+		public DbSet<Category> Categories { get; set; }
+        public DbSet<Rate> Rates { get; set; }
+        public DbSet<BasketItem> BasketItems { get; set; }
+		public DbSet<Order> Orders { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var item in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetProperties()

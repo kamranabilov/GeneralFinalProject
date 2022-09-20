@@ -1,10 +1,12 @@
 ﻿using FianlProject.Models;
 using System.Collections.Generic;
 
-namespace FianlProject.HomeVM
+namespace FianlProject.ViewModels
 {
     public class HomeVM
     {
-        //public List<Slider> Slider { get; set; }
-    }
+		public List<Slider> Sliders { get; set; }
+		public List<Furniture> Furnitures { get; set; }
+		public List<Category> Categories { get; set; }
+	}
 }

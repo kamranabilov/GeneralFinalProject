@@ -1,5 +1,7 @@
 ﻿using FianlProject.Models.Base;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FianlProject.Models
 {
@@ -16,5 +18,7 @@ namespace FianlProject.Models
         public string ButtonUrl { get; set; }
         [Required]
         public byte Order { get; set; }
+        [NotMapped]
+        public IFormFile Photo { get; set; }
     }
 }

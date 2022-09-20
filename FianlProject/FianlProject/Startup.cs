@@ -27,12 +27,15 @@ namespace FianlProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
             services.AddDbContext<AppDbContext>(option =>
             {
                 option.UseSqlServer(_configuration.GetConnectionString("default"));
             });
             services.AddScoped<LayoutService>();
-        }
+
+			services.AddHttpContextAccessor();
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,9 +53,14 @@ namespace FianlProject
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+			app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+				endpoints.MapControllerRoute(
+				  name: "areas",
+				  pattern: "{area:exists}/{controller=dashboard}/{action=Index}/{id?}"
+				);
+
+				endpoints.MapControllerRoute(
                         name: "default",
                         pattern: "{controller=home}/{action=index}/{id?}"
                     );

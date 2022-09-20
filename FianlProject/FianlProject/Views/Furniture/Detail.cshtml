@@ -1,0 +1,476 @@
+﻿@model Furniture
+@{
+    ViewData["Title"] = "Detail";
+}
+
+@{
+    string categoryfurniture="";
+    foreach (Category category in ViewBag.Category)
+    {
+        if (category.Id == Model.CategoryId)
+        {
+            categoryfurniture = category.Name;
+        }
+
+    }
+}
+<!-- Main start -->
+    <main>
+        <section>
+            <div class="about">
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-lg-12 g-4">
+                            <div class="about-title">
+                                <span>
+                                    <a href="index.html">Home </a>
+                                </span>
+                                >
+                            <span> <a href="shop.html">@categoryfurniture</a></span>
+                                >
+                                <span>@Model.Name</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="product-details">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="product-details-wrapper">
+                                <div class="row">
+                                    <div class="col-lg-7">
+                                        <div class="product-wrapper-img mb-5">
+                                        <img src="~/assets/image/shop/@Model.Image" alt="">
+                                        </div>
+                                        <div class="product-mini-img d-flex" style="gap: 20px;">
+                                        <div class="mini-img">
+                                            <img src="/assets/image/shop/@Model.Image" style="width: 110px;" alt="">
+                                        </div>
+                                           @foreach(Furnitureimage furnitureimage in Model.Furnitureimages.Where(m=>m.IsMain==false))
+                                           {
+                                                <div class="mini-img">
+                                                    <img src="/assets/image/shop/@furnitureimage.Name" style="width: 110px;" alt="">
+                                                </div>
+                                           }
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <div class="product-details-title">
+                                            <h3>@Model.Name</h3>
+                                            <div class="sku">
+                                                <span>
+                                                    SKU: @Model.SKU
+                                                </span>
+                                            </div>
+                                            <div class="category">
+                                                <span>
+                                                    Categories:
+                                                </span>
+                                            @categoryfurniture
+                                            </div>
+                                            <div class="review">
+                                                <span class="rate">
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star"></i>
+                                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                                </span>
+                                                <a href="#">(3 customer reviews)</a>
+                                            </div>
+                                            <div class="desc">
+                                                <span>About the product</span>
+                                            </div>
+                                            <p>@Model.Article
+                                            </p>
+                                            <div class="price mb-5">
+                                                <span>
+                                                    @Model.Price
+                                                </span>
+                                            </div>
+                                            <!-- <div class="stok mb-2">
+                                                <span>Yes in stock</span>
+                                            </div> -->
+                                            <div class="quantity mb-5">
+                                                <div class="qty-input">
+                                                    <button class="qty-count qty-count--minus" data-action="minus"
+                                                        type="button">-</button>
+                                                    <input class="product-qty" type="number" name="product-qty" min="0"
+                                                        max="10" value="1">
+                                                    <button class="qty-count qty-count--add" data-action="add"
+                                                        type="button">+</button>
+                                                </div>
+                                                <a href="cart.html" class="btn btn-default">Add To Cart</a>
+                                            </div>
+                                            <div class="share-icon">
+                                                <span class="feedback">
+                                                    The product is already in the wishlist!
+                                                    Browse Wishlist
+                                                </span>
+                                                <a href="wishlist.html">
+                                                    <i class="fa-solid fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="product-details-information">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="product-review-info">
+                                <ul class="nav-desc ">
+                                    <li class="tab_one ">
+                                        <a id="1" class="btnclick active">description</a>
+                                    </li>
+                                    <li class="tab_one">
+                                        <a id="2" class="btnclick">reviews (1)</a>
+                                    </li>
+                                </ul>
+                                <div class="tab_body" id="1">
+                                    <div class="tab_contentt">
+                                        <div class="tab_desc">
+                                        @foreach (FurnitureDescription description in ViewBag.Desc)
+                                        {
+                                            @if (Model.FurnitureDescriptionId==description.Id)
+                                            {
+                                                <img width="100%" src="~/assets/image/shop/@description.Image"/>
+                                            }
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab_body" id="2">
+                                    <div class="tab_contentt starcon">
+                                        <div class="row starall">
+                                            <div class="col-md-6">
+                                                <div class="rate_detail">
+                                                    <ul class="rate_list">
+                                                        <li>5 Stars
+                                                            <span></span>
+                                                            <span class="stars d-flex">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                            </span>
+                                                        </li>
+                                                        <li>4 Stars
+                                                            <span></span>
+                                                            <div class="stars d-flex">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                            </div>
+                                                        </li>
+                                                        <li>3 Stars
+                                                            <span></span>
+                                                            <div class="stars d-flex">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                            </div>
+                                                        </li>
+                                                        <li>2 Stars
+                                                            <span></span>
+                                                            <div class="stars d-flex">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                            </div>
+                                                        </li>
+                                                        <li>1 Stars
+                                                            <span></span>
+                                                            <div class="stars d-flex">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                                <i class="fa-solid fa-star-half-stroke"></i>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 align-self-center">
+                                                <div class="rate_score">
+                                                    <div class="stars d-flex">
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star"></i>
+                                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                                    </div>
+                                                    <p class="rating-des">Average Star Rating: <em>3.3 out of 5</em>
+                                                        (3 vote)
+                                                    </p>
+                                                    <span class="help-tip">
+                                                        <i class="fa-solid fa-question"></i>
+                                                        <span class="help-tip-text">If you finish the payment today,
+                                                            your order will arrive within the estimated delivery
+                                                            time.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="commet-section">
+                                        <h5 id="commet-title">3 reviews for Fashionable Bedspread
+                                        </h5>
+                                        <ul>
+                                            <div class="commet-img">
+                                                <img alt=""
+                                                    src="https://secure.gravatar.com/avatar/f0cde930b42c79145194679d5b6e3b1d?s=60&amp;d=mm&amp;r=g"
+                                                    class="avatar avatar-60 photo lazyloaded" height="60" width="60"
+                                                    srcset="https://secure.gravatar.com/avatar/f0cde930b42c79145194679d5b6e3b1d?s=120&amp;d=mm&amp;r=g 2x"
+                                                    data-ll-status="loaded">
+                                            </div>
+                                            <li>
+                                                <div class="commet-body">
+                                                    <div class="commet-date">
+                                                        <span class="stars d-flex">
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                        </span>
+                                                        Maria – June 7, 2013
+                                                    </div>
+                                                    <p>Can’t wait to start mixin’ with this one!
+                                                        Irba-irr-Up-up-up-up-date your theme!</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="review_form">
+                                        <div id="review_form">
+                                            <div id="respond" class="comment-respond">
+                                                <span id="reply-title" class="comment-title">Add a review
+                                                </span>
+                                                <form action="" method="post" id="commentform" class="comment-form">
+                                                    <p class="comment-notes">
+                                                        <span id="email-notes">Your email address will not be published.
+                                                            Required fields are marked*
+                                                        </span>
+                                                    </p>
+                                                    <p class="comment-form-inp">
+                                                        <label for="author">Name
+                                                            <span class="required">*</span>
+                                                        </label>
+                                                        <input id="author" name="author" type="text" value="" size="30"
+                                                            required="">
+                                                    </p>
+                                                    <p class="comment-form-email">
+                                                        <label for="email">Email
+                                                            <span class="required">*</span>
+                                                        </label>
+                                                        <input id="email" name="email" type="email" value="" size="30"
+                                                            required="">
+                                                    </p>
+                                                    <p class="comment-form-cookies">
+                                                        <input id="wp-comment-cookies-consent"
+                                                            name="wp-comment-cookies-consent" type="checkbox"
+                                                            value="yes"> <label for="wp-comment-cookies-consent">Save my
+                                                            name, email, and website in this browser for the next time I
+                                                            comment.
+                                                        </label>
+                                                    </p>
+                                                    <div class="comment-form-rating">
+                                                        <label for="rating">Your rating
+                                                            <span class="required">*</span>
+                                                        </label>
+                                                        <div class='rating-stars'>
+                                                            <ul id='stars'>
+                                                                <li class='star' title='Poor' data-value='1'>
+                                                                    <i class='fa fa-star fa-fw'></i>
+                                                                </li>
+                                                                <li class='star' title='Fair' data-value='2'>
+                                                                    <i class='fa fa-star fa-fw'></i>
+                                                                </li>
+                                                                <li class='star' title='Good' data-value='3'>
+                                                                    <i class='fa fa-star fa-fw'></i>
+                                                                </li>
+                                                                <li class='star' title='Excellent' data-value='4'>
+                                                                    <i class='fa fa-star fa-fw'></i>
+                                                                </li>
+                                                                <li class='star' title='WOW!!!' data-value='5'>
+                                                                    <i class='fa fa-star fa-fw'></i>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- <p class="stars-selected">
+                                                            <span class="stars d-flex">
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                                <i class="fa-solid fa-star"></i>
+                                                            </span>
+                                                        </p> -->
+                                                    </div>
+                                                    <p class="comment-form-comment">
+                                                        <label for="comment">Your review
+                                                            <span class="required">*</span>
+                                                        </label>
+                                                        <textarea id="comment" name="comment" cols="45" rows="8"
+                                                            required="">
+
+                                                        </textarea>
+                                                    </p>
+                                                    <p class="form-submit">
+                                                        <input name="submit" type="submit" id="submit" class="submit"
+                                                            value="Submit">
+                                                    </p>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="new-arrivals">
+            <div class="container pt-5 pb-3">
+                <div class="content-header">
+                    <h2 class="content-title">Related products
+                    </h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="1" style="display: block;" class="arrival_content">
+                    <div class="row justify-content-center product-wrap g-2">
+                    @{
+                        int count = 0;
+                    }
+                    @foreach (Furniture furniture in ViewBag.furniture)
+                    {
+                        count++;
+
+                            if (Model.CategoryId==furniture.CategoryId)
+                            {
+                                 if (Model.Id!=furniture.Id && count < 6)
+                                 {
+                                    <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                                        <div class="card" id="demo">
+                                        <img style="width: 320px; height: 315px;" src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="...">
+                                            <div class="card-body text-center">
+                                                <span style="font-size: 18px; font-weight:600" class="product-categories">
+                                                    @categoryfurniture
+                                                </span>
+                                                <a class="product-title" href="#">@furniture.Name</a>
+                                                <span class="price">
+                                                    <span class="Price-amount amount">
+                                                        <bdi>
+                                                            <span class="Price-currencySymbol">$</span>@furniture.Price
+                                                        </bdi>
+                                                    </span>
+                                                </span>
+                                                <div class="hover-area text-center" id="text">
+                                                    <a href="cart.html" type="button" class="add-to-cart">
+                                                        <i class="fa-solid fa-basket-shopping">
+                                                        </i> Add to cart
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                    }
+                    @*<div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                            <div class="card" id="demo">
+                                <img src="~/assets/image/chair/chair-3.jpg" class="card-img-top img-fluid" alt="...">
+                                <div class="card-body text-center">
+                                    <span class="product-categories"><a href="#">Innovative Furnitures</a>
+                                    </span>
+                                    <a class="product-title" href="#">Heavy Duty Antis</a>
+                                    <span class="price">
+                                        <span class="Price-amount amount"><bdi><span
+                                                    class="Price-currencySymbol">$</span>2,000.00</bdi></span>
+                                    </span>
+                                    <div class="hover-area clearfix" id="text">
+                                        <div class="addcart woocommerce text-center">
+                                            <a href="#" data-quantity="1"
+                                                class="button product_type_variable add-to-cart" data-product_id="2333"
+                                                data-product_sku="" aria-label="Select options for “Heavy Duty Antis”"
+                                                rel="nofollow"><i class="fa-solid fa-basket-shopping"></i> Select
+                                                options</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                            <div class="card" id="demo">
+                                <img src="~/assets/image/chair/chair-4.jpg" class="card-img-top" alt="...">
+                                <div class="card-body text-center">
+                                    <span class="product-categories"><a href="#">Innovative Furnitures</a>
+                                    </span>
+                                    <a class="product-title" href="#">Heavy Duty Antis</a>
+                                    <span class="price">
+                                        <span class="Price-amount amount"><bdi><span
+                                                    class="Price-currencySymbol">$</span>3,000.00</bdi></span>
+                                    </span>
+                                    <div class="hover-area clearfix" id="text">
+                                        <div class="addcart woocommerce text-center">
+                                            <a href="#" data-quantity="1"
+                                                class="button product_type_variable add-to-cart" data-product_id="2333"
+                                                data-product_sku="" aria-label="Select options for “Heavy Duty Antis”"
+                                                rel="nofollow"><i class="fa-solid fa-basket-shopping"></i> Select
+                                                options</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                            <div class="card" id="demo">
+                                <img src="~/assets/image/chair/chair-6.jpg" class="card-img-top" alt="...">
+                                <div class="card-body text-center">
+                                    <span class="product-categories"><a href="#">Innovative Furnitures</a>
+                                    </span>
+                                    <a class="product-title" href="#">Heavy Duty Antis</a>
+                                    <span class="price">
+                                        <span class="Price-amount amount"><bdi><span
+                                                    class="Price-currencySymbol">$</span>5,000.00</bdi></span>
+                                    </span>
+                                    <div class="hover-area clearfix" id="text">
+                                        <div class="addcart woocommerce text-center">
+                                            <a href="#" data-quantity="1"
+                                                class="button product_type_variable add-to-cart" data-product_id="2333"
+                                                data-product_sku="" aria-label="Select options for “Heavy Duty Antis”"
+                                                rel="nofollow"><i class="fa-solid fa-basket-shopping"></i> Select
+                                                options</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Main end -->
+

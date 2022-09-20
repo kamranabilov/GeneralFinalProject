@@ -1,0 +1,187 @@
+﻿@inject FianlProject.Services.LayoutService layoutService
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Main start -->
+
+<main>
+    <section>
+        <div class="about">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-sm-12 g-4">
+                        <div class="about-title">
+                            <span>
+                                <a href="index.html">Home </a>
+                            </span>
+                            >
+                            <span> Cart</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cartt">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form action="" class="cart-form" method="post">
+                        <table class="shop_cart responsive table-bordered" cellspacing="0" data-id="10389">
+                            <thead>
+                                <tr>
+                                    <th class="product-remove"></th>
+                                    <th class="product-thumbnail"></th>
+                                    <th class="product-name">
+                                        Product
+                                    </th>
+                                    <th class="product-price">
+                                        Price
+                                    </th>
+                                    <th class="product-quantity">
+                                        Quantity
+                                    </th>
+                                    <th class="product-subtotal">
+                                        Subtotal
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="cart-items text-center">
+                                @foreach(BasketItemVM basketItem in layoutService.GetBasket().BasketItemVMs)
+                                {
+                                    <tr id="yith-wcwl-row-1322" data-row-id="1322">
+                                        <td class="product-remove">
+                                            <a asp-controller="Cart" asp-action="RemoveFromFurniture" asp-route-id="@basketItem.Furniture.Id" href="#" class="remove" title="Remove this product">×</a>
+                                        </td>
+                                        <td class="product-thumbnail">
+                                            <a href="#">
+                                                <img width="300" height="300" src="assets/image/shop/@basketItem.Furniture.Image"
+                                                 class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
+                                                 alt="">
+                                            </a>
+                                        </td>
+                                        <td class="product-name">
+                                            <a href="#">
+                                                @basketItem.Furniture.Name
+                                            </a>
+                                        </td>
+                                        <td class="product-price">
+                                            <span class="Price-amount amount">
+                                                $@basketItem.Furniture.Price
+                                            </span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <div class="qty-input">
+                                                <button asp-controller="Cart" asp-action="Minus" asp-route-id="@basketItem.Furniture.Id" class="qty-count qty-count--minus" data-action="minus"
+                                                    type="button">
+                                                    -
+                                                </button>
+                                                <input class="product-qty" type="text" name="product-qty" min="0"
+                                                   max="10" value="@basketItem.Quantity">
+                                                <button asp-controller="Cart" asp-action="Plus" asp-route-id="@basketItem.Furniture.Id" class="qty-count qty-count--add" data-action="add"
+                                                    type="button">
+                                                    +
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal" data-title="Subtotal">
+                                            <span class="Price-amount amount">
+                                                $@(basketItem.Quantity * basketItem.Furniture.Price)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="6" class="actions">
+                                        <div class="coupon">
+                                            <label for="coupon_code">Coupon:</label>
+                                            <input type="text" name="coupon_code" class="input-text"
+                                                   id="coupon_code" value="" placeholder="Coupon code">
+                                            <button type="submit" class="button" name="apply_coupon"
+                                                    value="Apply coupon">
+                                                Apply coupon
+                                            </button>
+                                        </div>
+                                        <button type="submit" class="button" name="update_cart" value="Update cart"
+                                                aria-disabled="false">
+                                            Update cart
+                                        </button>
+                                        <input type="hidden">
+                                        <input type="hidden" value="/marketov2/furniture/cart/">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                    <div class="cart-collaterals">
+                        <div class="cart_totals calculated_shipping">
+                            <h2>Cart totals</h2>
+                            <table cellspacing="0" class="shop_table shop_table_responsive table">
+                                <tbody class="text-center">
+                                    <tr class="cart-subtotal">
+                                        <th>Subtotal</th>
+                                        <td class="subtotal">
+                                            <span>
+                                                $995.00
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr class="shipping-total">
+                                        <th>Shipping</th>
+                                        <td class="ship text-center">
+                                            <ul id="shipping_method" class="ship-method">
+                                                <li>
+                                                    <input type="hidden" value="">
+                                                    <label for="shipping_method_0_free_shipping2">
+                                                        Free
+                                                        shipping
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                            <p>
+                                                Shipping to <strong>Baku</strong>
+                                            </p>
+                                            <form class="shipping-calculator" action="" method="post">
+                                                <a class="csta" href="#">
+                                                    Change address <i class="fa-solid fa-car-side"></i>
+                                                </a>
+                                                <section class="calculator-form d-none">
+                                                    <p class="form-row" id="calc_shipping_country_field">
+                                                        <select name="calc_shipping_country"
+                                                                id="calc_shipping_country" class="border-0">
+                                                            <option value="default">Select a country</option>
+                                                            <option value="AZ">Azerbajan</option>
+                                                        </select>
+                                                        <a href="#" class="buttonA">Update</a>
+                                                    </p>
+                                                </section>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th>Total</th>
+                                        <td data-title="Total">
+                                            <span>
+                                                $995.00
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="proceedd">
+                                <a href="" class="">
+                                    Proceed to checkout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<!-- main end -->
+

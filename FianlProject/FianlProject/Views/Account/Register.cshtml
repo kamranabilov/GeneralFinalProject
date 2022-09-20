@@ -1,0 +1,86 @@
+﻿ @model RegisterVM  
+ <!-- Main start -->
+<main class="w-100 m-auto register">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="main-heading">Register Page</h1>
+                        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+                        <form method="POST" action="submit.php">
+                            <div class="row mb-3">
+                                <label for="text" class="col-md-4 col-form-label text-md-end">FirstName</label>
+                                <div class="col-md-6">
+                                    <input id="text" type="text" class="form-control " name="name" value="" required
+                                           autocomplete="name" autofocus>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="text" class="col-md-4 col-form-label text-md-end">LastName</label>
+                                <div class="col-md-6">
+                                    <input id="text" type="text" class="form-control " name="name" value="" required
+                                           autocomplete="name" autofocus>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="text" class="col-md-4 col-form-label text-md-end">UserName</label>
+                                <div class="col-md-6">
+                                    <input id="text" type="text" class="form-control " name="name" value="" required
+                                           autocomplete="name" autofocus>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="email" class="col-md-4 col-form-label text-md-end">Email Address</label>
+                                <div class="col-md-6">
+                                    <input id="email" type="email" class="form-control " name="email" value=""
+                                           required autocomplete="email" autofocus>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control " name="password"
+                                           required autocomplete="current-password">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="confirm_password" class="col-md-4 col-form-label text-md-end">
+                                    Confirm
+                                    Password
+                                </label>
+                                <div class="col-md-6">
+                                    <input id="confirm_password" type="password" class="form-control "
+                                           name="confirm_password" required autocomplete="current-password">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-4 offset-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="remember"
+                                               id="remember">
+                                        <label class="form-check-label" for="remember">
+                                            Terms
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-0 mt-4">
+                                <div class="col-md-8 offset-md-3">
+                                    <button type="submit" class="btn btn-success w-75 m-5">
+                                        Register
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Main end -->
