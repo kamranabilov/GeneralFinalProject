@@ -1,4 +1,5 @@
 ﻿@model Furniture
+@inject FianlProject.Services.LayoutService layoutService
 @{
     ViewData["Title"] = "Detail";
 }
@@ -23,10 +24,10 @@
                         <div class="col-lg-12 g-4">
                             <div class="about-title">
                                 <span>
-                                    <a href="index.html">Home </a>
+                                    <a asp-controller="Home" asp-action="Index">Home </a>
                                 </span>
                                 >
-                            <span> <a href="shop.html">@categoryfurniture</a></span>
+                            <span> <a >@categoryfurniture</a></span>
                                 >
                                 <span>@Model.Name</span>
                             </div>
@@ -89,7 +90,7 @@
                                             </p>
                                             <div class="price mb-5">
                                                 <span>
-                                                    @Model.Price
+                                                    $@Model.Price
                                                 </span>
                                             </div>
                                             <!-- <div class="stok mb-2">
@@ -104,7 +105,7 @@
                                                     <button class="qty-count qty-count--add" data-action="add"
                                                         type="button">+</button>
                                                 </div>
-                                                <a href="cart.html" class="btn btn-default">Add To Cart</a>
+                                            <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@Model.Id" class="btn btn-default addToCart" onclick="">Add To Cart</a>
                                             </div>
                                             <div class="share-icon">
                                                 <span class="feedback">
@@ -387,7 +388,7 @@
                                                     </span>
                                                 </span>
                                                 <div class="hover-area text-center" id="text">
-                                                    <a href="cart.html" type="button" class="add-to-cart">
+                                                <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@Model.Id" type="button" class="add-to-cart addToCart">
                                                         <i class="fa-solid fa-basket-shopping">
                                                         </i> Add to cart
                                                     </a>

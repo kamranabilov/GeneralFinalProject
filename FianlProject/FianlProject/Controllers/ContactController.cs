@@ -1,5 +1,6 @@
 ﻿using FianlProject.DAL;
 using FianlProject.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System.Collections.Generic;
@@ -10,32 +11,39 @@ namespace FianlProject.Controllers
 	public class ContactController : Controller
 	{
 		private readonly AppDbContext _context;
+		private readonly UserManager<AppUser> _userManager;
 
-		public ContactController(AppDbContext context)
+		public ContactController(AppDbContext context, UserManager<AppUser> userManager)
 		{
 			_context = context;
+			_userManager = userManager;
 		}
 		public IActionResult Index()
 		{
 			return View();
 		}
 
-		//[HttpPost]
-		//[AutoValidateAntiforgeryToken]
-		//public async Task<IActionResult> Contact(Message message)
-		//{
-		//	if (!ModelState.IsValid) return View();
+		[HttpPost]
+		[AutoValidateAntiforgeryToken]
+		public async Task<IActionResult> Index(Contact contact)
+		{
+			if (!ModelState.IsValid)
+			{
+				ModelState.AddModelError("Contact", "This is erorr mesaj");
+				return View();
+			}
+				
+			Contact message = new Contact
+			{
+				Name = contact.Name,
+				Email = contact.Email,
+				Subject = contact.Subject,
+				Description = contact.Description
+			};
+			await _context.Contacts.AddAsync(contact);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
 
-		//	if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
-		//	{
-		//		ModelState.AddModelError(string.Empty, "Only Member and guests are allowed to send emails.");
-		//		return View();
-		//	}
-		//	_context.Messages.Add(message);
-		//	await _context.SaveChangesAsync();
-
-		//	TempData["Successfull"] = "Your message has been send successfully!";
-		//	return RedirectToAction(nameof(Index));
-		//}
+		}
 	}
 }

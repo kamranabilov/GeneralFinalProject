@@ -34,18 +34,18 @@
                     </button>
                 </div>
             </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:gold">
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown me-1">
-                        <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-bs-toggle="dropdown">
+                        <a asp-area="AdminPanel" asp-controller="Contact" class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown">
                             <i class="mdi mdi-message-text mx-0"></i>
-                            <span class="count"></span>
+                            <span style="background: #fff; width:20px; height: 20px; top: 0px;" class="count">@layoutService.GetContacts().Count()</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="messageDropdown">
                             <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
                             <a class="dropdown-item">
                                 <div class="item-thumbnail">
-                                    <img src="~/admin/images/faces/@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower() == "headerlogo")?.Value" alt="image" class="profile-pic">
+                                    <img src="~/admin/images/faces/face15.jpg" alt="image" class="profile-pic">
                                 </div>
                                 <div class="item-content flex-grow">
                                     <h6 class="ellipsis font-weight-normal">
@@ -60,8 +60,8 @@
                     </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                            <img src="~/admin/images/faces/face5.jpg" alt="profile" />
-                            <span class="nav-profile-name">Leo Messi</span>
+                            <img src="~/admin/images/faces/face23.jpg" alt="profile" />
+                            <span class="nav-profile-name">Antonalli Ruccozo</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
                             <a class="dropdown-item">
@@ -90,7 +90,7 @@
                     <li class="nav-item">
                         <a class="nav-link" style="color: #fff !important" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                             <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-                            <span class="menu-title">UI Elements</span>
+                            <span class="menu-title">List Elements</span>
                             <i class="menu-arrow"></i>
                         </a>
                         <div class="collapse" id="ui-basic">
@@ -99,6 +99,7 @@
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="category" asp-action="index">Category</a></li>
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Furniture" asp-action="index">Furniture</a></li>
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Setting" asp-action="index">Setting</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Contact" asp-action="index">Contact</a></li>
                             </ul>
                         </div>
                     </li>

@@ -24,7 +24,8 @@ namespace FianlProject.Areas.AdminPanel.Controllers
 			{
 				Sliders = await _context.Sliders.ToListAsync(),
 				Furnitures = await _context.Furnitures.Include(c => c.Furnitureimages).ToListAsync(),
-				Categories = await _context.Categories.Include(c => c.Furnitures).ToListAsync()
+				Categories = await _context.Categories.Include(c => c.Furnitures).ToListAsync(),
+				Contacts = await _context.Contacts.ToListAsync()
 			};
 			return View(homeVM);
 		}

@@ -1,6 +1,7 @@
 ﻿using FianlProject.DAL;
 using FianlProject.Extensions;
 using FianlProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,8 @@ using System.Threading.Tasks;
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-    public class FurnitureController : Controller
+	[Authorize(Roles = "Admin")]
+	public class FurnitureController : Controller
     {
 		private readonly AppDbContext _context;
 		private readonly IWebHostEnvironment _env;
@@ -32,7 +34,7 @@ namespace FianlProject.Areas.AdminPanel.Controllers
 				.Include(c => c.Furnitureimages).ToListAsync();
 			return View(model);
         }
-
+		
 		public IActionResult Create()
 		{
 			ViewBag.Description = _context.FurnitureDescriptions.ToList();
@@ -121,7 +123,7 @@ namespace FianlProject.Areas.AdminPanel.Controllers
 			if (!ModelState.IsValid) return View();
 			if (furniture.ImagesId == null && furniture.Photos == null)
 			{
-				ModelState.AddModelError("Photos", "must choose 1 main photo");
+				ModelState.AddModelError(string.Empty, "Please check our terms");
 				return View(existed);
 			}
 			if (furniture.MainPhoto == null)

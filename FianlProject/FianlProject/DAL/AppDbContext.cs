@@ -1,11 +1,13 @@
 ﻿using FianlProject.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 using System.Linq;
 
 namespace FianlProject.DAL
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -19,7 +21,10 @@ namespace FianlProject.DAL
 		public DbSet<Category> Categories { get; set; }
         public DbSet<Rate> Rates { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
-		public DbSet<Order> Orders { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Faq> Faqs { get; set; }
+		public DbSet<Wishlistitem> WishlistItems { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

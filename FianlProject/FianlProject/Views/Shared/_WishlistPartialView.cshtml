@@ -1,0 +1,48 @@
+﻿@inject FianlProject.Services.LayoutService layoutService 
+@{
+    ViewData["Title"] = "Index";
+
+    WishlistVM wishlist = await layoutService.GetWishlist();
+}
+
+<p id="totalcountWishlist" style="display:none">@layoutService.ShowBasket().Result.Count</p>
+@foreach (var item in wishlist.WishlistItems)
+ {
+     <tbody class="wishlist-items">
+        <tr >
+            <td class="product-remove">
+                <div>
+                    <a asp-controller="Wishlist" asp-action="DeleteWishListItem" asp-route-id="@item.Furniture.Id" class="remove  removeWishlistItem"
+                   title="Remove this product">×</a>
+                </div>
+            </td>
+            <td class="product-thumbnail">
+                <a href="#">
+                    <img width="300" height="300" src="~/assets/image/shop/@item.Furniture.Image"
+                     class="thumbnail"
+                     alt="">
+                </a>
+            </td>
+            <td class="product-name">
+                <a href="#">
+                    @item.Furniture.Name
+                </a>
+            </td>
+            <td class="product-price">
+                <span class="Price-amount amount">
+                    $@item.Furniture.Price
+                </span>
+            </td>
+            <td class="product-stock">
+                <span class="stock">In Stock</span>
+            </td>
+            <td class="product-add-to-cart">
+                <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@item.Furniture.Id" data-quantity="1"
+               class=" addToCart">
+                    Add to
+                    Cart
+                </a>
+            </td>
+        </tr>
+    </tbody>
+ }

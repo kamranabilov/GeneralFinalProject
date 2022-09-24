@@ -13,6 +13,7 @@ namespace FianlProject.Models
 		public string City { get; set; }
 		public string Address { get; set; }
 		public int PhoneNumber { get; set; }
+		public bool Status { get; set; }
 		public List<BasketItem> BasketItems { get; set; }
 		public string AppUserId { get; set; }
 		public AppUser AppUser { get; set; }

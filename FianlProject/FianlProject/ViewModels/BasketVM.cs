@@ -4,7 +4,8 @@ namespace FianlProject.ViewModels
 {
     public class BasketVM
     {
-		public List<BasketCookieItemVM> BasketCookieItemVMs { get; set; }
+		public List<BasketItemVM> BasketItems { get; set; }
 		public decimal TotalPrice { get; set; }
+		public int Count { get; set; }
 	}
 }

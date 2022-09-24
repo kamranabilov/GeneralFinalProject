@@ -1,10 +1,12 @@
 ﻿using FianlProject.DAL;
 using FianlProject.Extensions;
 using FianlProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +14,8 @@ using System.Threading.Tasks;
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-    public class CategoryController : Controller
+	//[Authorize(Roles = "Admin")]
+	public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;

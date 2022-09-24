@@ -1,8 +1,10 @@
 using FianlProject.DAL;
+using FianlProject.Models;
 using FianlProject.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,9 +34,32 @@ namespace FianlProject
             {
                 option.UseSqlServer(_configuration.GetConnectionString("default"));
             });
-            services.AddScoped<LayoutService>();
+
+			services.AddIdentity<AppUser, IdentityRole>(opt =>
+			{
+				opt.User.RequireUniqueEmail = true;
+                //opt.SignIn.RequireConfirmedEmail = true;
+                opt.User.AllowedUserNameCharacters = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890_";
+
+				opt.Password.RequiredUniqueChars = 3; // en azi 1 tekrar olunmayin herif olmalidir
+				opt.Password.RequireDigit = true;
+				opt.Password.RequiredLength = 8;
+				opt.Password.RequireNonAlphanumeric = false;
+				opt.Password.RequireUppercase = false;
+				opt.Password.RequireLowercase = false;
+
+				opt.Lockout.MaxFailedAccessAttempts = 3;
+				opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+				opt.Lockout.AllowedForNewUsers = true;
+			}).AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
+
+			services.AddScoped<LayoutService>();
 
 			services.AddHttpContextAccessor();
+
+			services.AddControllers().AddNewtonsoftJson(options =>
+		    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+			);
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +88,7 @@ namespace FianlProject
 				endpoints.MapControllerRoute(
                         name: "default",
                         pattern: "{controller=home}/{action=index}/{id?}"
-                    );
+                 );
             });
         }
     }

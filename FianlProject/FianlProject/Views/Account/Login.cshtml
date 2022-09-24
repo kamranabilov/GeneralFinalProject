@@ -1,4 +1,9 @@
-﻿<!-- Main start -->
+﻿@model LoginVM
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!-- Main start -->
 <main class="w-100 m-auto login">
     <div class="container">
         <div class="row justify-content-center">
@@ -7,28 +12,25 @@
                     <div class="card-body">
                         <h1 class="main-heading">Login Page</h1>
                         <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
-                        <form method="POST" action="submit.php">
+                        <form method="post" >
                             <div class="row mb-3">
                                 <label for="text" class="col-md-4 col-form-label text-md-end">UserName</label>
                                 <div class="col-md-6">
-                                    <input id="text" type="text" class="form-control " name="name" value="" required
-                                           autocomplete="name" autofocus>
+                                    <input type="text" class="form-control" asp-for="UserName">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control " name="password"
-                                           required autocomplete="current-password">
+                                    <input type="password" class="form-control " asp-for="Password">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4 offset-md-4">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="remember"
-                                               id="remember">
-                                        <label class="form-check-label text-center lbl" for="remember">
-                                            Remeber?
+                                        <input asp-for="Remember" class="form-check-input" type="checkbox">
+                                        <label class="form-check-label" for="remember">
+                                            Remember
                                         </label>
                                     </div>
                                 </div>

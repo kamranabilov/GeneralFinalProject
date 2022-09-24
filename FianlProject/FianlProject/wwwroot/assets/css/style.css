@@ -1558,8 +1558,8 @@
 	}
 
 		.cartt .cart-form .shop_cart .cart-items td a:hover {
-			opacity: 0.6;
-			transition: 0.5s linear;
+			opacity: 1;
+			transition: 0.1s linear;
 		}
 
 	.cartt .cart-form .shop_cart .cart-items td .Price-amount {
@@ -3480,7 +3480,7 @@ body {
 			}
 
 			.modal .modal-content .modal-body .product-details .product-details-wrapper .product-details-title .quantity .qty-input .product-qty {
-				width: 78px;
+				width: 78px !important;
 				border: 1px solid #e3e3e3 !important;
 				height: 45px;
 				display: inline-block;
@@ -3666,12 +3666,20 @@ body {
 		font-size: 14px;
 		margin-left: 130px;
 		position: relative;
-		line-height: 2.5;
+		line-height: 1.5;
+
+
 	}
+
+.username {
+	color: #000 !important;
+	text-decoration: none !important;
+}
 
 		.header .headertop .icons .myaccount .myaccountlist {
 			position: absolute;
 			left: -40%;
+			/*top: 2.5rem;*/
 		}
 
 			.header .headertop .icons .myaccount .myaccountlist .myaccountA {
@@ -3937,8 +3945,8 @@ body {
 				}
 
 					.header .headertop .icons .canvasss .offcanvas-end .offcanvas-body .canvas-box .minicart-button a:hover {
-						background-color: #7ad03a;
-						transition: 0.2s linear;
+						background-color: #7ad03a !important;
+						transition: 0.2s linear !important;
 					}
 
 @media screen and (max-width: 950px) {
@@ -4619,25 +4627,25 @@ body {
 		border: 1px solid #efefef;
 		border-left: 1px solid #efefef;
 		color: #b7b7b7;
-		transition: all 0.4s ease;
+		transition: all 0.3s ease;
 	}
 
 		.new-arrivals .product-wrap #demo .hover-area .add-to-cart {
 			opacity: 0;
 			visibility: hidden;
 			padding: 0;
-			font-size: 14px;
+			font-size: 18px;
 			line-height: 2;
 			background: 0 0;
 			font-weight: 400;
 			color: #b7b7b7;
 			text-decoration: none;
-			transition: all 0.4s ease;
+			transition: all 0.3s ease;
 		}
 
 	.new-arrivals .product-wrap #demo:hover {
 		box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
-		transition: 0.8s linear;
+		transition: 0.5s linear;
 	}
 
 		.new-arrivals .product-wrap #demo:hover .hover-area {
@@ -4645,10 +4653,12 @@ body {
 			transition: 0.6s linear;
 			opacity: 1;
 			visibility: visible;
+			transform: skewX(180deg);
 		}
 
 			.new-arrivals .product-wrap #demo:hover .hover-area .add-to-cart {
 				opacity: 1;
+				color: #002;
 				visibility: visible;
 			}
 
@@ -4959,7 +4969,7 @@ body {
 			}
 
 		.recently .content_tab .list-hover .title-img:hover {
-			opacity: 0.5;
+			opacity: 0.8;
 			transition: linear 0.3s;
 		}
 
@@ -5225,7 +5235,7 @@ body {
 		}
 
 .brand {
-	margin-top: 70px;
+	margin-top: 110px;
 }
 
 	.brand .brand-content {

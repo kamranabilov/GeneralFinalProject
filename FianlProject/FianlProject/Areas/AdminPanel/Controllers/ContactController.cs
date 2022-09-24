@@ -1,12 +1,18 @@
 ﻿using FianlProject.DAL;
 using FianlProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-    public class ContactController : Controller
+	//[Authorize(Roles = "Member")]
+	public class ContactController : Controller
     {
         private readonly AppDbContext _context;
 
@@ -16,8 +22,18 @@ namespace FianlProject.Areas.AdminPanel.Controllers
         }
         public IActionResult Index()
         {
-			//List<Contact> contacts = _context.Contact.ToList();
-			return View();
+            List<Contact> contacts = _context.Contacts.ToList();
+            return View(contacts);
         }
-    }
+
+		public async Task<IActionResult> Delete(int? id)
+		{
+			if (id == null || id == 0) return NotFound();
+			Contact contact = await _context.Contacts.FindAsync(id);
+			if (contact == null) return NotFound();
+			_context.Contacts.Remove(contact);
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
+	}
 }

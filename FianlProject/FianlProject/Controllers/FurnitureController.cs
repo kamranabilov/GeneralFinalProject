@@ -1,7 +1,10 @@
 ﻿using FianlProject.DAL;
 using FianlProject.Models;
+using FianlProject.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,10 +14,12 @@ namespace FianlProject.Controllers
 	public class FurnitureController : Controller
 	{
 		private readonly AppDbContext _context;
+		private readonly UserManager<AppUser> _userManager;
 
-		public FurnitureController(AppDbContext context)
+		public FurnitureController(AppDbContext context, UserManager<AppUser> userManager)
 		{
 			_context = context;
+			_userManager = userManager;
 		}
 		public async Task<IActionResult> Detail(int? id)
 		{
@@ -35,5 +40,7 @@ namespace FianlProject.Controllers
 		//	List<Furniture> furnitures = await _context.Furnitures.Include(c => c.Furnitureimages).ToListAsync();
 		//	return PartialView("_FurniturePartialView", furnitures);
 		//}
+
+
 	}
 }

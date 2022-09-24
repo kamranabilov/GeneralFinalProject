@@ -1,11 +1,13 @@
 ﻿using FianlProject.DAL;
 using FianlProject.Extensions;
 using FianlProject.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +15,8 @@ using System.Threading.Tasks;
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-    public class SliderController : Controller
+	[Authorize(Roles = "Admin")]
+	public class SliderController : Controller
     {
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;

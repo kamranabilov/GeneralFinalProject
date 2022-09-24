@@ -1,0 +1,43 @@
+﻿@model List<Furniture>
+@foreach (Furniture furniture in Model)
+{
+    <div class="col-lg-3 col-12 col-md-4 col-sm-6">
+        <div class="product-m">
+            <div class="thumb">
+                <a class="aspect aspect--bg-grey aspect--square u-d-block"
+               href="product-detail.    html">
+                    <img width="222" height="300" class="aspect__img"
+                     src="~/assets/image/shop/@furniture.Image" alt="">
+                </a>
+                <div class="add-cart d-flex">
+                    <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@furniture.Id" style="padding: 15px 24px;" class="btn--e-brand d-flex addToCart" data-modal="modal"
+                   data-modal-id="#add-to-cart">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </a>
+                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"
+                        class="btn--e-brand d-flex" data-modal="modal"
+                        data-modal-id="#add-to-cart">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                    <a asp-controller="wishlist" asp-action="AddWishlist" class="btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"
+                   data-modal-id="#add-to-cart">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="content">
+                <div class="name">
+                    <a href="product-detail.html">@furniture.Name</a>
+                </div>
+                <div class="price">$@furniture.Price</div>
+                <div class="hover">
+                    <div class="preview-description">
+                        <span>
+                            @furniture.Article
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

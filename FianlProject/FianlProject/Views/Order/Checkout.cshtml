@@ -1,0 +1,243 @@
+﻿@model Order
+@inject FianlProject.Services.LayoutService layoutService
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<!-- Begin Main Content Area -->
+<main>
+    <section>
+        <div class="about">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-12 g-4">
+                        <div class="about-title">
+                            <span>
+                                <a asp-controller="Home" asp-action="Index">Home </a>
+                            </span>
+                            >
+                            <span> Checkout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-login-toggle">
+                        <div class="login-info">
+                            <i class="fa-regular fa-window-maximize"></i>
+                            Returning customer?
+                            <a href="#" class="showlogin" onclick="myFunction()">Click here to login</a>
+                        </div>
+                    </div>
+                    <form id="form-login-hidden" method="post" style="display: none;">
+                        <p>
+                            If you have shopped with us before, please enter your details below. If you are a new
+                            customer, please proceed to the Billing section.
+                        </p>
+                        <p class="form-row form-first">
+                            <label for="username">
+                                Username or email
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" class="input-text" name="username" id="username" autocomplete="username">
+                        </p>
+                        <p class="form-row form-last">
+                            <label for="password">
+                                Password
+                                <span class="required">*</span>
+                            </label>
+                            <input class="input-text" type="password" name="password" id="password"
+                                   autocomplete="current-password">
+                        </p>
+                        <div class="clear"></div>
+                        <p class="form-sbt">
+                            <label class="label_rememberme">
+                                <input class="input-checkbox" name="rememberme" type="checkbox" id="rememberme"
+                                       value="forever">
+                                <span>Remember me</span>
+                            </label>
+                            <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce"
+                                   value="5204d05800">
+                            <input type="hidden" name="_wp_http_referer" value="checkout">
+                            <input type="hidden" name="redirect" value="checkout">
+                            <button type="submit" class="login__submit" name="login" value="Login">Login</button>
+                        </p>
+                        <p class="lost_password">
+                            <a href="account.html">Lost your password?</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="order">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="billing-details">
+                        <h3>Billing details</h3>
+                        <div class="bill-wrapper">
+                            <p class="form-row form-row-first validate-required" id="billing_first_name_field"
+                               data-priority="10">
+                                <label for="billing_first_name" class="">
+                                    First name
+                                    <abbr class="required" title="required">*</abbr>
+                                </label>
+                                <span class="input-wrapper">
+                                    <input type="text" class="input-text " name="billing_first_name"
+                                           id="billing_first_name" placeholder="" value="" autocomplete="given-name">
+                                </span>
+                            </p>
+                            <p class="form-row form-row-last validate-required" id="billing_last_name_field"
+                               data-priority="20">
+                                <label for="billing_last_name" class="">
+                                    Last name
+                                    <abbr class="required" title="required">*</abbr>
+                                </label>
+                                <span class="input-wrapper">
+                                    <input type="text" class="input-text " name="billing_last_name"
+                                           id="billing_last_name" placeholder="" value="" autocomplete="family-name">
+                                </span>
+                            </p>
+                            <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
+                               id="billing_country_field" data-priority="40">
+                                <label for="billing_country" class="">
+                                    Country / Region
+                                    <abbr class="required" title="required">*</abbr>
+                                </label>
+                                <span class="input-wrapper">
+                                    <input type="text" class="input-text " name="billing_city" id="billing_city"
+                                           placeholder="" value="" autocomplete="address-level2">
+                                    <!-- <select name="billing_country" id="billing_country" class="country_select" autocomplete="country" data-placeholder="Select a country / region…" data-label="Country / Region" tabindex="-1" aria-hidden="true">
+                                        <option value="">Select a country / region…</option>
+                                        <option value="AZ">Azerbaijan</option>
+                                        <option value="UK">England</option>
+                                        <option value="ES">Espanyol</option>
+                                    </select> -->
+                                </span>
+                            </p>
+                            <p class="form-row address-field validate-required form-row-wide" id="billing_city_field"
+                               data-priority="70"
+                               data-o_class="form-row form-row-wide address-field validate-required">
+                                <label for="billing_city" class="">
+                                    Town / City
+                                    <abbr class="required" title="required">*</abbr>
+                                </label>
+                                <span class="input-wrapper">
+                                    <input type="text" class="input-text " name="billing_city" id="billing_city"
+                                           placeholder="" value="" autocomplete="address-level2">
+                                </span>
+                            </p>
+                            <p class="form-row form-row-wide validate-required validate-phone" id="billing_phone_field"
+                               data-priority="100">
+                                <label for="billing_phone" class="">
+                                    Phone
+                                    <abbr class="required" title="required">*</abbr>
+                                </label>
+                                <span class="input-wrapper">
+                                    <input type="tel" class="input-text " name="billing_phone" id="billing_phone"
+                                           placeholder="" value="" autocomplete="tel">
+                                </span>
+                            </p>
+                            <p class="form-row form-row-wide validate-required validate-email" id="billing_email_field"
+                               data-priority="110">
+                                <label for="billing_email" class="">
+                                    Email address
+                                    <abbr class="required" title="required">*</abbr>
+                                </label>
+                                <span class="input-wrapper">
+                                    <input type="email" class="input-text " name="billing_email" id="billing_email"
+                                           placeholder="" value="" autocomplete="email username">
+                                </span>
+                            </p>
+                        </div>
+                        <div class="additional-fields">
+                            <p class="form-row notes" id="order_comments" data-priority="">
+                                <label for="order_comments" class="">
+                                    Order notes
+                                    <span class="optional">(optional)</span>
+                                </label>
+                                <span class="input-wrapper">
+                                    <textarea name="order_comments" class="input-text " id="order_comments"
+                                              placeholder="N" rows="2" cols="5">
+                                    </textarea>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="checkout-form">
+                        <h3 id="order_review_heading">Your order</h3>
+                        <div id="order_review" class="checkout-review-order">
+                            <table class="shop_table checkout-review-order-table table"
+                                   style="position: static; zoom: 1;">
+                                <thead>
+                                    <tr>
+                                        <th class="product-name">Product</th>
+                                        <th class="product-total">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="cart_item">
+                                        <td class="product-name">
+                                            Feateured BedSpreed
+                                            <strong class="product-quantity">×&nbsp;3<strong>
+                                        </td>
+                                        <td class="product-total">
+                                            <span class="amount">
+                                                $60.000.00
+                                                <span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="order-total">
+                                        <th>Total</th>
+                                        <td>
+                                            <span class="amount">
+                                                $60.000.00
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div id="payment" class="checkout-payment" style="position: static; zoom: 1;">
+                                <ul class="payment_methods">
+                                    <li class="payment_method_cod">
+                                        <input id="payment_method_cod" type="radio" class="input-radio"
+                                               name="payment_method" value="cod" checked="checked"
+                                               data-order_button_text="" style="display: none;">
+                                        <label for="payment_method_cod">
+                                            Cash on delivery
+                                        </label>
+                                        <div class="payment_box">
+                                            <p>Pay with cash upon delivery.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="form-row place-order">
+                                    <button type="submit" class="button alt" name="checkout_place_order"
+                                            id="place_order" value="Place order" data-value="Place order">
+                                        Place
+                                        order
+                                    </button>
+                                    <input type="hidden" id="process-checkout-nonce" name="process-checkout-nonce"
+                                           value="">
+                                    <input type="hidden" name="_wp_http_referer" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Main Content Area End Here -->
+

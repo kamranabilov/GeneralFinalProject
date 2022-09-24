@@ -8,5 +8,6 @@ namespace FianlProject.ViewModels
 		public List<Slider> Sliders { get; set; }
 		public List<Furniture> Furnitures { get; set; }
 		public List<Category> Categories { get; set; }
+		public List<Contact> Contacts { get; set; }
 	}
 }

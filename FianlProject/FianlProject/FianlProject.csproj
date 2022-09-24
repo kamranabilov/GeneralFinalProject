@@ -7,10 +7,13 @@
   <ItemGroup>
     <Compile Remove="Migrations\20220916100414_srgsgvdf.cs" />
     <Compile Remove="Migrations\20220916100414_srgsgvdf.Designer.cs" />
+    <Compile Remove="Migrations\20220924130209_createwishlistTable.cs" />
+    <Compile Remove="Migrations\20220924130209_createwishlistTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.29" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.29">
@@ -18,6 +21,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>

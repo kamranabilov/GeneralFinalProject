@@ -1,13 +1,14 @@
 ﻿using FianlProject.Models.Base;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
 namespace FianlProject.Models
 {
-    public class AppUser:BaseEntity
+    public class AppUser:IdentityUser
     {
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public List<BasketItem> BasketItems { get; set; }
-		public List<Order> Order { get; set; }
+		public List<Order> Orders { get; set; }
 	}
 }

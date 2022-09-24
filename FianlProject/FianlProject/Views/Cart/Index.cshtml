@@ -1,6 +1,11 @@
 ﻿@inject FianlProject.Services.LayoutService layoutService
+
 @{
     ViewData["Title"] = "Index";
+
+}
+@{
+    decimal totalprice = 0;
 }
 
 <!-- Main start -->
@@ -13,7 +18,7 @@
                     <div class="col-sm-12 g-4">
                         <div class="about-title">
                             <span>
-                                <a href="index.html">Home </a>
+                                <a asp-controller="Home" asp-action="Index" >Home </a>
                             </span>
                             >
                             <span> Cart</span>
@@ -48,50 +53,46 @@
                                 </tr>
                             </thead>
                             <tbody class="cart-items text-center">
-                                @foreach(BasketItemVM basketItem in layoutService.GetBasket().BasketItemVMs)
-                                {
+                               @foreach(var item in layoutService.ShowBasket().Result.BasketItems)
+                               {
+                                    <span style="display:none">@(totalprice += item.Furniture.Price * item.Quantity)</span>
                                     <tr id="yith-wcwl-row-1322" data-row-id="1322">
-                                        <td class="product-remove">
-                                            <a asp-controller="Cart" asp-action="RemoveFromFurniture" asp-route-id="@basketItem.Furniture.Id" href="#" class="remove" title="Remove this product">×</a>
+                                        <td class="removeitem remove">
+                                            <a asp-controller="Cart" asp-action="removecartitem" asp-route-id="@item.Furniture.Id" class="cart-remove-btn">
+                                                <span style="background-color:#fff; color:red; border-radius: 100%;">X</span>
+                                            </a>
                                         </td>
                                         <td class="product-thumbnail">
                                             <a href="#">
-                                                <img width="300" height="300" src="assets/image/shop/@basketItem.Furniture.Image"
+                                                <img width="300" height="300" src="assets/image/shop/@item.Furniture.Image"
                                                  class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
                                                  alt="">
                                             </a>
                                         </td>
                                         <td class="product-name">
                                             <a href="#">
-                                                @basketItem.Furniture.Name
+                                               @item.Furniture.Name
                                             </a>
                                         </td>
                                         <td class="product-price">
                                             <span class="Price-amount amount">
-                                                $@basketItem.Furniture.Price
+                                                $@item.Furniture.Price
                                             </span>
                                         </td>
-                                        <td class="product-quantity">
-                                            <div class="qty-input">
-                                                <button asp-controller="Cart" asp-action="Minus" asp-route-id="@basketItem.Furniture.Id" class="qty-count qty-count--minus" data-action="minus"
-                                                    type="button">
-                                                    -
-                                                </button>
-                                                <input class="product-qty" type="text" name="product-qty" min="0"
-                                                   max="10" value="@basketItem.Quantity">
-                                                <button asp-controller="Cart" asp-action="Plus" asp-route-id="@basketItem.Furniture.Id" class="qty-count qty-count--add" data-action="add"
-                                                    type="button">
-                                                    +
-                                                </button>
-                                            </div>
+                                        <td class="product-quantity" >
+                                            <a data-id="@item.Furniture.Id" style="cursor:pointer;" class="down" id="downbtn"><i class="fas fa-chevron-left"></i></a>
+                            <span class="inp-value" style="cursor:pointer;">@item.Quantity</span>
+                                            <a data-id="@item.Furniture.Id" style="cursor:pointer;" class="up" id="upbtn"><i class="fas fa-chevron-right"></i></a>
                                         </td>
                                         <td class="product-subtotal" data-title="Subtotal">
-                                            <span class="Price-amount amount">
-                                                $@(basketItem.Quantity * basketItem.Furniture.Price)
-                                            </span>
+                                            <span style="font-size: 1.25rem;
+    font-weight: 500;">
+                                                $
+                                                <span style="font-size: 1.25rem;
+    font-weight: 500;"> <span data-id="@item.Furniture.Id" class="money-t"> @((item.Quantity * item.Furniture.Price).ToString("f0"))</span></span>
                                         </td>
                                     </tr>
-                                }
+                               }
                                 <tr>
                                     <td colspan="6" class="actions">
                                         <div class="coupon">
@@ -103,10 +104,10 @@
                                                 Apply coupon
                                             </button>
                                         </div>
-                                        <button type="submit" class="button" name="update_cart" value="Update cart"
+                                        <a class="button" style="cursor:pointer;" name="update_cart" value="Update cart"
                                                 aria-disabled="false">
                                             Update cart
-                                        </button>
+                                        </a>
                                         <input type="hidden">
                                         <input type="hidden" value="/marketov2/furniture/cart/">
                                     </td>
@@ -119,16 +120,16 @@
                             <h2>Cart totals</h2>
                             <table cellspacing="0" class="shop_table shop_table_responsive table">
                                 <tbody class="text-center">
-                                    <tr class="cart-subtotal">
+                                   @* <tr class="cart-subtotal">
                                         <th>Subtotal</th>
                                         <td class="subtotal">
                                             <span>
                                                 $995.00
                                             </span>
                                         </td>
-                                    </tr>
-                                    <tr class="shipping-total">
-                                        <th>Shipping</th>
+                                    </tr>*@
+                                    <tr class="shipping-total" style="border-width:thin;">
+                                        <th style="padding-top:65px;">Shipping</th>
                                         <td class="ship text-center">
                                             <ul id="shipping_method" class="ship-method">
                                                 <li>
@@ -143,7 +144,7 @@
                                                 Shipping to <strong>Baku</strong>
                                             </p>
                                             <form class="shipping-calculator" action="" method="post">
-                                                <a class="csta" href="#">
+                                                <a class="csta" href="#" style="text-decoration:none;">
                                                     Change address <i class="fa-solid fa-car-side"></i>
                                                 </a>
                                                 <section class="calculator-form d-none">
@@ -160,10 +161,11 @@
                                         </td>
                                     </tr>
                                     <tr class="order-total">
-                                        <th>Total</th>
+                                        <th style="padding-top:21px;">Total</th>
                                         <td data-title="Total">
-                                            <span>
-                                                $995.00
+                                            <span style="font-size:2rem;">
+                                                $
+                                                <span style="font-size:2rem;" class="total_price"> <span>@totalprice.ToString("f0")</span></span>
                                             </span>
                                         </td>
                                     </tr>
@@ -182,6 +184,103 @@
 
     </section>
 </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+        $(document).on("click", ".down", function (e) {
+            e.preventDefault();
+            var id = $(this).attr("data-id")
+            var total = document.querySelector(".total_price")
+            var money = document.querySelectorAll(".money-t")
+            var quantity = document.querySelector(".inp-value")
+
+            $.ajax({
+                url: "/cart/decrease",
+                data: {
+                    id: id
+                },
+                type: "post",
+                datatype: "json",
+                success: function (data) {
+                    money.forEach(mon => {
+                        if (id == mon.getAttribute("data-id")) {
+                            mon.innerHTML = data.price
+                        }
+                    })
+                    total.innerHTML = `${data.totalPrice}`
+                    quantity.innerHTML = `${data.Quantity}`
+
+                }
+            })
+
+        })
+
+
+        $(document).on("click", ".up", function (e) {
+            e.preventDefault();
+            var id = $(this).attr("data-id")
+
+            var total = document.querySelector(".total_price")
+            var money = document.querySelectorAll(".money-t")
+            console.log(id)
+            $.ajax({
+                url: "/cart/increase",
+                data: {
+                    id: id
+                },
+                type: "post",
+                datatype: "json",
+                success: function (data) {
+                    money.forEach(mon => {
+                        if (id == mon.getAttribute("data-id")) {
+                            mon.innerHTML = data.price
+                            console.log(data.price)
+                        }
+                    })
+                    total.innerHTML = `${data.totalPrice}`
+
+                }
+            })
+
+        })
+
+
+    })
+
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(".cart-remove-btn").click(function (e) {
+        e.preventDefault()
+        console.log($(this).attr("href"))
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var link = $(this).attr("href");
+                fetch(link).then(response => response.json()).then(data => {
+                    if (data.status == 200) {
+                        location.reload(true)
+                    } else {
+                        Swal.fire(
+                            'Not found!',
+                            'Your file can not be deleted.',
+                            'Failed'
+                        )
+                    }
+                });
+            }
+        })
+    })
+</script>
 
 <!-- main end -->
 
