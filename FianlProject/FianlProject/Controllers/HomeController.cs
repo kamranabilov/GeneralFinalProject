@@ -17,8 +17,9 @@ namespace FianlProject.Controllers
 		{
 			_context = context;
 		}
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string str)
 		{
+			//str = "bed";
 			HomeVM homeVM = new HomeVM
 			{
 				Sliders =await _context.Sliders.ToListAsync(),
@@ -26,6 +27,17 @@ namespace FianlProject.Controllers
 				Categories =await _context.Categories.Include(c => c.Furnitures).ToListAsync(),
 				Contacts = await _context.Contacts.ToListAsync()
 			};
+
+
+			if (!string.IsNullOrWhiteSpace(str))
+			{
+				List<Furniture> furnitures = _context.Furnitures.Include(x => x.Furnitureimages).Where(x => x.Name.Trim().ToLower().Contains(str)).ToList();
+				homeVM.Furnitures = furnitures;
+			}
+			else
+			{
+				homeVM.Furnitures = _context.Furnitures.Include(x => x.Furnitureimages).ToList();
+			}
 			return View(homeVM);
 		}
 

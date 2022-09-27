@@ -394,17 +394,19 @@
                         @foreach (Furniture furniture in Model.Furnitures.OrderBy(o=>o.Name).Take(6))
                     {
                         <div class="col-lg-2 col-12 col-sm-6 ">
-                            <div class="title-img w-100">
-                                <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                <div class="title-img w-100">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
                                         height: 315px !important;
                                         object-fit: contain;
                                         padding: 0;
                                         margin-bottom: 30px;">
-                                <div class="title-a mt-4 mx-3" style="text-align:center;">
-                                    <a style="text-align:center;">@furniture.Name</a>
-                                    <span>$@furniture.Price</span>
+                                    <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                        <a style="text-align:center;">@furniture.Name</a>
+                                        <span>$@furniture.Price</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     }
                         
@@ -415,45 +417,65 @@
                     @foreach (Furniture furniture in Model.Furnitures.OrderBy(o => o.Name).Take(1))
                     {
                         <div class="col-lg-12">
-                            <div class="title-img w-100">
-                                <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                <div class="title-img w-100">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
                                         height: 315px !important;
                                         object-fit: contain;
                                         padding: 0;
                                         margin-bottom: 30px;">
-                                <div class="title-a mt-4 mx-3" style="text-align:center;">
-                                    <a style="text-align:center;">@furniture.Name</a>
-                                    <span>$@furniture.Price</span>
+                                    <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                        <a style="text-align:center;">@furniture.Name</a>
+                                        <span>$@furniture.Price</span>
+                                    </div>
                                 </div>
-                            </div>
+                           </a>
                         </div>
                     }
                     </div>
                 </div>
                 <div id="3" class="content_tab">
                     <div class="row mt-5 list-hover text-center">
+                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.Name).Take(1))
+                    {
                         <div class="col-lg-12">
-                            <div class="title-img w-100">
-                                <img src="~/assets/image/chair/chair-2.jpg" class="img-fluid" alt="...">
-                                <div class="title-a mt-4 mx-3">
-                                    <a href="#">Furniture chair</a>
-                                    <span>$1.500.00</span>
+                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                <div class="title-img w-100">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                    <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                        <a style="text-align:center;">@furniture.Name</a>
+                                        <span>$@furniture.Price</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
+                    }
                     </div>
                 </div>
                 <div id="4" class="content_tab">
                     <div class="row mt-5 list-hover text-center">
+                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.Price).Take(1))
+                    {
                         <div class="col-lg-12">
-                            <div class="title-img w-100 text-center">
-                                <img src="~/assets/image/chair/chair-1.jpg" class="img-fluid" alt="...">
-                                <div class="title-a mt-4 mx-3">
-                                    <a href="#">Furniture Rim</a>
-                                    <span>$4,000.00</span>
+                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                <div class="title-img w-100">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                    <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                        <a style="text-align:center;">@furniture.Name</a>
+                                        <span>$@furniture.Price</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
+                    }
                     </div>
                 </div>
             </div>

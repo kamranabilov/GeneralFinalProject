@@ -41,6 +41,12 @@ namespace FianlProject.Controllers
 		//	return PartialView("_FurniturePartialView", furnitures);
 		//}
 
+		//// rate pr id user id
+		//// rate rate user id pr id 5
+		/// text user id product id 
+
+
+
 
 	}
 }

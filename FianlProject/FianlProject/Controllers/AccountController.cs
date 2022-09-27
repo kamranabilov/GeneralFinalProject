@@ -18,16 +18,18 @@ namespace FianlProject.Controllers
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly AppDbContext _context;
 		private readonly IHttpContextAccessor _http;
+		//private readonly EmailService _emailService;
 
 
 		public AccountController
-			(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context, IHttpContextAccessor http)
+			(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context, IHttpContextAccessor http /*EmailService emailService*/)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_roleManager = roleManager;
 			_context = context;
 			_http = http;
+			//_emailService = emailService;
 		}
 
 		public IActionResult Register()
@@ -35,7 +37,7 @@ namespace FianlProject.Controllers
             return View();
         }
 
-    [HttpPost]
+		[HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Register(RegisterVM register)
         {
@@ -63,7 +65,8 @@ namespace FianlProject.Controllers
                 }
                 return View();
             }
-            await _userManager.AddToRoleAsync(user, "Member");
+			//await _userManager.AddToRoleAsync(user, "Admin");
+			await _userManager.AddToRoleAsync(user, "Member");
 			string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 			string link = Url.Action(nameof(VerifyEmail), "Account", new { email = user.Email, token }, Request.Scheme, Request.Host.ToString());
 			MailMessage mail = new MailMessage();
@@ -156,6 +159,56 @@ namespace FianlProject.Controllers
 			TempData["Verified"] = true;
 			return RedirectToAction("Index", "Home");
 		}
+
+		//[HttpGet]
+  //      public async Task<IActionResult> ForgetPassword()
+  //      {
+  //          return View();
+  //      }
+
+  //      [HttpPost]
+  //      public async Task<IActionResult> ForgetPassword(ForgetPasswordVM forgotPassword)
+  //      {
+  //          if (!ModelState.IsValid) return View(forgotPassword);
+  //          var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
+  //          if (user is null)
+  //          {
+  //              ModelState.AddModelError("", "User with this Email Doesn't Exist!");
+  //              return View(forgotPassword);
+  //          }
+  //          var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+  //          var link = Url.Action(nameof(ResetPassword), "Account", new { email = user.Email, token = code }, Request.Scheme, Request.Host.ToString());
+  //          string html = $"{link}";
+  //          string content = "Reset Password";
+  //          await _emailService.SendEmailAsync(user, html, content);
+  //          return RedirectToAction(nameof(RecoverPasswordView));
+  //      }
+
+		//[HttpGet]
+		//public IActionResult ResetPassword(string email, string token)
+		//{
+		//	var resetPasswordModel = new ResetPasswordVM { Email = email, Token = token };
+		//	return View(resetPasswordModel);
+		//}
+
+		//[HttpPost]
+		//[ValidateAntiForgeryToken]
+		//public async Task<IActionResult> ResetPassword(ResetPasswordVM resetPasswordVM)
+		//{
+		//	if (!ModelState.IsValid) return View(resetPasswordVM);
+		//	var user = await _userManager.FindByEmailAsync(resetPasswordVM.Email);
+		//	IdentityResult result = await _userManager.ResetPasswordAsync(user, resetPasswordVM.Token, resetPasswordVM.Password);
+		//	if (!result.Succeeded)
+		//	{
+		//		foreach (var item in result.Errors)
+		//		{
+		//			ModelState.AddModelError("", item.Description);
+		//		}
+		//		return View(resetPasswordVM);
+		//	}
+		//	return RedirectToAction(nameof(BeenReseted));
+
+		//}
 
 	}
 }

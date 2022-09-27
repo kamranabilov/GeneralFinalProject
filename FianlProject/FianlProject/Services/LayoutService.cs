@@ -37,6 +37,12 @@ namespace FianlProject.Services
 			return contacts;
 		}
 
+		public List<Order> GetOrders()
+		{
+			List<Order> order = _context.Orders.ToList();
+			return order;
+		}
+
 		public List<Category> GetCategories()
 		{
 			List<Category> categories = _context.Categories.ToList();

@@ -7,11 +7,24 @@
   <ItemGroup>
     <Compile Remove="Migrations\20220916100414_srgsgvdf.cs" />
     <Compile Remove="Migrations\20220916100414_srgsgvdf.Designer.cs" />
+    <Compile Remove="Migrations\20220920170727_addIdentity.cs" />
+    <Compile Remove="Migrations\20220920170727_addIdentity.Designer.cs" />
+    <Compile Remove="Migrations\20220920184303_addAppUser.cs" />
+    <Compile Remove="Migrations\20220920184303_addAppUser.Designer.cs" />
+    <Compile Remove="Migrations\20220920185006_createBasketItemandOrderTables.cs" />
+    <Compile Remove="Migrations\20220920185006_createBasketItemandOrderTables.Designer.cs" />
+    <Compile Remove="Migrations\20220921191332_createContactTable.cs" />
+    <Compile Remove="Migrations\20220921191332_createContactTable.Designer.cs" />
+    <Compile Remove="Migrations\20220922135002_createFaqTable.cs" />
+    <Compile Remove="Migrations\20220922135002_createFaqTable.Designer.cs" />
     <Compile Remove="Migrations\20220924130209_createwishlistTable.cs" />
     <Compile Remove="Migrations\20220924130209_createwishlistTable.Designer.cs" />
+    <Compile Remove="Migrations\20220924131253_createwishlistTables.cs" />
+    <Compile Remove="Migrations\20220924131253_createwishlistTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.29" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.29" />
@@ -27,6 +40,21 @@
   <ItemGroup>
     <Folder Include="Areas\AdminPanel\Data\" />
     <Folder Include="Areas\AdminPanel\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

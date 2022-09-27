@@ -2,6 +2,7 @@
 @inject FianlProject.Services.LayoutService layoutService
 @{
     ViewData["Title"] = "Index";
+    
 }
 
  <!-- Main start -->
@@ -115,25 +116,16 @@
                     <div class="product-category">
                         <h3 class="category-title">Product categories</h3>
                         <ul class="category-list">
+                            @foreach (Category item in ViewBag.Category)
+                        {
                             <li class="list-item">
-                                <a href="#">
-                                    Chair
+                                <a asp-controller="shop" asp-action="index" asp-route-id="@item.Id">
+                                    @item.Name
                                     <span class="count">(3)</span>
                                 </a>
                             </li>
-                            <li class="list-item">
-                                <a href="#">
-                                    Featured Product
-                                    <span class="count">(1)</span>
-                                </a>
-                            </li>
-                            <li class="list-item">
-                                <a href="#">
-                                    Bluetooth
-                                    <span class="count">(5)</span>
-                                </a>
-                            </li>
-                        </ul>
+                        }
+                    </ul>
                     </div>
                     <div id="block-2" class="widget widget_block media_image">
                         <figure class="block-image size-full">
@@ -148,14 +140,16 @@
                         <h5 class="products-header_title page-title">Shop</h5>
                         <div class="media filter-content">
                             <div class="media-body before-shop-loop">
-                                <form class="form-order" >
+                                <form class="form-order" method="get">
                                     <p class="sorting">Sort by</p>
                                    @* <select name="orderby" class="orderby" aria-label="Shop order">*@
-                                    <a id="latest" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Latest")">Latest</a>
-                                    <a id="a-z" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("A-Z")"> A-Z</a>
-                                    <a id="z-a" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Z-A")"> Z-A</a>
-                                <a id="z-a" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by ascending")"> Price by ascending</a>
-                                <a id="z-a" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by descending")">Price by descending</a>
+                                <div class="orderby">
+                                    <a id="latest" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Latest")">Latest</a>
+                                    <a id="a-z" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("A-Z")"> A-Z</a>
+                                    <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Z-A")"> Z-A</a>
+                                    <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by ascending")"> Price by ascending</a>
+                                    <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by descending")">Price by descending</a>
+                                   </div>
                                  @*   </select>*@
                                     <input type="hidden" name="paged" value="1">
                                 </form>
@@ -181,41 +175,34 @@
                         <div class="row is-grid-active">
                         @await Html.PartialAsync("_shopPartial", Model)
                         <nav class="pagination">
-                                <ul class="page-numbers">
-                                    <li>
-                                        <span aria-current="page" class="page-numbers current">1</span>
+                            <ul id="myDIV" class="page-numbers">
+                                @if (ViewBag.CurentPage > 1)
+                                {
+                                    <li class="page-item " style="width: 55px;">
+                                        <a class="page-link page-numbers current btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Prev</a>
+                                     </li>
+                                }
+                                @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                                {
+                                    <li class="page-item @(ViewBag.TotalPage==1 ? "active": "") style="color:blue;">
+                                        <a class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                     </li>
+                                }
+                                @if (ViewBag.CurentPage < ViewBag.TotalPage)
+                                {
+                                    <li class="page-item" style="width: 55px;">
+                                        <a class="page-link page-numbers btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Next</a>
+                                    
                                     </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/2/">2</a>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/3/">3</a>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/4/">4</a>
-                                    </li>
-                                    <li>
-                                        <span class="page-numbers dots ">…</span>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/2/">2</a>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/3/">3</a>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/4/">4</a>
-                                    </li>
-                                    <li>
-                                        <a class="next page-numbers" href="shop/page/2/">→</a>
-                                    </li>
+                                }
+
                                 </ul>
                             </nav>
                         </div>
                     </div>
                     <div id="2" class="shop_content">
                         <div class="row is-grid-active">
-                            @foreach (Furniture furniture in Model.Take(4))
+                            @foreach (Furniture furniture in Model.OrderByDescending(c=>c.Name).Take(6))
                         {
                             <div class="col-lg-6">
                                 <div class="product-m d-flex text-start p-3" style="border: 1px solid #e3e3e3;">
@@ -234,6 +221,10 @@
                                             <i class="fa-solid fa-star-half-stroke"></i>
                                             <i class="fa-solid fa-star-half-stroke"></i>
                                         </span>
+                                        <a asp-controller="Wishlist" asp-action="AddWishlist" class="hrt btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"
+                                       data-modal-id="#add-to-cart" >
+                                             <i class="fa-regular fa-heart"></i>
+                                        </a>
                                         <div class="name">
                                             <a href="product-detail.html">@furniture.Name</a>
                                         </div>
@@ -242,39 +233,6 @@
                                 </div>
                             </div>
                         }
-                            
-          
-                            <nav class="pagination">
-                                <ul class="page-numbers">
-                                    <li>
-                                        <span aria-current="page" class="page-numbers current">1</span>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/2/">2</a>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/3/">3</a>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/4/">4</a>
-                                    </li>
-                                    <li>
-                                        <span class="page-numbers dots ">…</span>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/2/">2</a>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/3/">3</a>
-                                    </li>
-                                    <li>
-                                        <a class="page-numbers" href="shop/page/4/">4</a>
-                                    </li>
-                                    <li>
-                                        <a class="next page-numbers" href="shop/page/2/">→</a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
@@ -282,4 +240,6 @@
         </div>
     </section>
     <!-- Main end -->
+
+
 

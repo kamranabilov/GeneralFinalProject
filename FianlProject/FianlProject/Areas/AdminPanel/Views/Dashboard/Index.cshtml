@@ -7,6 +7,7 @@
     int Categorycount = 0;
     int Furniturecount = 0;
     int Contactcount = 0;
+    int Ordercount = 0;
 }
 @foreach (Category item in Model.Categories)
     Categorycount++;
@@ -106,7 +107,7 @@
                                     <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
                                         <i class="mdi mdi-currency-usd me-3 icon-lg text-danger"></i>
                                         <div class="d-flex flex-column justify-content-around">
-                                            <small class="mb-1 text-muted" style="font-weight:600;">Revenue</small>
+                                            <small class="mb-1 text-muted" style="font-weight:600;">Order Count</small>
                                             <h5 class="me-2 mb-0">$555 </h5>
                                         </div>
                                     </div>
@@ -214,7 +215,7 @@
             </div>
         </div>
     </div>
-    <!-- content-wrapper ends -->
+   
     <!-- partial:partials/_footer.html -->
     <footer class="footer">
         <div class="d-sm-flex justify-content-center justify-content-sm-between">

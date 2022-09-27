@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FianlProject.Migrations
 {
-    public partial class addIdentity : Migration
+    public partial class createAppUserandIdentityandOrderandBasketItemandContactandFaqandWishlist : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,36 @@ namespace FianlProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contacts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    Email = table.Column<string>(maxLength: 40, nullable: false),
+                    Subject = table.Column<string>(maxLength: 30, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Faqs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: true),
+                    Desc = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Faqs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,33 +185,7 @@ namespace FianlProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
-                    Country = table.Column<string>(nullable: true),
-                    City = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<int>(nullable: false),
-                    AppUserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BasketItem",
+                name: "BasketItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -189,30 +193,112 @@ namespace FianlProject.Migrations
                     FurnitureId = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    AppUserId = table.Column<string>(nullable: true),
-                    OrderId = table.Column<int>(nullable: true)
+                    AppUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BasketItem", x => x.Id);
+                    table.PrimaryKey("PK_BasketItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BasketItem_AspNetUsers_AppUserId",
+                        name: "FK_BasketItems_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BasketItem_Furnitures_FurnitureId",
+                        name: "FK_BasketItems_Furnitures_FurnitureId",
                         column: x => x.FurnitureId,
                         principalTable: "Furnitures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
+                    Country = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BasketItem_Order_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Order",
+                        name: "FK_Orders_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WishlistItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FurnitureId = table.Column<int>(nullable: false),
+                    AppUserId = table.Column<string>(nullable: true),
+                    Count = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WishlistItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WishlistItems_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_WishlistItems_Furnitures_FurnitureId",
+                        column: x => x.FurnitureId,
+                        principalTable: "Furnitures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    FurnitureId = table.Column<int>(nullable: true),
+                    AppUserId = table.Column<string>(nullable: true),
+                    OrderId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItem", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItem_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderItem_Furnitures_FurnitureId",
+                        column: x => x.FurnitureId,
+                        principalTable: "Furnitures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderItem_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -255,24 +341,44 @@ namespace FianlProject.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BasketItem_AppUserId",
-                table: "BasketItem",
+                name: "IX_BasketItems_AppUserId",
+                table: "BasketItems",
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BasketItem_FurnitureId",
-                table: "BasketItem",
+                name: "IX_BasketItems_FurnitureId",
+                table: "BasketItems",
                 column: "FurnitureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BasketItem_OrderId",
-                table: "BasketItem",
+                name: "IX_OrderItem_AppUserId",
+                table: "OrderItem",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItem_FurnitureId",
+                table: "OrderItem",
+                column: "FurnitureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItem_OrderId",
+                table: "OrderItem",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_AppUserId",
-                table: "Order",
+                name: "IX_Orders_AppUserId",
+                table: "Orders",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WishlistItems_AppUserId",
+                table: "WishlistItems",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WishlistItems_FurnitureId",
+                table: "WishlistItems",
+                column: "FurnitureId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -293,13 +399,25 @@ namespace FianlProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "BasketItem");
+                name: "BasketItems");
+
+            migrationBuilder.DropTable(
+                name: "Contacts");
+
+            migrationBuilder.DropTable(
+                name: "Faqs");
+
+            migrationBuilder.DropTable(
+                name: "OrderItem");
+
+            migrationBuilder.DropTable(
+                name: "WishlistItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

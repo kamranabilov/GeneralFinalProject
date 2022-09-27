@@ -28,9 +28,9 @@
         </section>
         <section class="wishlist">
             <div class="container">
-                <div class="row d-md-block">
+            <div class="row d-md-block">
                     <div class="col-lg-12 col-sm-6">
-                        <h2>My wishlist on MarketPress</h2>
+                       @* <h2">My wishlist on MarketPress</h2>*@
                         <div class="title-form">
                             <input type="text" value="My wishlist on MarketPress" name="wishlist_name">
                             <!-- <div class="edit-title-buttons">
@@ -72,7 +72,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                        @await Html.PartialAsync("_WishlistPartialView", layoutService)
+                            @await Html.PartialAsync("_WishlistPartialView", layoutService)
                         </table>
                     </div>
                 </div>

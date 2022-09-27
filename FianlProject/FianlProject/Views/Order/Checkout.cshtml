@@ -1,7 +1,8 @@
-﻿@model Order
+﻿@model OrderVM
 @inject FianlProject.Services.LayoutService layoutService
 @{
     ViewData["Title"] = "Checkout";
+    decimal total = 0;
 }
 
 <!-- Begin Main Content Area -->
@@ -77,165 +78,158 @@
     </section>
     <section class="order">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="billing-details">
-                        <h3>Billing details</h3>
-                        <div class="bill-wrapper">
-                            <p class="form-row form-row-first validate-required" id="billing_first_name_field"
-                               data-priority="10">
-                                <label for="billing_first_name" class="">
-                                    First name
-                                    <abbr class="required" title="required">*</abbr>
-                                </label>
-                                <span class="input-wrapper">
-                                    <input type="text" class="input-text " name="billing_first_name"
-                                           id="billing_first_name" placeholder="" value="" autocomplete="given-name">
-                                </span>
-                            </p>
-                            <p class="form-row form-row-last validate-required" id="billing_last_name_field"
-                               data-priority="20">
-                                <label for="billing_last_name" class="">
-                                    Last name
-                                    <abbr class="required" title="required">*</abbr>
-                                </label>
-                                <span class="input-wrapper">
-                                    <input type="text" class="input-text " name="billing_last_name"
-                                           id="billing_last_name" placeholder="" value="" autocomplete="family-name">
-                                </span>
-                            </p>
-                            <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
-                               id="billing_country_field" data-priority="40">
-                                <label for="billing_country" class="">
-                                    Country / Region
-                                    <abbr class="required" title="required">*</abbr>
-                                </label>
-                                <span class="input-wrapper">
-                                    <input type="text" class="input-text " name="billing_city" id="billing_city"
-                                           placeholder="" value="" autocomplete="address-level2">
-                                    <!-- <select name="billing_country" id="billing_country" class="country_select" autocomplete="country" data-placeholder="Select a country / region…" data-label="Country / Region" tabindex="-1" aria-hidden="true">
-                                        <option value="">Select a country / region…</option>
-                                        <option value="AZ">Azerbaijan</option>
-                                        <option value="UK">England</option>
-                                        <option value="ES">Espanyol</option>
-                                    </select> -->
-                                </span>
-                            </p>
-                            <p class="form-row address-field validate-required form-row-wide" id="billing_city_field"
-                               data-priority="70"
-                               data-o_class="form-row form-row-wide address-field validate-required">
-                                <label for="billing_city" class="">
-                                    Town / City
-                                    <abbr class="required" title="required">*</abbr>
-                                </label>
-                                <span class="input-wrapper">
-                                    <input type="text" class="input-text " name="billing_city" id="billing_city"
-                                           placeholder="" value="" autocomplete="address-level2">
-                                </span>
-                            </p>
-                            <p class="form-row form-row-wide validate-required validate-phone" id="billing_phone_field"
-                               data-priority="100">
-                                <label for="billing_phone" class="">
-                                    Phone
-                                    <abbr class="required" title="required">*</abbr>
-                                </label>
-                                <span class="input-wrapper">
-                                    <input type="tel" class="input-text " name="billing_phone" id="billing_phone"
-                                           placeholder="" value="" autocomplete="tel">
-                                </span>
-                            </p>
-                            <p class="form-row form-row-wide validate-required validate-email" id="billing_email_field"
-                               data-priority="110">
-                                <label for="billing_email" class="">
-                                    Email address
-                                    <abbr class="required" title="required">*</abbr>
-                                </label>
-                                <span class="input-wrapper">
-                                    <input type="email" class="input-text " name="billing_email" id="billing_email"
-                                           placeholder="" value="" autocomplete="email username">
-                                </span>
-                            </p>
-                        </div>
-                        <div class="additional-fields">
-                            <p class="form-row notes" id="order_comments" data-priority="">
-                                <label for="order_comments" class="">
-                                    Order notes
-                                    <span class="optional">(optional)</span>
-                                </label>
-                                <span class="input-wrapper">
-                                    <textarea name="order_comments" class="input-text " id="order_comments"
-                                              placeholder="N" rows="2" cols="5">
-                                    </textarea>
-                                </span>
-                            </p>
+            <form method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="billing-details">
+                            <h3>Billing details</h3>
+                            <div class="bill-wrapper">
+                                <p class="form-row form-row-first validate-required" id="billing_first_name_field"
+                                   data-priority="10">
+                                    <label for="billing_first_name" class="">
+                                        First name
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <span class="input-wrapper">
+                                        <input asp-for="FirstName" type="text" class="input-text ">
+                                    </span>
+                                </p>
+                                <p class="form-row form-row-last validate-required" id="billing_last_name_field"
+                                   data-priority="20">
+                                    <label for="billing_last_name" class="">
+                                        Last name
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <span class="input-wrapper">
+                                        <input asp-for="LastName" type="text" class="input-text">
+                                    </span>
+                                </p>
+                                <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
+                                   id="billing_country_field" data-priority="40">
+                                    <label for="billing_country" class="">
+                                        Country / Region
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <span class="input-wrapper">
+                                        <input asp-for="Country" type="text" class="input-text">
+                                    </span>
+                                </p>
+                                <p class="form-row address-field validate-required form-row-wide" id="billing_city_field"
+                                   data-priority="70"
+                                   data-o_class="form-row form-row-wide address-field validate-required">
+                                    <label for="billing_city" class="">
+                                        Town / City
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <span class="input-wrapper">
+                                        <input asp-for="City" type="text" class="input-text ">
+                                    </span>
+                                </p>
+                                <p class="form-row address-field validate-required form-row-wide" id="billing_city_field"
+                                   data-priority="70"
+                                   data-o_class="form-row form-row-wide address-field validate-required">
+                                    <label for="billing_city" class="">
+                                        Address
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <span class="input-wrapper">
+                                        <input asp-for="Address" type="text" class="input-text ">
+                                    </span>
+                                </p>
+                                <p class="form-row form-row-wide validate-required validate-phone" id="billing_phone_field"
+                                   data-priority="100">
+                                    <label for="billing_phone" class="">
+                                        Phone
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <span class="input-wrapper">
+                                        <input asp-for="PhoneNumber" type="tel" class="input-text ">
+                                    </span>
+                                </p>
+                                <p class="form-row form-row-wide validate-required validate-email" id="billing_email_field"
+                                   data-priority="110">
+                                    <label for="billing_email" class="">
+                                        Email address
+                                        <abbr class="required" title="required">*</abbr>
+                                    </label>
+                                    <span class="input-wrapper">
+                                        <input asp-for="Email" type="email" class="input-text ">
+                                    </span>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="checkout-form">
-                        <h3 id="order_review_heading">Your order</h3>
-                        <div id="order_review" class="checkout-review-order">
-                            <table class="shop_table checkout-review-order-table table"
-                                   style="position: static; zoom: 1;">
-                                <thead>
-                                    <tr>
-                                        <th class="product-name">Product</th>
-                                        <th class="product-total">Subtotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="cart_item">
-                                        <td class="product-name">
-                                            Feateured BedSpreed
-                                            <strong class="product-quantity">×&nbsp;3<strong>
-                                        </td>
-                                        <td class="product-total">
-                                            <span class="amount">
-                                                $60.000.00
-                                                <span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="order-total">
-                                        <th>Total</th>
-                                        <td>
-                                            <span class="amount">
-                                                $60.000.00
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            <div id="payment" class="checkout-payment" style="position: static; zoom: 1;">
-                                <ul class="payment_methods">
-                                    <li class="payment_method_cod">
-                                        <input id="payment_method_cod" type="radio" class="input-radio"
-                                               name="payment_method" value="cod" checked="checked"
-                                               data-order_button_text="" style="display: none;">
-                                        <label for="payment_method_cod">
-                                            Cash on delivery
-                                        </label>
-                                        <div class="payment_box">
-                                            <p>Pay with cash upon delivery.</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="form-row place-order">
+                    <div class="col-lg-6">
+                        <div class="checkout-form">
+                            <h3 id="order_review_heading">Your order</h3>
+                            <div id="order_review" class="checkout-review-order">
+                                <table class="shop_table checkout-review-order-table table"
+                                       style="position: static; zoom: 1;">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-name">Product</th>
+                                            <th class="product-total">Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.BasketItems)
+                                        {
+                                            <span style="display:none;">@(total += item.Price * item.Quantity)</span>
+                                            <tr class="cart_item">
+                                                <td class="product-name">
+                                                    @item.Furniture.Name
+                                                    <strong class="product-quantity">×@item.Quantity<strong>
+                                                </td>
+                                                <td class="product-total">
+                                                    <span class="amount">
+                                                        $@(item.Price * item.Quantity)
+                                                        <span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="order-total">
+                                            <th>Total</th>
+                                            <td>
+                                                <span class="amount">
+                                                    $@total
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div id="payment" class="checkout-payment" style="position: static; zoom: 1;">
+                                    <ul class="payment_methods">
+                                        <li class="payment_method_cod">
+                                            <input id="payment_method_cod" type="radio" class="input-radio"
+                                                   name="payment_method" value="cod" checked="checked"
+                                                   data-order_button_text="" style="display: none;">
+                                            <label for="payment_method_cod">
+                                                Cash on delivery
+                                            </label>
+                                            <div class="payment_box">
+                                                <p>Pay with cash upon delivery.</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="form-row place-order">
                                     <button type="submit" class="button alt" name="checkout_place_order"
-                                            id="place_order" value="Place order" data-value="Place order">
-                                        Place
-                                        order
+                                    id="place_order" value="Place order" data-value="Place order">
+                                    Send
+                                    order
                                     </button>
                                     <input type="hidden" id="process-checkout-nonce" name="process-checkout-nonce"
-                                           value="">
+                                    value="">
                                     <input type="hidden" name="_wp_http_referer" value="">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
+           
         </div>
     </section>
 </main>

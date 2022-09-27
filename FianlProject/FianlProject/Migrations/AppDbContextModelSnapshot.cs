@@ -103,9 +103,6 @@ namespace FianlProject.Migrations
                     b.Property<int>("FurnitureId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
 
@@ -117,8 +114,6 @@ namespace FianlProject.Migrations
                     b.HasIndex("AppUserId");
 
                     b.HasIndex("FurnitureId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("BasketItems");
                 });
@@ -295,9 +290,6 @@ namespace FianlProject.Migrations
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(6,2)");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -309,6 +301,42 @@ namespace FianlProject.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("FianlProject.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("FurnitureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("FurnitureId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("FianlProject.Models.Rate", b =>
@@ -554,10 +582,6 @@ namespace FianlProject.Migrations
                         .HasForeignKey("FurnitureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("FianlProject.Models.Order", null)
-                        .WithMany("BasketItems")
-                        .HasForeignKey("OrderId");
                 });
 
             modelBuilder.Entity("FianlProject.Models.Furniture", b =>
@@ -589,6 +613,23 @@ namespace FianlProject.Migrations
                     b.HasOne("FianlProject.Models.AppUser", "AppUser")
                         .WithMany("Orders")
                         .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("FianlProject.Models.OrderItem", b =>
+                {
+                    b.HasOne("FianlProject.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("FianlProject.Models.Furniture", "Furniture")
+                        .WithMany()
+                        .HasForeignKey("FurnitureId");
+
+                    b.HasOne("FianlProject.Models.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FianlProject.Models.Rate", b =>

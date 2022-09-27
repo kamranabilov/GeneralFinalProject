@@ -9,10 +9,10 @@
 @foreach (var item in wishlist.WishlistItems)
  {
      <tbody class="wishlist-items">
-        <tr >
+        <tr style="text-align:center;" >
             <td class="product-remove">
                 <div>
-                    <a asp-controller="Wishlist" asp-action="DeleteWishListItem" asp-route-id="@item.Furniture.Id" class="remove  removeWishlistItem"
+                    <a asp-controller="Wishlist" asp-action="DeleteWishListItem" asp-route-id="@item.Furniture.Id" class="remove removeWishlistItem"
                    title="Remove this product">×</a>
                 </div>
             </td>

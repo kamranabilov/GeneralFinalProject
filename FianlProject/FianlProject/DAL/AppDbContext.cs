@@ -22,7 +22,8 @@ namespace FianlProject.DAL
         public DbSet<Rate> Rates { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Contact> Contacts { get; set; }
+		public DbSet<OrderItem> OrderItems { get; set; }
+		public DbSet<Contact> Contacts { get; set; }
         public DbSet<Faq> Faqs { get; set; }
 		public DbSet<Wishlistitem> WishlistItems { get; set; }
 

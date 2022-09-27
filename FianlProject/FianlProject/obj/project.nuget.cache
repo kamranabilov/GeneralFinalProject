@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "AmxyusAx9qNac2Q2/xlJjfCMFlhMX4fZWXId67okBx/GGi8OJzPIEKbQft2ReZ3qaazgK9TIqeDjowfmdK2zZQ==",
+  "dgSpecHash": "dumsBSfcXv2lONQesLVF8mif7BaKLjsmQQbLbe1C7OXe4LWHyxzMt7Fmg6IUd1rRDS9DB2k/qHDQ/E3YXrtizA==",
   "success": true,
   "projectFilePath": "F:\\1.1.FinalProject\\FianlProject\\FianlProject\\FianlProject.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\fluentvalidation\\11.2.2\\fluentvalidation.11.2.2.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.29\\microsoft.aspnetcore.cryptography.internal.3.1.29.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.29\\microsoft.aspnetcore.cryptography.keyderivation.3.1.29.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

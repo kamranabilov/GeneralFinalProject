@@ -455,6 +455,11 @@
 				text-decoration: none;
 			}
 
+			.product-category .category-list .list-item:hover a {
+				color: #2154cf;
+				padding-left: 5px;
+			}
+
 .media_image {
 	margin-bottom: 40px;
 	border: 1px solid #f1f1f1;
@@ -535,7 +540,9 @@
 						white-space: nowrap;
 						min-height: 1.2em;
 						padding: 0px 2px 1px;
+
 					}
+							
 
 		.products-header .filter-content .media {
 			cursor: pointer;
@@ -620,6 +627,7 @@
 		text-align: center !important;
 		display: block;
 		padding-left: 115px;
+		align-items: center;
 	}
 
 		.pagination .page-numbers li {
@@ -631,16 +639,16 @@
 			border: none;
 		}
 
-			.pagination .page-numbers li span {
+			/*.pagination .page-numbers li a {
 				color: #fff;
 				background: #2154cf;
 				padding: 12px;
 				text-align: center;
 				font-size: 1em;
 				font-weight: 400;
-			}
+			}*/
 
-			.pagination .page-numbers li .dots {
+			/*.pagination .page-numbers li .a {
 				text-decoration: none;
 				color: #7c7c7c;
 				background-color: #fff;
@@ -648,21 +656,22 @@
 				text-align: center;
 				padding: 12px;
 				cursor: pointer;
-			}
+			}*/
 
-			.pagination .page-numbers li a {
+			.pagination .page-numbers li .page-link {
 				text-decoration: none;
 				color: #7c7c7c;
 				border: 1px solid #f1f1f1;
 				text-align: center;
 				padding: 12px;
 				cursor: pointer;
+				border-radius: 4px;
 			}
 
-				.pagination .page-numbers li a:hover {
-					color: #fff;
-					background: #2154cf;
-				}
+			.pagination .page-numbers li .page-link:hover {
+				color: #fff;
+				background: #2154cf;
+			}
 
 @media screen and (max-width: 768px) {
 	.pagination .page-numbers > li {
@@ -798,6 +807,18 @@
 				text-decoration: none;
 				color: #1c1c24;
 			}
+
+			.shop_content .is-grid-active .product-m .content .hrt {
+				color: #f07f13;
+				text-decoration: none;
+				position: absolute;
+				right: 32px;
+				top: 18px;
+			}
+
+				.shop_content .is-grid-active .product-m .content .hrt:hover {
+					color: green;
+				}
 
 				.shop_content .is-grid-active .product-m .content .name a .product-m:hover {
 					color: green;

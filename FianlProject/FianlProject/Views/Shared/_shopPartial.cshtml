@@ -1,4 +1,4 @@
-﻿@model List<Furniture>
+﻿
 @foreach (Furniture furniture in Model)
 {
     <div class="col-lg-3 col-12 col-md-4 col-sm-6">
@@ -9,16 +9,16 @@
                     <img width="222" height="300" class="aspect__img"
                      src="~/assets/image/shop/@furniture.Image" alt="">
                 </a>
-                <div class="add-cart d-flex">
-                    <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@furniture.Id" style="padding: 15px 24px;" class="btn--e-brand d-flex addToCart" data-modal="modal"
-                   data-modal-id="#add-to-cart">
+                <div class="add-cart d-flex btn--e-brand" data-bs-target="#quickModal" id="quickModal">
+                    <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@furniture.Id" style="padding: 15px 24px;" class="btn--e-brand d-flex addToCart" data-modal="modal" data-modal-id="#add-to-cart">
                         <i class="fa-solid fa-basket-shopping"></i>
                     </a>
-                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button"
+                    <a asp-controller="shop"  asp-action="ModalShopView" asp-route-id="@furniture.Id" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        id="viewbtn"
                         class="btn--e-brand d-flex" data-modal="modal"
                         data-modal-id="#add-to-cart">
                         <i class="fa-regular fa-eye"></i>
-                    </button>
+                    </a>
                     <a asp-controller="wishlist" asp-action="AddWishlist" class="btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"
                    data-modal-id="#add-to-cart">
                         <i class="fa-regular fa-heart"></i>
