@@ -1,10 +1,9 @@
-﻿@model List<Furniture>
+﻿@model HomeVM
 @inject FianlProject.Services.LayoutService layoutService
 @{
     ViewData["Title"] = "Index";
     
 }
-
  <!-- Main start -->
     <section>
         <div class="about">
@@ -13,7 +12,7 @@
                     <div class="col-sm-12 g-4">
                         <div class="about-title">
                             <span>
-                                <a href="index.html">Home </a>
+                                <a asp-controller="home" asp-action="index">Home </a>
                             </span>
                             >
                             <span> Shop</span>
@@ -29,7 +28,7 @@
                 <div class="col-lg-3">
                     <div class="filter-title">
                         <h3>Filter:</h3>
-                        <form method="get" action="">
+                        <form method="get">
                             <div class="price_slider_wrapper">
                                 <div class="range-slider">
                                     <span class="rangeValues"
@@ -116,14 +115,14 @@
                     <div class="product-category">
                         <h3 class="category-title">Product categories</h3>
                         <ul class="category-list">
-                            @foreach (Category item in ViewBag.Category)
+                            @foreach (Category item in Model.Categories)
                         {
-                            <li class="list-item">
-                                <a asp-controller="shop" asp-action="index" asp-route-id="@item.Id">
-                                    @item.Name
-                                    <span class="count">(3)</span>
-                                </a>
-                            </li>
+                                    <li class="list-item">
+                                        <a asp-controller="shop" asp-action="index" asp-route-id="@item.Id">
+                                            @item.Name
+                                    <span class="count">(@layoutService.GetFurnitureCategory(item.Id))</span>
+                                        </a>
+                                    </li>
                         }
                     </ul>
                     </div>
@@ -140,19 +139,14 @@
                         <h5 class="products-header_title page-title">Shop</h5>
                         <div class="media filter-content">
                             <div class="media-body before-shop-loop">
-                                <form class="form-order" method="get">
-                                    <p class="sorting">Sort by</p>
-                                   @* <select name="orderby" class="orderby" aria-label="Shop order">*@
-                                <div class="orderby">
-                                    <a id="latest" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Latest")">Latest</a>
-                                    <a id="a-z" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("A-Z")"> A-Z</a>
-                                    <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Z-A")"> Z-A</a>
-                                    <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by ascending")"> Price by ascending</a>
-                                    <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by descending")">Price by descending</a>
-                                   </div>
-                                 @*   </select>*@
-                                    <input type="hidden" name="paged" value="1">
-                                </form>
+                                <button type="button" data-toggle="dropdown" class="sorting">Sort by</button>
+                                <div class="orderby" name="orderby" aria-label="Shop order">
+                                        <a id="latest" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Latest")">Latest</a>
+                                        <a id="a-z" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("A-Z")"> A-Z</a>
+                                        <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Z-A")"> Z-A</a>
+                                        <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by ascending")"> Price by ascending</a>
+                                        <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by descending")">Price by descending</a>
+                                 </div>
                             </div>
                             <div class="media">
                                 <h6>View</h6>
@@ -173,20 +167,26 @@
                     </div>
                     <div id="1" style="display: block;" class="shop_content">
                         <div class="row is-grid-active">
-                        @await Html.PartialAsync("_shopPartial", Model)
+                        @await Html.PartialAsync("_shopPartial", Model.Furnitures)
                         <nav class="pagination">
                             <ul id="myDIV" class="page-numbers">
                                 @if (ViewBag.CurentPage > 1)
                                 {
                                     <li class="page-item " style="width: 55px;">
                                         <a class="page-link page-numbers current btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Prev</a>
-                                     </li>
+                                    </li>
                                 }
                                 @for (int i = 1; i <= ViewBag.TotalPage; i++)
                                 {
-                                    <li class="page-item @(ViewBag.TotalPage==1 ? "active": "") style="color:blue;">
-                                        <a class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
-                                     </li>
+                                    <li class="page-item">
+                                        @if (i != ViewBag.CurentPage)
+                                        {
+                                            <a id="myPage" class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                        }
+                                        else{
+                                            <a style="background-color:blue;color:wheat" id="myPage" class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                        }
+                                    </li>
                                 }
                                 @if (ViewBag.CurentPage < ViewBag.TotalPage)
                                 {
@@ -202,7 +202,7 @@
                     </div>
                     <div id="2" class="shop_content">
                         <div class="row is-grid-active">
-                            @foreach (Furniture furniture in Model.OrderByDescending(c=>c.Name).Take(6))
+                            @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(c=>c.Name).Take(6))
                         {
                             <div class="col-lg-6">
                                 <div class="product-m d-flex text-start p-3" style="border: 1px solid #e3e3e3;">
@@ -240,6 +240,7 @@
         </div>
     </section>
     <!-- Main end -->
+
 
 
 

@@ -53,6 +53,21 @@ namespace FianlProject.Services
 			return categories;
 		}
 
+		public  int  GetFurnitureCategory (int? id)
+		{
+			List<Furniture> furnitures = _context.Furnitures.ToList();
+			Category category = _context.Categories.FirstOrDefault(c=>c.Id==id);
+			int count = 0;
+			foreach (var item in furnitures)
+			{
+				if (category.Id==item.CategoryId)
+				{
+					count++;
+				}
+			}
+			return count;
+		}
+
 		public async Task<WishlistVM> GetWishlist()
 		{
 			string wishlist = _http.HttpContext.Request.Cookies["Wishlist"];

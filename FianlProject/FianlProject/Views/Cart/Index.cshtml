@@ -63,14 +63,14 @@
                                             </a>
                                         </td>
                                         <td class="product-thumbnail">
-                                            <a href="#">
+                                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@item.Furniture.Id">
                                                 <img width="300" height="300" src="assets/image/shop/@item.Furniture.Image"
                                                  class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
                                                  alt="">
                                             </a>
                                         </td>
                                         <td class="product-name">
-                                            <a href="#">
+                                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@item.Furniture.Id">
                                                @item.Furniture.Name
                                             </a>
                                         </td>

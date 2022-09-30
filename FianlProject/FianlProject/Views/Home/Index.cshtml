@@ -89,6 +89,7 @@
                     @foreach (Furniture furniture in Model.Furnitures.OrderBy(o => o.Name).Take(4))
                     {
                         <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
                             <div class="card" id="demo">
                                 <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="    width: 320px !important;
                                         height: 315px !important;
@@ -97,16 +98,16 @@
                                         margin-bottom: 30px;">
                                 <div class="card-body text-center">
                                     <span class="product-categories">
-                                        <a href="#">@furniture.Categories.Name</a>
+                                        <a style="text-decoration: none;">@furniture.Categories.Name</a>
                                     </span>
-                                    <a class="product-title" href="#">@furniture.Name</a>
+                                    <a class="product-title" style="color: #000; font-size: 20px;">@furniture.Name</a>
                                     <span class="price">
                                         <span class="Price-amount amount"><bdi>
                                                 <span class="Price-currencySymbol">$</span>@furniture.Price</bdi>
                                         </span>
                                     </span>
                                     <div class="hover-area text-center" id="text">
-                                        <a style="text-decoration:none; color: red; position:relative;" class="wishlistFetch" asp-controller="wishlist" asp-action="AddWishlist" asp-route-id="@furniture.Id">
+                                        <a style="text-decoration:none; background-color: red; color: green; position:relative;" class="wishlistFetch" asp-controller="wishlist" asp-action="AddWishlist" asp-route-id="@furniture.Id">
                                             <i style="font-size: 18px; position: absolute;
                                                                 top: -425px;
                                                                 right: -200px;"
@@ -120,6 +121,7 @@
                                     </div>
                                 </div>
                             </div>
+                       </a>
                         </div>
                     }
                     </div>
@@ -129,7 +131,8 @@
                     @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.Name).Take(4))
                     {
                         <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
-                            <div class="card" id="demo">
+                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                  <div class="card" id="demo">
                                 <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="    width: 320px !important;
                                         height: 315px !important;
                                         object-fit: contain;
@@ -162,6 +165,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     }
                     </div>
@@ -171,7 +175,8 @@
                     @foreach (Furniture furniture in Model.Furnitures.OrderBy(o => o.Price).Take(4))
                     {
                         <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
-                            <div class="card" id="demo">
+                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                 <div class="card" id="demo">
                                 <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="                                          width: 320px !important;
                                         height: 315px !important;
                                         object-fit: contain;
@@ -204,6 +209,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </div>
                     }
                     </div>
@@ -213,39 +219,41 @@
                     @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.Price).Take(4))
                     {
                         <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
-                            <div class="card" id="demo">
-                                <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="    width: 320px !important;
+                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                <div class="card" id="demo">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="    width: 320px !important;
                                         height: 315px !important;
                                         object-fit: contain;
                                         padding: 0;
                                         margin-bottom: 30px;">
-                                <div class="card-body text-center">
-                                    <span class="product-categories">
-                                        <a href="#">@furniture.Categories.Name</a>
-                                    </span>
-                                    <a class="product-title" href="#">@furniture.Name</a>
-                                    <span class="price">
-                                        <span class="Price-amount amount">
-                                            <bdi>
-                                                <span class="Price-currencySymbol">$</span>@furniture.Price
-                                            </bdi>
+                                    <div class="card-body text-center">
+                                        <span class="product-categories">
+                                            <a href="#">@furniture.Categories.Name</a>
                                         </span>
-                                    </span>
-                                    <div class="hover-area text-center" id="text">
-                                        <a style="text-decoration:none; color: red; position:relative;" class="wishlistFetch" asp-controller="wishlist" asp-action="AddWishlist" asp-route-id="@furniture.Id">
-                                            <i style="font-size: 18px; position: absolute;
+                                        <a class="product-title" href="#">@furniture.Name</a>
+                                        <span class="price">
+                                            <span class="Price-amount amount">
+                                                <bdi>
+                                                    <span class="Price-currencySymbol">$</span>@furniture.Price
+                                                </bdi>
+                                            </span>
+                                        </span>
+                                        <div class="hover-area text-center" id="text">
+                                            <a style="text-decoration:none; color: red; position:relative;" class="wishlistFetch" asp-controller="wishlist" asp-action="AddWishlist" asp-route-id="@furniture.Id">
+                                                <i style="font-size: 18px; position: absolute;
                                                                 top: -425px;
                                                                 right: -200px;"
-                                           class="fa-regular fa-heart">
-                                            </i>
-                                        </a>
-                                        <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id" class="add-to-cart" style="">
-                                            <i class="fa-solid fa-basket-shopping">
-                                            </i> Select to option
-                                        </a>
+                                               class="fa-regular fa-heart">
+                                                </i>
+                                            </a>
+                                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id" class="add-to-cart" style="">
+                                                <i class="fa-solid fa-basket-shopping">
+                                                </i> Select to option
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     }
                     </div>
@@ -561,11 +569,6 @@
                                                     $@furniture.Price
                                                 </span>
                                             </span>
-                                            <div class="product-hover-area clearfix">
-                                                <!-- <div class="addcart woocommerce text-center">
-                                                    <a href="#" class="product_type_variable add_to_cart_button" >Select options</a>
-                                                </div> -->
-                                            </div>
                                         </div>
                                     </div>
                                 </a>

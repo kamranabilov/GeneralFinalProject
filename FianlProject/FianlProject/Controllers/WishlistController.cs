@@ -113,13 +113,13 @@ namespace FianlProject.Controllers
 			return PartialView("_WishlistPartialView");
 		}
 
-		public async Task<IActionResult> DeleteWishListItem(int id)
+		public async Task<IActionResult> DeleteWishListItem(int? id)
 		{
 			if (User.Identity.IsAuthenticated)
 			{
 				AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-				List<Wishlistitem> wishlistItemss = _context.WishlistItems.Where(m => m.FurnitureId == id && m.AppUserId == user.Id).ToList();
-				foreach (var item in wishlistItemss)
+				List<Wishlistitem> wishlistItems = _context.WishlistItems.Where(m => m.FurnitureId == id && m.AppUserId == user.Id).ToList();
+				foreach (var item in wishlistItems)
 				{
 					_context.WishlistItems.Remove(item);
 				}
@@ -143,31 +143,62 @@ namespace FianlProject.Controllers
 			_context.SaveChanges();
 			return PartialView("_WishlistPartialView");
 		}
-		public async Task<IActionResult> DeleteAllWishList(int id)
-		{
-			if (User.Identity.IsAuthenticated)
-			{
-				AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-				List<Wishlistitem> wishlistItemss = _context.WishlistItems.Where(m => m.AppUserId == user.Id).ToList();
-				foreach (var item in wishlistItemss)
-				{
-					_context.WishlistItems.Remove(item);
-				}
-			}
-			else
-			{
-				string basket = HttpContext.Request.Cookies["Wishlist"];
 
-				List<WishlistCookieItemVM> wishlistCookieItems = JsonConvert.DeserializeObject<List<WishlistCookieItemVM>>(basket);
+		//public async Task<IActionResult> DeleteWishListItem(int? id)
+		//{
+		//	if (User.Identity.IsAuthenticated)
+		//	{
+		//		AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+		//		List<Wishlistitem> wishlistItemss = _context.WishlistItems.Where(m => m.FurnitureId == id && m.AppUserId == user.Id).ToList();
+		//		foreach (var item in wishlistItemss)
+		//		{
+		//			_context.WishlistItems.Remove(item);
+		//		}
+		//	}
+		//	else
+		//	{
+		//		string basket = HttpContext.Request.Cookies["Wishlist"];
 
-				wishlistCookieItems.Clear();
+		//		List<WishlistCookieItemVM> wishlistCookieItems = JsonConvert.DeserializeObject<List<WishlistCookieItemVM>>(basket);
 
-				string wishlistStr = JsonConvert.SerializeObject(wishlistCookieItems);
-				HttpContext.Response.Cookies.Append("Wishlist", wishlistStr);
+		//		WishlistCookieItemVM cookieItem = wishlistCookieItems.FirstOrDefault(c => c.Id == id);
 
-			}
-			_context.SaveChanges();
-			return PartialView("_WishlistPartialView");
-		}
+
+		//		wishlistCookieItems.Remove(cookieItem);
+
+		//		string wishlistStr = JsonConvert.SerializeObject(wishlistCookieItems);
+
+		//		HttpContext.Response.Cookies.Append("Wishlist", wishlistStr);
+
+		//	}
+		//	_context.SaveChanges();
+		//	return PartialView("_WishlistPartialView");
+		//}
+		//public async Task<IActionResult> DeleteAllWishList(int id)
+		//{
+		//	if (User.Identity.IsAuthenticated)
+		//	{
+		//		AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+		//		List<Wishlistitem> wishlistItemss = _context.WishlistItems.Where(m => m.AppUserId == user.Id).ToList();
+		//		foreach (var item in wishlistItemss)
+		//		{
+		//			_context.WishlistItems.Remove(item);
+		//		}
+		//	}
+		//	else
+		//	{
+		//		string basket = HttpContext.Request.Cookies["Wishlist"];
+
+		//		List<WishlistCookieItemVM> wishlistCookieItems = JsonConvert.DeserializeObject<List<WishlistCookieItemVM>>(basket);
+
+		//		wishlistCookieItems.Clear();
+
+		//		string wishlistStr = JsonConvert.SerializeObject(wishlistCookieItems);
+		//		HttpContext.Response.Cookies.Append("Wishlist", wishlistStr);
+
+		//	}
+		//	_context.SaveChanges();
+		//	return PartialView("_WishlistPartialView");
+		//}
 	}
 }

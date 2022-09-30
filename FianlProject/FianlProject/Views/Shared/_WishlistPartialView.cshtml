@@ -5,26 +5,25 @@
     WishlistVM wishlist = await layoutService.GetWishlist();
 }
 
-<p id="totalcountWishlist" style="display:none">@layoutService.ShowBasket().Result.Count</p>
+<p id="totalcountWishlist" style="display:none">@layoutService.GetWishlist().Result.Count</p>
 @foreach (var item in wishlist.WishlistItems)
  {
-     <tbody class="wishlist-items">
-        <tr style="text-align:center;" >
-            <td class="product-remove">
-                <div>
-                    <a asp-controller="Wishlist" asp-action="DeleteWishListItem" asp-route-id="@item.Furniture.Id" class="remove removeWishlistItem"
-                   title="Remove this product">×</a>
-                </div>
+    <tbody class="wishlist-items ">
+        <tr style="text-align:center;" class="">
+            <td class="product-remove wishinROw">
+                <a asp-controller="Wishlist" asp-action="DeleteWishListItem" asp-route-id="@item.Furniture.Id" class="remove removeWishlistItem">
+                    <span>X</span>
+                </a>
             </td>
             <td class="product-thumbnail">
-                <a href="#">
+                <a asp-controller="furniture" asp-action="detail" asp-route-id="@item.Furniture.Id">
                     <img width="300" height="300" src="~/assets/image/shop/@item.Furniture.Image"
                      class="thumbnail"
                      alt="">
                 </a>
             </td>
             <td class="product-name">
-                <a href="#">
+                <a asp-controller="furniture" asp-action="detail" asp-route-id="@item.Furniture.Id">
                     @item.Furniture.Name
                 </a>
             </td>
@@ -34,7 +33,14 @@
                 </span>
             </td>
             <td class="product-stock">
-                <span class="stock">In Stock</span>
+                @if (item.Furniture.Stock == true)
+                {
+                    <span class="stock" style="color:green">In Stock </span> <i class="fa-solid fa-thumbs-up"></i>
+                   @* <a class="col-3 addToCart" asp-controller="Cart" asp-action="AddBasket" asp-route-id="@item.Furniture.Id">In Stock</a>*@
+                }else
+                {
+                    <span class="stock" style="color:red">Out of stock  <i class="fa-solid fa-thumbs-down"></i></span>
+                }
             </td>
             <td class="product-add-to-cart">
                 <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@item.Furniture.Id" data-quantity="1"

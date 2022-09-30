@@ -19,6 +19,33 @@ namespace FianlProject.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("FianlProject.Models.About", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Desc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("Order")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("SubTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Abouts");
+                });
+
             modelBuilder.Entity("FianlProject.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
@@ -136,6 +163,34 @@ namespace FianlProject.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("FianlProject.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FurnitureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("FurnitureId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("FianlProject.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -214,6 +269,9 @@ namespace FianlProject.Migrations
 
                     b.Property<string>("SKU")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Stock")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -346,6 +404,12 @@ namespace FianlProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("FurnitureId")
                         .HasColumnType("int");
 
@@ -353,6 +417,8 @@ namespace FianlProject.Migrations
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("FurnitureId");
 
@@ -584,6 +650,19 @@ namespace FianlProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FianlProject.Models.Comment", b =>
+                {
+                    b.HasOne("FianlProject.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("FianlProject.Models.Furniture", "Furniture")
+                        .WithMany("Comments")
+                        .HasForeignKey("FurnitureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FianlProject.Models.Furniture", b =>
                 {
                     b.HasOne("FianlProject.Models.Category", "Categories")
@@ -634,6 +713,10 @@ namespace FianlProject.Migrations
 
             modelBuilder.Entity("FianlProject.Models.Rate", b =>
                 {
+                    b.HasOne("FianlProject.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("FianlProject.Models.Furniture", "Furniture")
                         .WithMany("Rates")
                         .HasForeignKey("FurnitureId")

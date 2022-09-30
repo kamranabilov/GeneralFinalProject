@@ -15,12 +15,14 @@ namespace FianlProject.Models
 		public string SKU { get; set; }
 		public string Article { get; set; }
 		public decimal Price { get; set; }
+		public bool Stock { get; set; }
 		public int FurnitureDescriptionId { get; set; }
 		public FurnitureDescription FurnitureDescription { get; set; }
 		public List<Furnitureimage> Furnitureimages { get; set; }
 		public int CategoryId { get; set; }
 		public Category Categories { get; set; }
 		public List<Rate> Rates { get; set; }
+		public List<Comment> Comments { get; set; }
 		[NotMapped]
 		public IFormFile MainPhoto { get; set; }
 		[NotMapped]

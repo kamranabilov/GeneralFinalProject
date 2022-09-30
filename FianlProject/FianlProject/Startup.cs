@@ -38,7 +38,7 @@ namespace FianlProject
 			services.AddIdentity<AppUser, IdentityRole>(opt =>
 			{
 				opt.User.RequireUniqueEmail = true;
-                //opt.SignIn.RequireConfirmedEmail = true;
+                opt.SignIn.RequireConfirmedEmail = true;
                 opt.User.AllowedUserNameCharacters = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890_";
 
 				opt.Password.RequiredUniqueChars = 3; // en azi 1 tekrar olunmayin herif olmalidir
@@ -60,6 +60,7 @@ namespace FianlProject
 			services.AddControllers().AddNewtonsoftJson(options =>
 		    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 			);
+
 		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

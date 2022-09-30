@@ -333,3 +333,4 @@ F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\FianlProje
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\FianlProject.dll
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\FianlProject.pdb
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\FianlProject.genruntimeconfig.cache
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Home\About.cshtml.g.cs

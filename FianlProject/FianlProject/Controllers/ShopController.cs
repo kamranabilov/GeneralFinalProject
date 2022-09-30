@@ -21,21 +21,55 @@ namespace FianlProject.Controllers
 		{
 			_context = context;
 		}
-		public async Task<IActionResult> Index(int page = 1)
+		public async Task<IActionResult> Index(int? id, string sortingOrder, int page = 1)
 		{
-			ViewBag.Category = _context.Categories.ToList();
-			List<Furniture> furniture =await _context.Furnitures.Include(f => f.Categories).Skip((page - 1) * 4).Take(16).ToListAsync();
-			ViewBag.CurentPage = page;
-			ViewBag.TotalPage = Math.Ceiling((decimal)_context.Furnitures.Count() / 4);
-			return View(furniture);
-		}
+			int max = 8;
+			if (id != 0 || id != null)
+			{
+				Category category = await _context.Categories
+					.Include(c => c.Furnitures).ThenInclude(c => c.Furnitureimages).Skip((page - 1) * 4).Take(4)
+					.FirstOrDefaultAsync(x => x.Id == id);
+				double pageCount = Math.Ceiling((double)((decimal)_context.Furnitures.Count() / Convert.ToDecimal(max)));
+				ViewBag.CurentPage = page;
+				ViewBag.TotalPage = pageCount;
+				if (category != null)
+				{
+					if (category.Furnitures.Count() != 0)
+					{
+						HomeVM home = new HomeVM
+						{
+							Categories = _context.Categories.ToList(),
+							Furnitures = category.Furnitures
+						};
+						return View(home);
+					}
+					else
+					{
+						ViewBag.Message = "category";
+						return View();
+					}
+				}
+			}
 
-		public async Task<IActionResult> GetDatas(string sortingOrder)
+			HomeVM homeVM = new HomeVM
+			{
+				Categories= _context.Categories.ToList(),
+				Furnitures = _context.Furnitures.Include(f => f.Categories).Skip((page - 1) * max).Take(max).ToList()
+			};
+
+			List<Furniture> furnitures = new List<Furniture>();
+			if (!string.IsNullOrEmpty(sortingOrder))
+			{
+				furnitures = GetDatas(sortingOrder);
+			}
+
+			return View(homeVM);
+		}	
+
+		public List<Furniture> GetDatas(string sortingOrder)
 		{
-			//ViewBag.Category = _context.Categories.ToList();
-			List<Furniture> furniture = await _context.Furnitures.Include(f => f.Categories).ToListAsync();
-
-			//sorting
+			List<Furniture> furniture = new List<Furniture>();
+			//homeVM.Furnitures = new List<Furniture>();
 			switch (sortingOrder)
 			{
 				case "A-Z":
@@ -54,11 +88,37 @@ namespace FianlProject.Controllers
 					furniture = furniture.OrderBy(furnitures => furnitures.Id).ToList();
 					break;
 			}
-			return View("Index", furniture.OrderBy(s=>s.Id).Take(12).ToList());
-			//return PartialView("Index",homeVM);
+			return furniture;
 		}
 
-		//PartialView
+			//public async Task<IActionResult> GetDatas(string sortingOrder)
+			//{
+			//	//ViewBag.Category = _context.Categories.ToList();
+			//	List<Furniture> furniture = await _context.Furnitures.Include(f => f.Categories).ToListAsync();
+
+			//	switch (sortingOrder)
+			//	{
+			//		case "A-Z":
+			//			furniture = furniture.OrderByDescending(furnitures => furnitures.Name).ToList();
+			//			break;
+			//		case "Z-A":
+			//			furniture = furniture.OrderBy(furnitures => furnitures.Name).ToList();
+			//			break;
+			//		case "Price by ascending":
+			//			furniture = furniture.OrderBy(furnitures => furnitures.Price).ToList();
+			//			break;
+			//		case "Price by descending":
+			//			furniture = furniture.OrderByDescending(furnitures => furnitures.Price).ToList();
+			//			break;
+			//		default:
+			//			furniture = furniture.OrderBy(furnitures => furnitures.Id).ToList();
+			//			break;
+			//	}
+			//	return View("Index", furniture.OrderBy(s=>s.Id).Take(4).ToList());
+			//	//return PartialView("Index",homeVM);
+			//}
+
+			//PartialView
 		public async Task<IActionResult> ModalShopView(int? id)
 		{
 			Furniture furniture = await _context.Furnitures.Include(p => p.Furnitureimages).FirstOrDefaultAsync(p => p.Id == id);

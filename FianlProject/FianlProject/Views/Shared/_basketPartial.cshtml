@@ -1,7 +1,6 @@
 ﻿@inject FianlProject.Services.LayoutService layoutService
 @{
     BasketVM basket = await layoutService.ShowBasket();
-
 }
 <p id="total_count" style="display:none">@layoutService.ShowBasket().Result.Count</p>
 
@@ -58,10 +57,11 @@
                                 <div class="canvas-image" style="flex-basis: 85px;
 						            width: 85px;
 						            height: 91px;">
-                                    <a href="product-details.html" style="text-decoration: none;">
+                                    <a asp-controller="furniture" asp-action="detail" asp-route-id="@item.Furniture.Id" style="text-decoration: none;">
                                         <img style="max-width: 100%;" src="~/assets/image/shop/@item.Furniture.Image" alt="">
                                     </a>
                                 </div>
+
                                 <div class="canvas-img-title" style="padding: 0 10px;
 						            max-width: calc(100% - 115px);
 						            flex-basis: calc(100% - 115px);">
@@ -106,6 +106,7 @@
 								        padding-left: 4px" class="card-price2">$@(item.Furniture.Price * item.Quantity)</span>
                                     </p>
                                 </div>
+
                                 <a asp-controller="Cart" asp-action="DeleteBasketitem" asp-route-id="@item.Furniture.Id"  class="btn-xmark remove"
                                  style="background-color: #fff;
 						            cursor: pointer;
@@ -117,7 +118,9 @@
 						            font-weight: 800;">
                                     <span> X</span>
                                 </a>
+
                             </li>
+
                             <hr />
                         </ul>
                     </div>
@@ -125,14 +128,14 @@
                 </div>
             </div>
         }
-        <div class="canvas-price-box" style="padding-bottom: 30px;
+        <div class="canvas-price-box" style="padding-bottom: 0px;
 				        padding-top: 0px;
 				        display: flex;
-				        justify-content: center;
+				        justify-content: right;
 				        gap: 5px;">
             <ul>
                 <li style="display: flex;
-					            justify-content: space-between;
+					            justify-content: flex-end;
 					            margin-bottom: 5px;
 					            margin-left: 15px;
 					            line-height: 0;
@@ -145,7 +148,7 @@
 						            left: 30px;
 						            top: 300px;
 						            font-weight: 600;" class="sub-total">
-                        <b style="color: #f08319;
+                        <b style="color: #f08319; padding-right: 20px;
 							font-weight: 600;">$@basket.TotalPrice.ToString("f2")</b>
                     </span>
                 </li>

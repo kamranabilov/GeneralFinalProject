@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 
 namespace FianlProject.Controllers
 {
@@ -45,6 +46,14 @@ namespace FianlProject.Controllers
 		{
 			List<Faq> faqs = await _context.Faqs.ToListAsync();
 			return View(faqs);
+		}
+
+		public async Task<IActionResult> About()
+		{
+			ViewBag.furniture = _context.Furnitures.ToList();
+			ViewBag.user = _context.Users.ToList();
+			List<About> abouts = await _context.Abouts.ToListAsync();		
+			return View(abouts);
 		}
 	}
 }

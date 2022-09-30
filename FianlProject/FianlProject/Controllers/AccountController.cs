@@ -133,6 +133,7 @@ namespace FianlProject.Controllers
 			return RedirectToAction("Index", "Home");
 
 		}
+
 		public async Task<IActionResult> Logout()
 		{
 			await _signInManager.SignOutAsync();
@@ -161,28 +162,28 @@ namespace FianlProject.Controllers
 		}
 
 		//[HttpGet]
-  //      public async Task<IActionResult> ForgetPassword()
-  //      {
-  //          return View();
-  //      }
+		//public async Task<IActionResult> ForgetPassword()
+		//{
+		//	return View();
+		//}
 
-  //      [HttpPost]
-  //      public async Task<IActionResult> ForgetPassword(ForgetPasswordVM forgotPassword)
-  //      {
-  //          if (!ModelState.IsValid) return View(forgotPassword);
-  //          var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
-  //          if (user is null)
-  //          {
-  //              ModelState.AddModelError("", "User with this Email Doesn't Exist!");
-  //              return View(forgotPassword);
-  //          }
-  //          var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-  //          var link = Url.Action(nameof(ResetPassword), "Account", new { email = user.Email, token = code }, Request.Scheme, Request.Host.ToString());
-  //          string html = $"{link}";
-  //          string content = "Reset Password";
-  //          await _emailService.SendEmailAsync(user, html, content);
-  //          return RedirectToAction(nameof(RecoverPasswordView));
-  //      }
+		//[HttpPost]
+		//public async Task<IActionResult> ForgetPassword(ForgetPasswordVM forgotPassword)
+		//{
+		//	if (!ModelState.IsValid) return View(forgotPassword);
+		//	var user = await _userManager.FindByEmailAsync(forgotPassword.Email);
+		//	if (user is null)
+		//	{
+		//		ModelState.AddModelError("", "User with this Email Doesn't Exist!");
+		//		return View(forgotPassword);
+		//	}
+		//	var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+		//	var link = Url.Action(nameof(ResetPassword), "Account", new { email = user.Email, token = code }, Request.Scheme, Request.Host.ToString());
+		//	string html = $"{link}";
+		//	string content = "Reset Password";
+		//	await _emailService.SendEmailAsync(user, html, content);
+		//	return RedirectToAction(nameof(RecoverPasswordView));
+		//}
 
 		//[HttpGet]
 		//public IActionResult ResetPassword(string email, string token)

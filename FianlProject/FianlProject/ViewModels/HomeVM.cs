@@ -9,5 +9,6 @@ namespace FianlProject.ViewModels
 		public List<Furniture> Furnitures { get; set; }
 		public List<Category> Categories { get; set; }
 		public List<Contact> Contacts { get; set; }
+		public List<About> Abouts { get; set; }
 	}
 }

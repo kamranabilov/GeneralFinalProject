@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,16 +31,58 @@ namespace FianlProject.Controllers
 			Furniture furniture = await _context.Furnitures
 				.Include(c => c.Furnitureimages)
 			    .Include(c => c.FurnitureDescription)
-			    .FirstOrDefaultAsync(c => c.Id == id);
+				.Include(c=>c.Comments).ThenInclude(c=>c.AppUser)
+				.Include(c => c.Rates).ThenInclude(c=>c.AppUser)
+				.FirstOrDefaultAsync(c => c.Id == id);
 			return View(furniture);
 		}
 
-		// Partial View
-		//public async Task<IActionResult> Partial()
-		//{
-		//	List<Furniture> furnitures = await _context.Furnitures.Include(c => c.Furnitureimages).ToListAsync();
-		//	return PartialView("_FurniturePartialView", furnitures);
-		//}
+		[HttpGet]
+		public async Task<IActionResult> AddRate(int id, byte point)
+		{
+			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+			Rate Rate = new Rate
+			{
+				Date = DateTime.Now,
+				AppUser = user,
+				FurnitureId = id,
+				Point = point
+			};
+			_context.Rates.Add(Rate);
+			_context.SaveChanges();
+			return Json("Oke");
+		}
+
+		[HttpPost]
+		[AutoValidateAntiforgeryToken]
+		public async Task<IActionResult> AddComment(Comment comment)
+		{
+			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+			if (!ModelState.IsValid) return RedirectToAction("Detail", "Furniture", new { id = comment.FurnitureId });
+			if (!_context.Furnitures.Any(f => f.Id == comment.FurnitureId)) return NotFound();
+			Comment cmnt = new Comment
+			{
+				Text = comment.Text,
+				FurnitureId = comment.FurnitureId,
+				Date = DateTime.Now,
+				AppUserId = user.Id,
+			};
+			_context.Comments.Add(cmnt);
+			_context.SaveChanges();
+			return RedirectToAction("Detail", "Furniture", new { id = comment.FurnitureId });
+		}
+
+		public async Task<IActionResult> DeleteComment(int id)
+		{
+			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+			if (!ModelState.IsValid) return RedirectToAction("Detail", "Book");
+			if (!_context.Comments.Any(c => c.Id == id && c.AppUserId == user.Id)) return NotFound();
+			Comment comment = _context.Comments.FirstOrDefault(c => c.Id == id && c.AppUserId == user.Id);
+			_context.Comments.Remove(comment);
+			_context.SaveChanges();
+			return RedirectToAction("Detail", "Furniture", new { id = comment.FurnitureId });
+		}
 
 		//// rate pr id user id
 		//// rate rate user id pr id 5

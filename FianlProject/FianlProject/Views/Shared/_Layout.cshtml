@@ -35,7 +35,126 @@
 
 <body>
     <!--  Modal start -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="product-details">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="product-details-wrapper">
+                                        <div class="row">
+                                            <div class="col-lg-7">
+                                                <div class="product-wrapper-img mb-5">
+                                                    <img style="width: 480px; border: 0;" src="~/assets/image/shop/Desk.jpg" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <div class="product-details-title">
+                                                    <h3>Roomdesk</h3>
+                                                    <div class="sku mb-3">
+                                                        <span>
+                                                            SKU: XT/77
+                                                        </span>
+                                                    </div>
+                                                    <div class="category mb-3">
+                                                        <span>
+                                                            Categories:
+                                                        </span>
+                                                        @*<a href="#">Featured</a>
+                                                        ,*@
+                                                        <a href="#">Chair</a>
+                                                    </div>
+                                                    <div class="review">
+                                                        <span class="rate">
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star"></i>
+                                                            <i class="fa-solid fa-star-half-stroke"></i>
+                                                            <i class="fa-solid fa-star-half-stroke"></i>
+                                                        </span>
+                                                        <a href="#">(3 customer reviews)</a>
+                                                    </div>
+                                                    <div class="desc">
+                                                        <span>About the product</span>
+                                                    </div>
+                                                    <p>
+                                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitrquis justo.
+                                                    </p>
+                                                    <div class="price mb-5">
+                                                        <span>
+                                                            $299.00
+                                                        </span>
+                                                    </div>
+                                                    <div class="stok mb-2">
+                                                        <span>Yes in stock</span>
+                                                    </div>
+                                                    <div class="quantity mb-5">
+                                                        <div class="mini-quan" style="display: inline-flex;
+                                                                white-space: nowrap;
+                                                                vertical-align: top;">
+                                                            <input style="    margin: 0;
+                                                                    vertical-align: middle;
+                                                                    background: #f9f9f9;
+                                                                    cursor: pointer;
+                                                                    box-shadow: none;
+                                                                    padding: 0 25px;
+                                                                    min-width: 35px;
+                                                                    height: 45px;
+                                                                    border: 1px solid rgba(129, 129, 129, 0.2);
+                                                                    display: inline-block;
+                                                                    color: #777;" type="button" value="-" class="minus">
+                                                            <input style="    align-items: center;
+                                                                    text-align: center;
+                                                                    width: 70px;
+                                                                    border: 1px solid #e3e3e3 !important;
+                                                                    height: 45px;
+                                                                    display: inline-block;
+                                                                    color: #777;
+                                                                    border-radius: 0;
+                                                                    outline: 0;" type="text" id="quantity_6" class="input-text"
+                                                               value="1">
+                                                            <input style="    margin: 0;
+                                                                    vertical-align: middle;
+                                                                    background: #f9f9f9;
+                                                                    cursor: pointer;
+                                                                    box-shadow: none;
+                                                                    padding: 0 25px;
+                                                                    min-width: 43px;
+                                                                    height: 45px;
+                                                                    border: 1px solid rgba(129, 129, 129, 0.2);
+                                                                    display: inline-block;
+                                                                    color: #777;" type="button" value="+" class="plus">
+                                                        </div>
+                                                        <a href="#" class="btn btn-default">Add To Cart</a>
+                                                    </div>
+                                                    <div class="share-icon">
+                                                        <span class="feedback">
+                                                            The product is already in the wishlist!
+                                                            Browse Wishlist
+                                                        </span>
+                                                        <a href="#">
+                                                            <i class="fa-solid fa-heart"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--  Modal end -->
     <!-- Header start -->
     <header>
@@ -58,7 +177,7 @@
                         <div class="col-lg-6">
                             <form class="form1" method="post">
                                 <div class="input-group">
-                                    <input type="search" class="form-control inp1" placeholder="Find your product">
+                                    <input type="search" name="str" class="form-control inp1" placeholder="Find your product">
                                     <div class="input-group-btn search-button">
                                         <input type="hidden" class="inp2" id="search-param">
                                         <button type="submit" class="btn search-icon">
@@ -104,7 +223,15 @@
                                 <div class="canvasss">
                                     <a asp-controller="Wishlist" asp-action="Index" class="btn btn-close-white canvas-shopping">
                                         <i class="fa-regular fa-heart">
-                                            <span>0</span>
+                                            @if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
+                                            {
+                                                <span id="totalcountWishlist" class="count">@layoutService.GetWishlist().Result.WishlistItems.Count</span>
+                                            }
+                                            else
+                                            {
+                                                <span id="totalcountWishlist" class="count">@layoutService.GetWishlist().Result.WishlistItems.Count</span>
+                                            }
+                                            @*<span>0</span>*@
                                         </i>
                                     </a>
                                     <a class="btn btn-close-white canvas-shopping"
@@ -179,7 +306,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="about.html">
+                                        <a asp-controller="Home" asp-action="About">
                                             About Us
                                         </a>
                                     </li>
@@ -590,11 +717,12 @@
         })
     });
 </script>
+
  @*wishlist fetch end*@
 
  @*ModalPartialView Start*@
 
-<script>
+@*<script>
     let btns = document.querySelectorAll(".btn--e-brand");
     let modalParent = document.getElementById("exampleModal");
     console.log(modalParent)
@@ -611,7 +739,8 @@
 
         })
     })
-</script>
+</script>*@
+
 @*ModalPartialView end*@
 <script src="~/assets/js/cart.js"></script>
 <script src="~/assets/js/shop.js"></script>
