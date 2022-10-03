@@ -37,10 +37,10 @@
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:gold">
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown me-1 g-3" style="gap: 20px;">
-                        <a asp-area="AdminPanel" asp-controller="Order" class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown">
+                       @* <a asp-area="AdminPanel" asp-controller="Order" class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown">
                             <i class="mdi mdi-checkbox-marked-circle mx-0"></i>
                             <span style="background: #fff; width:20px; height: 20px; top: 0px;" class="count">@layoutService.GetOrders().Count()</span>
-                        </a>
+                        </a>*@
                         <a asp-area="AdminPanel" asp-controller="Contact" class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown">
                             <i class="mdi mdi-message-text mx-0"></i>
                             <span style="background: #fff; width:20px; height: 20px; top: 0px;" class="count">@layoutService.GetContacts().Count()</span>
@@ -103,7 +103,7 @@
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="category" asp-action="index">Category</a></li>
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Furniture" asp-action="index">Furniture</a></li>
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Setting" asp-action="index">Setting</a></li>
-                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Contact" asp-action="index">Contact</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="About" asp-action="index">About</a></li>
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Order" asp-action="index">Order</a></li>
                             </ul>
                         </div>

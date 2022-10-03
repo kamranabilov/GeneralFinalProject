@@ -43,11 +43,17 @@
                 }
             </td>
             <td class="product-add-to-cart">
-                <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@item.Furniture.Id" data-quantity="1"
+                @if (item.Furniture.Stock == true)
+                {
+                    <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@item.Furniture.Id" data-quantity="1"
                class=" addToCart">
-                    Add to
-                    Cart
-                </a>
+                        Add to
+                        Cart
+                    </a>
+                }else
+                {
+                        
+                }
             </td>
         </tr>
     </tbody>

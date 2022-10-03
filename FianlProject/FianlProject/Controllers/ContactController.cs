@@ -38,7 +38,8 @@ namespace FianlProject.Controllers
 				Name = contact.Name,
 				Email = contact.Email,
 				Subject = contact.Subject,
-				Description = contact.Description
+				Description = contact.Description,
+				Here = false
 			};
 			await _context.Contacts.AddAsync(contact);
 			await _context.SaveChangesAsync();

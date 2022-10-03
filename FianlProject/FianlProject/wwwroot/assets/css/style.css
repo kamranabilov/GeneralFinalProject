@@ -5204,6 +5204,12 @@ body {
 		position: relative;
 		z-index: 1;
 	}
+		.popular .product-wrap .boxs .rate {
+			color: #f07f13;
+			letter-spacing: 0px;
+			text-align: center;
+			display: none;
+		}
 
 		.popular .product-wrap .boxs img {
 			width: 320px !important;
@@ -5252,6 +5258,15 @@ body {
 					font-size: 16px;
 					margin: 5px;
 				}
+		.popular .product-wrap .boxs:hover .rate {
+			transform-style: flat;
+			position: absolute;
+			top: 10px;
+			left: 30%;
+			transition: 0.4s ease-in-out;
+			display: block;
+
+		}
 
 		.popular .product-wrap .boxs:hover {
 			opacity: 0.7;

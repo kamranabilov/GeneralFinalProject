@@ -35,7 +35,7 @@
                             <a href="#" class="showlogin" onclick="myFunction()">Click here to login</a>
                         </div>
                     </div>
-                    <form id="form-login-hidden" method="post" style="display: none;">
+                   @* <form id="form-login-hidden" method="post" style="display: none;">
                         <p>
                             If you have shopped with us before, please enter your details below. If you are a new
                             customer, please proceed to the Billing section.
@@ -71,14 +71,14 @@
                         <p class="lost_password">
                             <a href="account.html">Lost your password?</a>
                         </p>
-                    </form>
+                    </form>*@
                 </div>
             </div>
         </div>
     </section>
     <section class="order">
         <div class="container">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post" enctype="multipart/form-data"  >
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="billing-details">
@@ -91,7 +91,7 @@
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
                                     <span class="input-wrapper">
-                                        <input asp-for="FirstName" type="text" class="input-text ">
+                                        <input asp-for="FirstName" required type="text" class="input-text ">
                                     </span>
                                 </p>
                                 <p class="form-row form-row-last validate-required" id="billing_last_name_field"
@@ -101,7 +101,7 @@
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
                                     <span class="input-wrapper">
-                                        <input asp-for="LastName" type="text" class="input-text">
+                                        <input asp-for="LastName" required type="text" class="input-text">
                                     </span>
                                 </p>
                                 <p class="form-row form-row-wide address-field update_totals_on_change validate-required"
@@ -111,7 +111,7 @@
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
                                     <span class="input-wrapper">
-                                        <input asp-for="Country" type="text" class="input-text">
+                                        <input asp-for="Country" type="text" class="input-text" required>
                                     </span>
                                 </p>
                                 <p class="form-row address-field validate-required form-row-wide" id="billing_city_field"
@@ -122,7 +122,7 @@
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
                                     <span class="input-wrapper">
-                                        <input asp-for="City" type="text" class="input-text ">
+                                        <input asp-for="City" type="text" class="input-text " required>
                                     </span>
                                 </p>
                                 <p class="form-row address-field validate-required form-row-wide" id="billing_city_field"
@@ -133,17 +133,17 @@
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
                                     <span class="input-wrapper">
-                                        <input asp-for="Address" type="text" class="input-text ">
+                                        <input asp-for="Address" type="text" class="input-text " required>
                                     </span>
                                 </p>
                                 <p class="form-row form-row-wide validate-required validate-phone" id="billing_phone_field"
                                    data-priority="100">
-                                    <label for="billing_phone" class="">
+                                    <label for="billing_phone" class="" required>
                                         Phone
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
                                     <span class="input-wrapper">
-                                        <input asp-for="PhoneNumber" type="tel" class="input-text ">
+                                        <input asp-for="PhoneNumber" type="tel" class="input-text " required>
                                     </span>
                                 </p>
                                 <p class="form-row form-row-wide validate-required validate-email" id="billing_email_field"
@@ -152,7 +152,7 @@
                                         Email address
                                         <abbr class="required" title="required">*</abbr>
                                     </label>
-                                    <span class="input-wrapper">
+                                    <span class="input-wrapper" required>
                                         <input asp-for="Email" type="email" class="input-text ">
                                     </span>
                                 </p>

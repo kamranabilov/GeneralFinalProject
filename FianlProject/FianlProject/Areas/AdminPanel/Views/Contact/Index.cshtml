@@ -4,8 +4,9 @@
 }
 
 <div class="main-panel">
-    <div class="table-responsive pt-3">
-        <table class="table table-bordered" style="text-align: center">
+    <h5 class="d-flex" style="justify-content: center; background-color: #d1e7dd; color: #000; font-size: 20px; padding: 10px;">Setting</h5>
+    <div class="table-responsive">
+        <table class="table table-bordered" style="text-align: center; padding-top: 0px !important;">
             <thead class="table table-success" style="text-align: center">
                 <tr>
                     <th>
@@ -28,7 +29,7 @@
             <tbody>
                 @foreach (Contact contact in Model)
                 {
-                    <tr class="table-secondary">
+                    <tr class="table-light">
                         <td>
                             @contact.Name
                         </td>
@@ -44,7 +45,7 @@
                         <td class="d-flex align-items-center" style="height:160px; justify-content: center; gap: 5px">
                             <div>
                                 <a asp-area="AdminPanel" asp-controller="Contact" asp-action="Delete" asp-route-id="@contact.Id"
-                                    class="btn btn-danger"><i class="mdi mdi-delete"></i>
+                                    class="btn btn-outline-danger"><i class="mdi mdi-delete"></i>
                                 </a>
                             </div>
                         </td>

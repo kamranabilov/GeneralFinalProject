@@ -50,6 +50,7 @@ namespace FianlProject.Controllers
 		public async Task<IActionResult> Checkout()
 		{
 			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+
 			OrderVM model = new OrderVM
 			{
 				FirstName = user.FirstName,
@@ -59,7 +60,6 @@ namespace FianlProject.Controllers
 				BasketItems = _context.BasketItems.Include(m => m.Furniture).Where(m => m.AppUserId == user.Id).ToList()
 
 			};
-
 			return View(model);
 		}
 

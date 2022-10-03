@@ -12,7 +12,7 @@
     @{
         if (TempData["FileName"]!= null)
         {
-            <div class="alert alert-danger">@TempData["FileName"]</div>
+                                <div class="alert alert-danger">@TempData["FileName"]</div>
         }
     }
 
@@ -43,7 +43,7 @@
             <tbody>
                 @foreach (Furniture furniture in Model)
                 {
-                    <tr class="table-warning">
+                    <tr class="table-light">
                         <td>
                             <img style="width:110px; height:110px"
                              src="~/assets/image/shop/@furniture.Image" />
@@ -63,21 +63,53 @@
                         <td class="d-flex align-items-center" style="height:160px; justify-content: center; gap: 5px">
                             <div>
                                 <a asp-area="AdminPanel" asp-controller="Furniture" asp-action="Edit" asp-route-id="@furniture.Id"
-                               class="btn btn-success"><i class="mdi mdi-border-color"></i></a>
+                               class="btn btn-outline-success"><i class="mdi mdi-border-color"></i></a>
                             </div>
                             <div>
                                 <a asp-area="AdminPanel" asp-controller="Furniture" asp-action="Delete" asp-route-id="@furniture.Id"
-                               class="btn btn-danger"><i class="mdi mdi-delete"></i></a>
+                               class="btn btn-outline-danger"><i class="mdi mdi-delete"></i></a>
                             </div>
                             <div>
                                 <a asp-area="AdminPanel" asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id"
-                               class="btn btn-warning"><i class="mdi mdi-information"></i></a>
+                               class="btn btn-outline-warning"><i class="mdi mdi-information"></i></a>
                             </div>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+        <nav class="pagination d-flex" style="justify-content: center;">
+            <ul id="myDIV" class="page-numbers" style="display: flex; list-style: none; padding-top: 10px;">
+                @if (ViewBag.CurentPage > 1)
+                {
+                    <li class="page-item " style="width: 55px;">
+                        <a class="page-link page-numbers current btnn" asp-area="AdminPanel" asp-controller="furniture" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Prev</a>
+                    </li>
+                }
+                @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                {
+                    <li class="page-item">
+                        @if (i != ViewBag.CurentPage)
+                        {
+                            <a id="myPage" class="page-link page-numbers btnn " asp-area="AdminPanel" asp-controller="furniture" asp-action="index" asp-route-page="@i">@i</a>
+                        }
+                        else
+                        {
+                            <a style="background-color:blue;color:wheat" id="myPage" class="page-link page-numbers btnn " asp-area="AdminPanel" asp-controller="furniture" asp-action="index" asp-route-page="@i">@i</a>
+                        }
+                    </li>
+                }
+                @if (ViewBag.CurentPage < ViewBag.TotalPage)
+                {
+                    <li class="page-item" style="width: 55px;">
+                        <a class="page-link page-numbers btnn" asp-area="AdminPanel" asp-controller="furniture" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Next</a>
+
+                    </li>
+                }
+
+            </ul>
+        </nav>
     </div>
 </div>
+
 

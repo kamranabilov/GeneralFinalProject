@@ -80,9 +80,11 @@
                                             </span>
                                         </td>
                                         <td class="product-quantity" >
-                                            <a data-id="@item.Furniture.Id" style="cursor:pointer;" class="down" id="downbtn"><i class="fas fa-chevron-left"></i></a>
-                            <span class="inp-value" style="cursor:pointer;">@item.Quantity</span>
-                                            <a data-id="@item.Furniture.Id" style="cursor:pointer;" class="up" id="upbtn"><i class="fas fa-chevron-right"></i></a>
+                                            <div class="inp-num" style="border: 1px solid #ddd; gap: 8px; padding: 8px 8px;">
+                                                <a data-id="@item.Furniture.Id" style="padding: 2px; cursor:pointer; border: 1px solid; color: #f07f13;" class="down" id="downbtn"><i class="fa-solid fa-minus"></i></a>
+                                                <span id="@item.Furniture.Id" class="inp-value" style="cursor:pointer; border: 0; gap: 8px; padding: 3px 15px;">@item.Quantity</span>
+                                                <a data-id="@item.Furniture.Id" style="padding: 2px; cursor:pointer; border: 1px solid; color: #f07f13;" class="up" id="upbtn"><i class="fa-solid fa-plus"></i></a>
+                                           </div>
                                         </td>
                                         <td class="product-subtotal" data-title="Subtotal">
                                             <span style="font-size: 1.25rem;
@@ -93,7 +95,7 @@
                                         </td>
                                     </tr>
                                }
-                                <tr>
+                               @* <tr>
                                     <td colspan="6" class="actions">
                                         <div class="coupon">
                                             <label for="coupon_code">Coupon:</label>
@@ -111,14 +113,14 @@
                                         <input type="hidden">
                                         <input type="hidden" value="/marketov2/furniture/cart/">
                                     </td>
-                                </tr>
+                                </tr>*@
                             </tbody>
                         </table>
                     </form>
                     <div class="cart-collaterals">
                         <div class="cart_totals calculated_shipping">
                             <h2>Cart totals</h2>
-                            <table cellspacing="0" class="shop_table shop_table_responsive table">
+                            <table cellspacing="0" class="shop_table shop_table_responsive table table-bordered">
                                 <tbody class="text-center">
                                    @* <tr class="cart-subtotal">
                                         <th>Subtotal</th>
@@ -128,7 +130,7 @@
                                             </span>
                                         </td>
                                     </tr>*@
-                                    <tr class="shipping-total" style="border-width:thin;">
+                                   @* <tr class="shipping-total" style="border-width:thin;">
                                         <th style="padding-top:65px;">Shipping</th>
                                         <td class="ship text-center">
                                             <ul id="shipping_method" class="ship-method">
@@ -159,7 +161,7 @@
                                                 </section>
                                             </form>
                                         </td>
-                                    </tr>
+                                    </tr>*@
                                     <tr class="order-total">
                                         <th style="padding-top:21px;">Total</th>
                                         <td data-title="Total">
@@ -194,10 +196,11 @@
             var id = $(this).attr("data-id")
             var total = document.querySelector(".total_price")
             var money = document.querySelectorAll(".money-t")
-            var quantity = document.querySelector(".inp-value")
+            var quantity = document.getElementById(id)
+            @*var quantity = document.querySelector(".inp-value")*@
 
             $.ajax({
-                url: "/cart/decrease",
+                url: "/Cart/decrease",
                 data: {
                     id: id
                 },
@@ -210,7 +213,7 @@
                         }
                     })
                     total.innerHTML = `${data.totalPrice}`
-                    quantity.innerHTML = `${data.Quantity}`
+                        quantity.innerHTML = `${data.quantity}`
 
                 }
             })
@@ -224,9 +227,10 @@
 
             var total = document.querySelector(".total_price")
             var money = document.querySelectorAll(".money-t")
+            var quantity = document.getElementById(id)
             console.log(id)
             $.ajax({
-                url: "/cart/increase",
+                url: "/Cart/increase",
                 data: {
                     id: id
                 },
@@ -240,6 +244,7 @@
                         }
                     })
                     total.innerHTML = `${data.totalPrice}`
+                    quantity.innerHTML = `${data.quantity}`
 
                 }
             })

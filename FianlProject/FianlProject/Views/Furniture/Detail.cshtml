@@ -134,16 +134,17 @@
                                         <div class="price mb-5">
                                             
                                             <span>
-                                                <span style="color: #4a4a4a; font-size: 15px;">Price:</span>
+                                                <span style="color: #4a4a4a; font-size: 15px; margin-left: -5px;">Price:</span>
                                                 $@Model.Price
                                             </span>
                                         </div>
-                                        <div class="stok mb-2">
-                                            <span style="color: #4a4a4a; font-size: 15px;"> Existence:</span>
+                                        <div class="stok mb-4">
+                                           @* <span style="color: #4a4a4a; font-size: 15px;"> Existence:</span>*@
                                             @if (Model.Stock == true)
                                             {
-                                                <span style="color: forestgreen">Yes in stock</span>
-                                            }else{
+                                                <span style="color: #F07F13;">Yes in stock</span>
+                                            }else
+                                            {
                                                 <span style="color: #F07F13;">Out of stock</span>
                                             }
                                         </div> 
@@ -160,7 +161,13 @@
                                                     +
                                                 </button>
                                             </div>
-                                            <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@Model.Id" class="btn btn-default addToCart" onclick="">Add To Cart</a>
+                                            @if (Model.Stock == true)
+                                            {
+                                                <a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@Model.Id" class="btn btn-default addToCart" onclick="">Add To Cart</a>
+                                            }else
+                                            {
+                                                @*<a asp-controller="Cart" asp-action="AddBasket" asp-route-id="@Model.Id" class="btn btn-default addToCart" onclick="" style="cursor:not-allowed;">Add To Cart</a>*@
+                                            }
                                         </div>
                                         <div class="share-icon">
                                             <span class="feedback">
@@ -189,13 +196,13 @@
                             <div class="product-review-info">
                                 <ul class="nav-desc ">
                                     <li class="tab_one ">
-                                        <a id="1" class="btnclick active">description</a>
+                                        <a id="1" class="btnclick active ">description</a>
                                     </li>
-                                    <li class="tab_one">
+                                    <li class="tab_one " >
                                         <a id="2" class="btnclick">reviews (1)</a>
                                     </li>
                                 </ul>
-                                <div class="tab_body" id="1">
+                                <div class="tab_body" id="1" style="display: block;">
                                     <div class="tab_contentt">
                                         <div class="tab_desc">
                                             @foreach (FurnitureDescription description in ViewBag.Desc)
@@ -208,7 +215,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab_body" id="2">
+                                <div class="tab_body " id="2">
                                     <div class="tab_contentt starcon">
                                         <div class="row starall">
                                             <div class="col-md-6">
@@ -305,20 +312,30 @@
                                                 @foreach(Rate item in Model.Rates)
                                                 {
                                                     <li>
-                                                        <div class="commet-body">
+                                                        <div class="commet-body g-5">
                                                             <div class="commet-date">
-                                                                <span class="stars d-flex" >
+                                                                <span class="stars d-flex" style="padding: 1px 20px;">
                                                                     @for (var i = 0; i < item.Point; i++)
                                                                    {
                                                                         <i class="fa-solid fa-star"></i>
                                                                     }
                                                                    
                                                                 </span>
-                                                               @item.AppUser – @item.Date
+                                                               @item.AppUser: @item.Date
                                                             </div>
-                                                            <p>
+                                                             <p style="color:#000; font-size: 20px; margin-top: -35px; ">
                                                                @item.Point
                                                             </p>
+                                                            @if (User.Identity.IsAuthenticated)
+                                                            {
+                                                               @if (User.Identity.Name==item.AppUser.UserName || User.IsInRole("Admin"))
+                                                                {
+                                                                    <a style="margin-top:-35px; border-radius: 50%; position: absolute; right: 228px; color: #fff; text-decoration: none; background-color: #000; font-size:22px; width:16px; height:28px;" asp-controller="Furniture" asp-action="DeleteRate" asp-route-id="@item.Id">
+                                                                        X
+
+                                                                    </a>
+                                                                }
+                                                            }
                                                         </div>
                                                     </li>
                                                 }
@@ -326,14 +343,25 @@
                                                 {
                                                     <li>
                                                         <div class="commet-body">
-                                                            <div class="commet-date">
-                                                                @item.AppUser – @item.Date
-                                                                <h5 class="stars d-flex" style="color:#000; font-size: 20px; margin-top: -5px;">
+                                                                <div class="commet-date">
+                                                                    @item.AppUser:  @item.Date
+                                                        <h5 class="stars d-flex" style="color:#000; font-size: 20px; margin-top: -8px;">
                                                                     @item.Text
                                                                 </h5>
                                                             </div>
                                                         </div>
-                                                <a style="color: #fff; text-decoration: none; background-color: red; font-size:22px; width:16px; height:28px;" asp-controller="Furniture" asp-action="DeleteComment" asp-route-id="@item.Id">X</a>
+                                                       
+                                                        @if (User.Identity.IsAuthenticated)
+                                                        {
+                                                            @if (User.Identity.Name == item.AppUser.UserName || User.IsInRole("Admin"))
+                                                            {
+                                                                 <a style="color: #fff; text-decoration: none; background-color: red; font-size:22px; width:16px; height:28px; border-radius: 50%;" asp-controller="Furniture" asp-action="DeleteComment" asp-route-id="@item.Id">
+                                                                            X
+
+                                                                 </a>
+                                                            }
+                                                        }
+                                                        
                                                     </li>
                                                 }
                                         </ul>
@@ -394,24 +422,29 @@
                                                     }
 
                                                 </form>
-                                            <form method="post" class="comment-form" asp-controller="Furniture" asp-action="AddComment">
-                                                    <p class="comment-form-comment">
-                                                        <label for="comment">
-                                                            Your review
-                                                            <span class="required">*</span>
-                                                        </label>
-                                                    <textarea id="comment" name="Text" cols="45" rows="8"
-                                                              required="">
-                                                        </textarea>
-                                                   @* <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="Text" style="font-size:15px;"></textarea>*@
-                                                    <input type="hidden" name="FurnitureId" value="@Model.Id" />
-                                                    </p>
-                                                    <p class="form-submit">
-                                                        <input name="submit" type="submit" id="submit" class="submit"
+                                               @if (User.Identity.IsAuthenticated)
+                                                {
+                                                    <form method="post" class="comment-form" asp-controller="Furniture" asp-action="AddComment">
+                                                        <p class="comment-form-comment">
+                                                            <label for="comment">
+                                                                Your review
+                                                                <span class="required">*</span>
+                                                            </label>
+                                                            <textarea id="comment" name="Text" cols="45" rows="8">
+                                                            </textarea>
+                                                            <input type="hidden" name="FurnitureId" value="@Model.Id" />
+                                                        </p>
+                                                        <p class="form-submit">
+                                                            <input name="submit" type="submit" id="submit" class="submit"
                                                                value="Submit">
-                                                    </p>
-                                            </form>
-                                           
+                                                        </p>
+                                                    </form>
+                                                }
+                                                else{
+                                                    <a asp-controller="Account" asp-action="Login" style="text-decoration:none; font-size: 24px;     background-color: #f07f13; border-radius: 5px; color: #fff; padding: 5px 5px; position: absolute; ">Write a comment 
+
+                                                    </a>
+                                                }
                                             </div>
                                         </div>
                                     </div>

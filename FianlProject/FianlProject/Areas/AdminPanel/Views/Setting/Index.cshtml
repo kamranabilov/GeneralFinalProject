@@ -4,7 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<main class="main-panel " style="background-color: #f80; display: flex; border-spacing">
+<main class="main-panel " style="background-color: #6222; display: flex; border-spacing">
+    <h5 class="d-flex" style="justify-content: center; background-color: #cdcdcd; color: #000; font-size: 20px; padding: 10px;">Setting</h5>
     @foreach (var setting in Model)
    {
        if(setting.Key.ToLower().Trim()=="headerlogo"){
@@ -12,7 +13,7 @@
                 <div style="padding: 1rem"><img style="width: 20rem" src="~/assets/image/logo/@setting.Value" /></div>
                 <div>
                     <a style="border-radius: 5px;" asp-area="AdminPanel" asp-controller="setting" asp-action="Edit" asp-route-id="@setting.Id"
-               class="btn btn-success mt-3"><i class="mdi mdi-border-color"></i></a>
+               class="btn btn-outline-success mt-3"><i class="mdi mdi-border-color"></i></a>
                 </div>
             </div>
        }
@@ -24,7 +25,7 @@
                 </h1>
                 <div>
                     <a style="border-radius: 5px;" asp-area="AdminPanel" asp-controller="setting" asp-action="Edit" asp-route-id="@setting.Id"
-               class="btn btn-success mt-3"><i class="mdi mdi-border-color"></i></a>
+               class="btn btn-outline-success mt-3"><i class="mdi mdi-border-color"></i></a>
                 </div>
           </div>
         }

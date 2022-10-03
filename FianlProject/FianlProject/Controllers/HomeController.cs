@@ -23,10 +23,12 @@ namespace FianlProject.Controllers
 			//str = "bed";
 			HomeVM homeVM = new HomeVM
 			{
-				Sliders =await _context.Sliders.ToListAsync(),
-				Furnitures = await _context.Furnitures.Include(c => c.Furnitureimages).ToListAsync(),
-				Categories =await _context.Categories.Include(c => c.Furnitures).ToListAsync(),
-				Contacts = await _context.Contacts.ToListAsync()
+				Sliders = await _context.Sliders.ToListAsync(),
+				Furnitures = await _context.Furnitures.Include(c=>c.Rates).Include(c => c.Furnitureimages).ToListAsync(),
+				Categories = await _context.Categories.Include(c => c.Furnitures).ToListAsync(),
+				Contacts = await _context.Contacts.ToListAsync(),
+				Rates = await _context.Rates.ToListAsync(),
+				Orders = await _context.Orders.ToListAsync()
 			};
 
 

@@ -6,7 +6,7 @@ var QtyInput = (function () {
     if (!$qtyInputs.length) {
         return;
     }
-    console.log(QtyInput);
+   /* console.log(QtyInput);*/
 
     var $inputs = $qtyInputs.find(".product-qty");
     var $countBtn = $qtyInputs.find(".qty-count");

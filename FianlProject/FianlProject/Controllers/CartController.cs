@@ -39,12 +39,14 @@ namespace FianlProject.Controllers
 		[HttpPost]
 		public async Task<IActionResult> increase(int Id)
 		{
+			int quantity = 0;
 			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
 			BasketItem basket = _context.BasketItems.Include(m => m.Furniture).FirstOrDefault(m => m.FurnitureId == Id && m.AppUserId == user.Id);
 			basket.Quantity++;
 			_context.SaveChanges();
 			decimal TotalPrice = 0;
 			decimal Price = basket.Quantity * basket.Price;
+			quantity = basket.Quantity;
 			List<BasketItem> basketItems = _context.BasketItems.Include(m => m.AppUser).Include(m => m.Furniture).Where(m => m.AppUserId == user.Id).ToList();
 			foreach (BasketItem item in basketItems)
 			{
@@ -61,12 +63,46 @@ namespace FianlProject.Controllers
 
 			}
 
-			return Json(new { totalPrice = TotalPrice, Price });
+			return Json(new { totalPrice = TotalPrice, Price, quantity});
+		}
+		public async Task<IActionResult> decrease(int Id)
+		{
+			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+			BasketItem basket = _context.BasketItems.Include(m => m.Furniture).FirstOrDefault(m => m.FurnitureId == Id && m.AppUserId == user.Id);
+			int quantity = 0;
+			if (basket.Quantity == 1)
+			{
+				basket.Quantity = 1;
+			}
+			else
+			{
+				basket.Quantity--;
+			}
+			_context.SaveChanges();
+			decimal TotalPrice = 0;
+			decimal Price = basket.Quantity * basket.Price;
+			List<BasketItem> basketItems = _context.BasketItems.Include(m => m.AppUser).Include(m => m.Furniture).Where(b => b.AppUserId == user.Id).ToList();
+			quantity = basket.Quantity;
+			foreach (BasketItem item in basketItems)
+			{
+				Furniture furniture = _context.Furnitures.FirstOrDefault(m => m.Id == item.FurnitureId);
+
+				BasketItemVM basketItemVM = new BasketItemVM
+				{
+					Furniture = furniture,
+					Quantity = item.Quantity
+				};
+				basketItemVM.Price = furniture.Price;
+				TotalPrice += basketItemVM.Price * basketItemVM.Quantity;
+
+			}
+
+			return Json(new { totalPrice = TotalPrice, Price, quantity });
 		}
 		public async Task<IActionResult> AddBasket(int id)
 		{
 			Furniture furniture = _context.Furnitures.Include(m => m.Furnitureimages).Include(m => m.Categories).FirstOrDefault(m => m.Id == id);
-			if (furniture == null) return View("This is error");
+			if (furniture == null) return View("This is error msg");
 
 			if (User.Identity.IsAuthenticated && User.IsInRole("Member"))
 			{

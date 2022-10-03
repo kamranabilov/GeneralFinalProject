@@ -23,7 +23,13 @@ namespace FianlProject.Areas.AdminPanel.Controllers
         public IActionResult Index()
         {
             List<Contact> contacts = _context.Contacts.ToList();
+			foreach (Contact item in  contacts)
+			{
+				item.Here = true;
+			}
+			_context.SaveChanges();
             return View(contacts);
+
         }
 
 		public async Task<IActionResult> Delete(int? id)

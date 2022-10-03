@@ -22,7 +22,7 @@
                             <div class="row mb-3">
                                 <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
                                 <div class="col-md-6">
-                                    <input type="password" class="form-control " asp-for="Password">
+                                    <input type="password" class="form-control" value="password" asp-for="Password">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -33,13 +33,12 @@
                                             Remember
                                         </label>
                                     </div>
-                                    @*<div class="form-check">
-                                        <input asp-for="Remember" class="form-check-input" type="checkbox">
-                                        <label class="form-check-label" for="remember">
-                                            Forget
-                                        </label>
-                                    </div>*@
+                                    
                                 </div>
+                                <p class="lost_password" style="position: relative;">
+                                    <a style="color: #007bff; text-decoration: none; outline: 0; line-height: 4; font-weight: 600;
+                opacity: 0.8; position: absolute; top: 130px;" asp-controller="Account" asp-action="ForgotPassword">Lost your password?</a>
+                                </p>
                             </div>
 
                             <div class="row mb-0 mt-4">

@@ -13,5 +13,6 @@ namespace FianlProject.Models
 		public string Subject { get; set; }
 		[Required, MaxLength(500)]
 		public string Description { get; set; }
+		public bool Here { get; set; }
 	}
 }

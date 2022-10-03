@@ -56,18 +56,16 @@
                                             </div>
                                             <div class="col-lg-5">
                                                 <div class="product-details-title">
-                                                    <h3>Roomdesk</h3>
+                                                    <h3>Roomdesk solid wood</h3>
                                                     <div class="sku mb-3">
                                                         <span>
-                                                            SKU: XT/77
+                                                            SKU: AA/99
                                                         </span>
                                                     </div>
                                                     <div class="category mb-3">
                                                         <span>
                                                             Categories:
                                                         </span>
-                                                        @*<a href="#">Featured</a>
-                                                        ,*@
                                                         <a href="#">Chair</a>
                                                     </div>
                                                     <div class="review">
@@ -88,7 +86,7 @@
                                                     </p>
                                                     <div class="price mb-5">
                                                         <span>
-                                                            $299.00
+                                                            $100.00
                                                         </span>
                                                     </div>
                                                     <div class="stok mb-2">
@@ -194,12 +192,16 @@
                                       @if (User.Identity.IsAuthenticated)
                                      {
                                         <li style="text-decoration: none; color: #000;" class="myaccountA">
-                                            @Html.ActionLink(User.Identity.Name, "Manager", "Account", routeValues: null, htmlAttributes:
-                                               new {@class = "username", title="Manager"})
+                                           @* <a asp-controller="Manager" asp-action="index">
+                                                @User.Identity.Name
+                                            </a>*@
+                                            @Html.ActionLink(User.Identity.Name, "Index", "Manager", routeValues: null, htmlAttributes:
+                                        new {@class = "username", title="Manager"})
                                          </li>
                                      }
                                      else{
                                            <li  class="myaccountA">
+                                               <i class="fa-solid fa-user"></i>
                                                <a style="text-decoration: none; color: #000;">
                                                    MyAccount
                                                </a>
@@ -208,7 +210,8 @@
                                     <li class="dropdown-menu-right myaccountlist" style="text-decoration: none; top:3.2rem; left: -40%">
                                         @if (User.Identity.IsAuthenticated)
                                         {
-                                            <a style="text-decoration: none; color: #000; margin-left:10px; margin-top:2px; height:16.5px;" class="myaccountA" asp-controller="account" asp-action="logout" type="submit">Logout</a>
+                                            <a style="text-decoration: none; color: #000; margin-left:10px; margin-top:2px; height:16.5px;"                                                 class="myaccountA" asp-controller="account" asp-action="logout" type="submit">Logout
+                                            </a>
                                         }
                                         else
                                         {
@@ -272,23 +275,24 @@
                                             </a>
                                             <ul class="dropdown">
                                                 <li>
-                                                    <a href="index.html">Furniture</a>
+                                                    <a asp-controller="shop" asp-action="index">Furniture</a>
                                                     <i class="fa-solid fa-chevron-right"></i>
                                                 </li>
                                                 <li>
-                                                    <a href="index.html">Bedstead</a>
+                                                    <a asp-controller ="shop" asp-action="index">
+                                                        Bedstead</a>
                                                     <i class="fa-solid fa-chevron-right"></i>
                                                 </li>
                                                 <li>
-                                                    <a href="index.html">Sofa</a>
+                                                    <a asp-controller="shop" asp-action="index">Table</a>
                                                     <i class="fa-solid fa-chevron-right"></i>
                                                 </li>
                                                 <li>
-                                                    <a href="index-2.html">Bed</a>
+                                                    <a asp-controller="shop" asp-action="index">Chair</a>
                                                     <i class="fa-solid fa-chevron-right"></i>
                                                 </li>
                                                 <li>
-                                                    <a href="index-2.html">Kreslo</a>
+                                                    <a asp-controller="shop" asp-action="index">Sofa</a>
                                                     <i class="fa-solid fa-chevron-right"></i>
                                                 </li>
                                             </ul>
@@ -334,11 +338,14 @@
                                 </ul>
                             </div>
                         </div>
+                        @{
+                            Furniture furniture=layoutService.GetFurnitures();
+                        }
                         <div class="col-lg-3 d-lg-block d-md-none d-sm-none">
                             <div class="logoright ">
-                                <a class="menu-discount" href="#" rel="nofollow" class="btn ">
-                                    <strong>@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower() == "logotitle")?.Value</strong>
-                                    <span>@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower() == "logodiscount")?.Value </span>
+                                <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id" class="menu-discount">
+                                    <strong>@furniture.Name</strong>
+                                    <span>@furniture.Price </span>
                                 </a>
                             </div>
                         </div>

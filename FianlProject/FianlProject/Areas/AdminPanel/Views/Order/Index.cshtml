@@ -18,7 +18,7 @@
                         City
                     </th>
                     <th>
-                        Address
+                       Phone
                     </th>
                     <th>
                         Settings
@@ -39,7 +39,7 @@
                             @order.City
                         </td>
                         <td>
-                            @order.Address
+                            @order.PhoneNumber
                         </td>
                         <td class="d-flex align-items-center" style="height:160px; justify-content: center; gap: 5px">
                             @if (order.Status==true)
@@ -61,7 +61,7 @@
                            }
                             <div>
                                 <a asp-area="AdminPanel" asp-controller="Order" asp-action="Delete" asp-route-id="@order.Id"
-                               class="btn btn-danger">
+                               class="btn btn-outline-danger">
                                     <i class="mdi mdi-delete"></i>
                                 </a>
                             </div>

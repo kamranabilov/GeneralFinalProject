@@ -25,7 +25,14 @@ namespace FianlProject.Services
 			_http = http;
 			_userManager = userManager;
 		}
-        public List<Setting> getSettings()
+
+		public Furniture GetFurnitures()
+		{
+			Furniture furnitures = _context.Furnitures.FirstOrDefault(x=>x.Id == 80);
+			return furnitures;
+		}
+
+		public List<Setting> getSettings()
         {
             List<Setting> settings = _context.Settings.ToList();
             return settings;
@@ -33,7 +40,7 @@ namespace FianlProject.Services
 
 		public List<Contact> GetContacts()
 		{
-			List<Contact> contacts = _context.Contacts.ToList();
+			List<Contact> contacts = _context.Contacts.Where(c=>c.Here==false).ToList();
 			return contacts;
 		}
 

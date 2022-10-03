@@ -1,0 +1,70 @@
+﻿@model AppUser
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    string name = null;
+
+    if (TempData.ContainsKey("name"))
+        name = TempData["name"].ToString();
+}
+<h5 id="succses" style="color:green;">
+    @name
+</h5>
+
+<main class="w-100 m-auto login">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="main-heading">Reset Page</h1>
+                        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+                        <form method="post" class="mt-2 col-lg-4" enctype="multipart/form-data" style="margin: 150px; width: 50%;">
+                            <div style="text-align:start; ">
+                                <div>
+                                    <label>FirstName:</label><br />
+                                    <input asp-for="FirstName" class="form-control" /><br />
+                                    <span classs="text-danger" asp-validation-for="FirstName"></span>
+                                </div>
+                                <div>
+                                    <label>LastName:</label><br />
+                                    <input asp-for="LastName" type="text" class="form-control" /><br />
+                                    <span class="text-danger" asp-validation-for="LastName"></span>
+                                </div>
+                                <div>
+                                    <label>Email:</label><br />
+                                    <input asp-for="Email" type="text" class="form-control" /><br />
+                                    <span class="text-danger" asp-validation-for="Email"></span>
+                                </div>
+
+
+                                <div class="mt-2" style="text-align: center;">
+                                    <button class="btn btn-primary" type="submit" style="color: #fff;background-color: #198754;border-color: #198754; font-size: 20px; width: 100%;">
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <button class="btn btn-primary" type="submit" style="color: #fff; background-color: #f07f13; font-size: 14px; border-color:none !important;">
+                            <a style="color:#fff; text-decoration: none;" asp-action="forgotpassword" asp-controller="Account" class="forget">Reset Password?</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<script>
+    var succses = document.getElementById("succses");
+    console.log(succses);
+    const myTimeout = setTimeout(myGreeting, 2000);
+    function myGreeting() {
+        document.getElementById("succses").style.display = "none";
+    }
+</script>
+

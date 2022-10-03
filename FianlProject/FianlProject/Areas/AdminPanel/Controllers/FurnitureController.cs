@@ -1,12 +1,15 @@
 ﻿using FianlProject.DAL;
 using FianlProject.Extensions;
 using FianlProject.Models;
+using FianlProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,12 +29,17 @@ namespace FianlProject.Areas.AdminPanel.Controllers
 			_context = context;
 			_env = env;
 		}
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
+			int max = 8;
+			double pageCountsort = Math.Ceiling((double)((decimal)_context.Furnitures.Count() / Convert.ToDecimal(max)));
+			
 			List<Furniture> model =await _context.Furnitures
 				.Include(c => c.FurnitureDescription)
 				.Include(c => c.Categories)
-				.Include(c => c.Furnitureimages).ToListAsync();
+				.Include(c => c.Furnitureimages).Include(f => f.Categories).Skip((page - 1) * max).Take(max).ToListAsync();
+			ViewBag.CurentPage = page;
+			ViewBag.TotalPage = pageCountsort;
 			return View(model);
         }
 		
@@ -123,7 +131,7 @@ namespace FianlProject.Areas.AdminPanel.Controllers
 			if (!ModelState.IsValid) return View();
 			if (furniture.ImagesId == null && furniture.Photos == null)
 			{
-				ModelState.AddModelError(string.Empty, "Please check our terms");
+				ModelState.AddModelError(string.Empty, "Please choose at least one main photo");
 				return View(existed);
 			}
 			if (furniture.MainPhoto == null)
@@ -261,5 +269,23 @@ namespace FianlProject.Areas.AdminPanel.Controllers
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
 		}
+
+		//public async Task<IActionResult> Index(int? id, int page = 1)
+		//{
+		//	int max = 8;
+		//	if (id != 0 || id != null)
+		//	{
+		//		Category category = await _context.Categories
+		//			.Include(c => c.Furnitures).ThenInclude(c => c.Furnitureimages).Skip((page - 1) * 4).Take(4)
+		//			.FirstOrDefaultAsync(x => x.Id == id);
+		//		double pageCount = Math.Ceiling((double)((decimal)_context.Furnitures.Count() / Convert.ToDecimal(max)));
+		//		ViewBag.CurentPage = page;
+		//		ViewBag.TotalPage = pageCount;
+		//	}
+
+		//	List<Furniture> furnitures = _context.Furnitures.Include(f => f.Categories).Skip((page - 1) * max).Take(max).ToList();
+
+		//	return View(furnitures);
+		//}
 	}
 }

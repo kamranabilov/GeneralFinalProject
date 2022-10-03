@@ -308,7 +308,6 @@ F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Area
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\Slider\Index.cshtml.g.cs
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\_ViewImports.cshtml.g.cs
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\_ViewStart.cshtml.g.cs
-F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\ForgetPassword.cshtml.g.cs
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Cart\Index.cshtml.g.cs
@@ -334,3 +333,7 @@ F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\FianlProje
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\FianlProject.pdb
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\FianlProject.genruntimeconfig.cache
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Home\About.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\ForgotPassword.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPassword.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Manager\Index.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\About\Index.cshtml.g.cs

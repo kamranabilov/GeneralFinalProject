@@ -4,6 +4,26 @@
     ViewData["Title"] = "Index";
     
 }
+
+@*@{
+    int ratingcount = 0;
+    int countpoint = 0;
+}
+
+@foreach (var item in Model.Rates)
+{
+    ratingcount++;
+    countpoint += item.Point;
+}
+
+@{
+    int Average = 0;
+    if (Model.Rates.Count > 0)
+    {
+        Average = countpoint / ratingcount;
+    }
+
+}*@
  <!-- Main start -->
     <section>
         <div class="about">
@@ -28,13 +48,13 @@
                 <div class="col-lg-3">
                     <div class="filter-title">
                         <h3>Filter:</h3>
-                        <form method="get">
+                    <form method="post" asp-controller="Shop" asp-action="index">
                             <div class="price_slider_wrapper">
                                 <div class="range-slider">
                                     <span class="rangeValues"
                                         style="display: inline-block; color: #999; padding-top: 20px; padding-left: 50px; font-size: 15px"></span>
-                                    <input value="100" min="100" max="1000" step="50" type="range">
-                                    <input value="1000" min="100" max="1000" step="50" type="range">
+                                <input value="100" min="100" max="1000" name="pagimin" step="50" type="range">
+                                <input value="1000" min="100" max="1000" name="pagimax" step="50" type="range">
                                 </div>
                                 <div class="price_slider_amount" data-step="10">
                                     <button type="submit" class="button">Filter</button>
@@ -44,31 +64,40 @@
                                     <div class="clear"></div>
                                 </div>
                             </div>
-                        </form>
+                     </form>
                     </div>
                     <div id="rated_products-2" class="widget woocommerce rated_products">
                         <h3 class="rated-title widget-title">Products By Rating</h3>
                         <ul class="product_list">
-                            <li>
-                                <a href="#">
-                                    <img width="200" height="200" src="~/assets/image/shop/mini-chair_1.jpg"
-                                        sizes="(max-width: 300px) 100vw, 300px" class=" lazyloaded" alt=""
-                                        data-ll-status="loaded">
-                                    <span class="product-title">Mic for Phone</span>
-                                </a>
-                                <div class="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                                    <span style="width:100%">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
+                            @*    @foreach (Rate rate in Model.Rates)
+                            {
+                                <li>
+                                    <a href="#">
+                                        <img width="200" height="200" src="~/assets/image/shop/@rate.Furniture.Image"
+                                         sizes="(max-width: 300px) 100vw, 300px" class=" lazyloaded" alt=""
+                                         data-ll-status="loaded">
+                                        <span class="product-title">@rate.Furniture.Name</span>
+                                    </a>
+                                    <div class="star-rating" role="img" aria-label="Rated 5.00 out of 5">
+                                        <span style="width:100%">
+                                        @for (int i = 0; i < Average; i++)
+                                        {
+                                            <i class="fa-solid fa-star"></i>
+                                        }
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                    </div>
+                                    <span class="amount">
+                                        $@rate.Furniture.Price
                                     </span>
-                                </div>
-                                <span class="amount">
-                                    $70.00
-                                </span>
-                            </li>
+                                </li>
+                            }*@
+
+
                             <li>
                                 <a href="">
                                 <img width="200" height="200" src="~/assets/image/shop/Desk.jpg"
@@ -117,12 +146,12 @@
                         <ul class="category-list">
                             @foreach (Category item in Model.Categories)
                         {
-                                    <li class="list-item">
-                                        <a asp-controller="shop" asp-action="index" asp-route-id="@item.Id">
-                                            @item.Name
+                            <li class="list-item">
+                                <a asp-controller="shop" asp-action="index" asp-route-id="@item.Id">
+                                    @item.Name
                                     <span class="count">(@layoutService.GetFurnitureCategory(item.Id))</span>
-                                        </a>
-                                    </li>
+                                </a>
+                            </li>
                         }
                     </ul>
                     </div>
@@ -141,11 +170,11 @@
                             <div class="media-body before-shop-loop">
                                 <button type="button" data-toggle="dropdown" class="sorting">Sort by</button>
                                 <div class="orderby" name="orderby" aria-label="Shop order">
-                                        <a id="latest" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Latest")">Latest</a>
-                                        <a id="a-z" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("A-Z")"> A-Z</a>
-                                        <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Z-A")"> Z-A</a>
-                                        <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by ascending")"> Price by ascending</a>
-                                        <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="getdatas" asp-route-sortingOrder="@("Price by descending")">Price by descending</a>
+                                        <a id="latest" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Latest")">Latest</a>
+                                        <a id="a-z" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("A-Z")"> A-Z</a>
+                                <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Z-A")"> Z-A</a>
+                                        <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Price by ascending")"> Price by ascending</a>
+                                <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Price by descending")">Price by descending</a>
                                  </div>
                             </div>
                             <div class="media">
@@ -203,36 +232,83 @@
                     <div id="2" class="shop_content">
                         <div class="row is-grid-active">
                             @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(c=>c.Name).Take(6))
-                        {
-                            <div class="col-lg-6">
-                                <div class="product-m d-flex text-start p-3" style="border: 1px solid #e3e3e3;">
-                                    <div class="thumb d-flex">
-                                        <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                       href="product-detail.    html">
-                                            <img width="125" height="125" class="aspect__img"
-                                             src="~/assets/image/shop/@furniture.Image" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="content text-center py-0">
-                                        <span class="rate" style="color: #f07f13; letter-spacing: -3px;">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star-half-stroke"></i>
-                                            <i class="fa-solid fa-star-half-stroke"></i>
-                                        </span>
-                                        <a asp-controller="Wishlist" asp-action="AddWishlist" class="hrt btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"
-                                       data-modal-id="#add-to-cart" >
-                                             <i class="fa-regular fa-heart"></i>
-                                        </a>
-                                        <div class="name">
-                                            <a href="product-detail.html">@furniture.Name</a>
+                            {
+                                @*int ratingCount = 0;
+                                int countPoint = 0;
+                                int avg = 0;
+                                    @if (furniture.Rates.Count > 0)
+                                    {
+                                        @foreach (var item in furniture.Rates)
+                                        {
+                                            ratingCount++;
+                                            countPoint += item.Point;
+                                        }
+
+                                        avg = countPoint / ratingCount;
+
+                                    }*@
+
+                                <div class="col-lg-6">
+                                    <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                    <div class="product-m d-flex text-start p-3" style="border: 1px solid #e3e3e3;">
+                                        <div class="thumb d-flex">
+                                            <a class="aspect aspect--bg-grey aspect--square u-d-block"
+                                           href="product-detail.    html">
+                                                <img width="125" height="125" class="aspect__img"
+                                                 src="~/assets/image/shop/@furniture.Image" alt="">
+                                            </a>
                                         </div>
-                                        <div class="price">$@furniture.Price</div>
+                                        <div class="content text-center py-0">
+                                            <span class="rate" style="color: #f07f13; letter-spacing: -3px;">
+                                               @* @for (int i = 0; i < avg; i++)
+                                                {
+                                                     <i class="fa-solid fa-star"></i>
+                                                }*@
+                                            </span>
+                                            <a asp-controller="Wishlist" asp-action="AddWishlist" class="hrt btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"
+                                           data-modal-id="#add-to-cart">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </a>
+                                            <div class="name">
+                                                <a href="product-detail.html">@furniture.Name</a>
+                                            </div>
+                                            <div class="price">$@furniture.Price</div>
+                                        </div>
                                     </div>
+                                    </a>
                                 </div>
-                            </div>
-                        }
+                            }
+                            <nav class="pagination">
+                                <ul id="myDIV" class="page-numbers">
+                                    @if (ViewBag.CurentPage > 1)
+                                    {
+                                        <li class="page-item " style="width: 55px;">
+                                            <a class="page-link page-numbers current btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Prev</a>
+                                        </li>
+                                    }
+                                    @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                                    {
+                                        <li class="page-item">
+                                            @if (i != ViewBag.CurentPage)
+                                            {
+                                                <a id="myPage" class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                            }
+                                            else
+                                            {
+                                                <a style="background-color:blue;color:wheat" id="myPage" class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                            }
+                                        </li>
+                                    }
+                                    @if (ViewBag.CurentPage < ViewBag.TotalPage)
+                                    {
+                                        <li class="page-item" style="width: 55px;">
+                                            <a class="page-link page-numbers btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Next</a>
+
+                                        </li>
+                                    }
+
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

@@ -21,13 +21,45 @@ namespace FianlProject.Controllers
 		{
 			_context = context;
 		}
-		public async Task<IActionResult> Index(int? id, string sortingOrder, int page = 1)
+		public async Task<IActionResult> Index(int? id, string sortingOrder, int pagimax, int pagimin, int page = 1)
 		{
 			int max = 8;
 			if (id != 0 || id != null)
 			{
+				if (!string.IsNullOrEmpty(sortingOrder))
+				{
+					double pageCountsort = Math.Ceiling((double)((decimal)_context.Furnitures.Count() / Convert.ToDecimal(max)));
+					ViewBag.CurentPage = page;
+					ViewBag.TotalPage = pageCountsort;
+
+					HomeVM sort = new HomeVM
+					{
+						Furnitures = _context.Furnitures.Include(f => f.Rates).Include(f => f.Categories).ToList(),
+						Categories = _context.Categories.Include(c => c.Furnitures).ToList(),
+
+					};
+					switch (sortingOrder)
+					{
+						case "A-Z":
+							sort.Furnitures = sort.Furnitures.OrderBy(Furnitures => Furnitures.Name).Skip((page - 1) * 4).Take(max).ToList();
+							break;
+						case "Z-A":
+							sort.Furnitures = sort.Furnitures.OrderByDescending(Furnitures => Furnitures.Name).Skip((page - 1) * 4).Take(max).ToList();
+							break;
+						case "Price by ascending":
+							sort.Furnitures = sort.Furnitures.OrderBy(Furnitures => Furnitures.Price).Skip((page - 1) * 4).Take(max).ToList();
+							break;
+						case "Price by descending":
+							sort.Furnitures = sort.Furnitures.OrderByDescending(Furnitures => Furnitures.Price).Skip((page - 1) * 4).Take(max).ToList();
+							break;
+						default:
+							sort.Furnitures = sort.Furnitures.OrderBy(Furnitures => Furnitures.Id).Skip((page - 1) * 4).Take(max).ToList();
+							break;
+					}
+					return View(sort);
+				}
 				Category category = await _context.Categories
-					.Include(c => c.Furnitures).ThenInclude(c => c.Furnitureimages).Skip((page - 1) * 4).Take(4)
+					.Include(c => c.Furnitures).ThenInclude(c => c.Rates).Include(c => c.Furnitures).ThenInclude(c => c.Furnitureimages).Skip((page - 1) * 4).Take(4)
 					.FirstOrDefaultAsync(x => x.Id == id);
 				double pageCount = Math.Ceiling((double)((decimal)_context.Furnitures.Count() / Convert.ToDecimal(max)));
 				ViewBag.CurentPage = page;
@@ -49,76 +81,32 @@ namespace FianlProject.Controllers
 						return View();
 					}
 				}
-			}
 
+				if (pagimax != 0 || pagimin != 0)
+				{
+					ViewBag.TotalPage = Math.Ceiling((decimal)_context.Furnitures.Where(m => m.Price > pagimin && m.Price < pagimax).Count() / 4);
+					ViewBag.CurrentPage = page;
+					HomeVM filter = new HomeVM
+					{
+						Furnitures = _context.Furnitures.Include(f => f.Categories).Where(m => m.Price > pagimin && m.Price < pagimax).Skip((page - 1) * 4).Take(4).ToList(),
+						Categories = _context.Categories.Include(c => c.Furnitures).ToList(),
+					};
+					return View(filter);
+
+				}
+			}
 			HomeVM homeVM = new HomeVM
 			{
 				Categories= _context.Categories.ToList(),
 				Furnitures = _context.Furnitures.Include(f => f.Categories).Skip((page - 1) * max).Take(max).ToList()
-			};
 
-			List<Furniture> furnitures = new List<Furniture>();
-			if (!string.IsNullOrEmpty(sortingOrder))
-			{
-				furnitures = GetDatas(sortingOrder);
-			}
+			};
 
 			return View(homeVM);
 		}	
 
-		public List<Furniture> GetDatas(string sortingOrder)
-		{
-			List<Furniture> furniture = new List<Furniture>();
-			//homeVM.Furnitures = new List<Furniture>();
-			switch (sortingOrder)
-			{
-				case "A-Z":
-					furniture = furniture.OrderByDescending(furnitures => furnitures.Name).ToList();
-					break;
-				case "Z-A":
-					furniture = furniture.OrderBy(furnitures => furnitures.Name).ToList();
-					break;
-				case "Price by ascending":
-					furniture = furniture.OrderBy(furnitures => furnitures.Price).ToList();
-					break;
-				case "Price by descending":
-					furniture = furniture.OrderByDescending(furnitures => furnitures.Price).ToList();
-					break;
-				default:
-					furniture = furniture.OrderBy(furnitures => furnitures.Id).ToList();
-					break;
-			}
-			return furniture;
-		}
-
-			//public async Task<IActionResult> GetDatas(string sortingOrder)
-			//{
-			//	//ViewBag.Category = _context.Categories.ToList();
-			//	List<Furniture> furniture = await _context.Furnitures.Include(f => f.Categories).ToListAsync();
-
-			//	switch (sortingOrder)
-			//	{
-			//		case "A-Z":
-			//			furniture = furniture.OrderByDescending(furnitures => furnitures.Name).ToList();
-			//			break;
-			//		case "Z-A":
-			//			furniture = furniture.OrderBy(furnitures => furnitures.Name).ToList();
-			//			break;
-			//		case "Price by ascending":
-			//			furniture = furniture.OrderBy(furnitures => furnitures.Price).ToList();
-			//			break;
-			//		case "Price by descending":
-			//			furniture = furniture.OrderByDescending(furnitures => furnitures.Price).ToList();
-			//			break;
-			//		default:
-			//			furniture = furniture.OrderBy(furnitures => furnitures.Id).ToList();
-			//			break;
-			//	}
-			//	return View("Index", furniture.OrderBy(s=>s.Id).Take(4).ToList());
-			//	//return PartialView("Index",homeVM);
-			//}
-
-			//PartialView
+		
+			
 		public async Task<IActionResult> ModalShopView(int? id)
 		{
 			Furniture furniture = await _context.Furnitures.Include(p => p.Furnitureimages).FirstOrDefaultAsync(p => p.Id == id);

@@ -31,9 +31,13 @@ namespace FianlProject.Controllers
 			Furniture furniture = await _context.Furnitures
 				.Include(c => c.Furnitureimages)
 			    .Include(c => c.FurnitureDescription)
+				.Include(c => c.Categories)
 				.Include(c=>c.Comments).ThenInclude(c=>c.AppUser)
 				.Include(c => c.Rates).ThenInclude(c=>c.AppUser)
 				.FirstOrDefaultAsync(c => c.Id == id);
+
+			//Medicine medicine = _context.Medicines.Include(m => m.Category).Include(m => m.MedicineImages).Include(m => m.Comments).ThenInclude(x => x.AppUser).Include(x => x.Rates).ThenInclude(x => x.AppUser).FirstOrDefault(m => m.Id == id);
+			//return View(medicine);
 			return View(furniture);
 		}
 
@@ -54,6 +58,29 @@ namespace FianlProject.Controllers
 			return Json("Oke");
 		}
 
+		public async Task<IActionResult> DeleteRate(int id)
+		{
+			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+		
+			if (!ModelState.IsValid) return RedirectToAction("Detail", "Furniture");
+			if (User.IsInRole("Admin"))
+			{
+				Rate rateadmin = _context.Rates.FirstOrDefault(c => c.Id == id);
+				_context.Rates.Remove(rateadmin);
+				_context.SaveChanges();
+				return RedirectToAction("Detail", "Furniture", new { id = rateadmin.FurnitureId });
+			}
+		    else if (!_context.Rates.Any(c => c.Id == id && c.AppUserId == user.Id))
+		    {
+				return NotFound();
+			
+			}
+			Rate rate = _context.Rates.FirstOrDefault(c => c.Id == id && c.AppUserId == user.Id);
+			_context.Rates.Remove(rate);
+			_context.SaveChanges();
+			return RedirectToAction("Detail", "Furniture", new { id = rate.FurnitureId });
+		}
+
 		[HttpPost]
 		[AutoValidateAntiforgeryToken]
 		public async Task<IActionResult> AddComment(Comment comment)
@@ -61,23 +88,38 @@ namespace FianlProject.Controllers
 			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
 			if (!ModelState.IsValid) return RedirectToAction("Detail", "Furniture", new { id = comment.FurnitureId });
 			if (!_context.Furnitures.Any(f => f.Id == comment.FurnitureId)) return NotFound();
-			Comment cmnt = new Comment
+			if (comment.Text != null)
 			{
-				Text = comment.Text,
-				FurnitureId = comment.FurnitureId,
-				Date = DateTime.Now,
-				AppUserId = user.Id,
-			};
-			_context.Comments.Add(cmnt);
-			_context.SaveChanges();
+				Comment cmnt = new Comment
+				{
+					Text = comment.Text,
+					FurnitureId = comment.FurnitureId,
+					Date = DateTime.Now,
+					AppUserId = user.Id,
+				};
+				_context.Comments.Add(cmnt);
+				_context.SaveChanges();
+				return RedirectToAction("Detail", "Furniture", new { id = comment.FurnitureId });
+			}
+			
 			return RedirectToAction("Detail", "Furniture", new { id = comment.FurnitureId });
 		}
 
 		public async Task<IActionResult> DeleteComment(int id)
 		{
 			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-			if (!ModelState.IsValid) return RedirectToAction("Detail", "Book");
-			if (!_context.Comments.Any(c => c.Id == id && c.AppUserId == user.Id)) return NotFound();
+			if (!ModelState.IsValid) return RedirectToAction("Detail", "Furniture");
+			if (User.IsInRole("Admin"))
+			{
+				Comment commentadmin = _context.Comments.FirstOrDefault(c => c.Id == id);
+				_context.Comments.Remove(commentadmin);
+				_context.SaveChanges();
+				return RedirectToAction("Detail", "Furniture", new { id = commentadmin.FurnitureId });
+			}
+			else if (!_context.Comments.Any(c => c.Id == id && c.AppUserId == user.Id))
+			{
+				return NotFound();
+			}
 			Comment comment = _context.Comments.FirstOrDefault(c => c.Id == id && c.AppUserId == user.Id);
 			_context.Comments.Remove(comment);
 			_context.SaveChanges();
