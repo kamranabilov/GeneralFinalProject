@@ -5,6 +5,15 @@
 	ViewData["Title"] = "Index";
 }
 
+@{
+    string name = null;
+
+    if (TempData.ContainsKey("name"))
+        name = TempData["name"].ToString();
+}
+<h6 id="succses" style="color:#fff; background-color: #2b7800; text-align: center;">
+    @name
+</h6>
  <!-- Main start -->
     <main>
         <section>
@@ -17,10 +26,10 @@
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
                         aria-label="Slide 3"></button>
                 </div>
-                <div class="carousel-inner" style="z-index: -1;">
+                <div class="carousel-inner" >
                     @foreach (Slider slider in Model.Sliders.OrderBy(o => o.Order))
 				    {
-					    <div class="carousel-item @(slider.Order == 1 ? "active": "")">
+                    <div class="carousel-item @(slider.Order == 1 ? "active": "")" style="z-index: -1;">
 						    <img src="~/assets/image/slider/@slider.Image" class="d-block w-100" alt="...">
 						    <div class="carousel-caption d-none d-md-block title-crs">
 							    <h5 data-aos="fade-right" data-aos-duration="1000">@slider.Discount</h5>
@@ -128,9 +137,12 @@
                 </div>
                 <div id="2" class="arrival_content">
                     <div class="row justify-content-center product-wrap g-2">
-                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.Name).Take(4))
+                    @foreach (OrderItem orderItem in Model.OrderItems.OrderByDescending(o => o.Id).Take(4))
                     {
-                        <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                        int? orderid = orderItem.FurnitureId;
+                        @foreach (var furniture in Model.Furnitures.Where(f=>f.Id==orderItem.FurnitureId))
+                        {
+                            <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
                             <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
                                   <div class="card" id="demo">
                                 <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="    width: 320px !important;
@@ -167,12 +179,13 @@
                             </div>
                             </a>
                         </div>
+                        }
                     }
                     </div>
                 </div>
                 <div id="3" class="arrival_content">
                     <div class="row justify-content-center product-wrap g-2">
-                    @foreach (Furniture furniture in Model.Furnitures.OrderBy(o => o.Price).Take(4))
+                    @foreach (Furniture furniture in Model.Furnitures.Where(f=>f.Trend==true).Take(4))
                     {
                         <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
                             <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
@@ -216,7 +229,7 @@
                 </div>
                 <div id="4" class="arrival_content">
                     <div class="row justify-content-center product-wrap g-2">
-                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.Price).Take(4))
+                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.BestSeller).Take(4))
                     {
                         <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
                             <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
@@ -364,16 +377,24 @@
         <section class="offer">
             <div class="container mt-4">
                 <div data-aos="zoom-in" class="context">
-                    <span class="sale text-center">57% <br> Offer</span>
-                <img src="~/assets/image/chair-slider/@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower()=="offerimg")?.Value" class="img-fluid" alt="">
+                    <span class="sale text-center">New <br> Chair</span>
+                    <img src="~/assets/image/chair-slider/@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower()=="offerimg")?.Value" class="img-fluid" alt="">
                     <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" class="join">
-                        <span class="now">Join now & earn 5% rewards <br> on every order. </span>
-                        <span class="join-price">$340.00 <del>$460.00</del> </span>
+                        <span class="now">Join now & earn rewards <br> on every order. </span>
+                        <span class="join-price">$340.00 </span>
                     </div>
-                <button data-aos="fade-up" data-aos-duration="4000">
-                    @Html.Raw(layoutService.getSettings().FirstOrDefault(x => x.Key.Trim().ToLower() == "offerbutton")?.Value)Buy
-                        Now</button>
-                    <button id="view" data-aos="fade-up" data-aos-duration="4000">View collections</button>
+                         <a data-aos="fade-up" data-aos-duration="4000" asp-controller="Furniture" asp-action="detail" asp-route-id="@layoutService.GetFurnitures().Id" style="cursor: pointer;                            position: absolute;
+                        bottom: 155px;
+                        right: 200px;
+                        color: #fff;
+                        font-size: 12px;
+                        background-color: #f07f13;
+                        border-radius: 1px;
+                        padding: 19px 45px;
+                         text-decoration: none;
+                        margin-right: 110px;
+                        text-transform: uppercase;
+                        outline: none;">Buy Now</a>
                 </div>
             </div>
         </section>
@@ -422,29 +443,33 @@
                 </div>
                 <div id="2" class="content_tab">
                     <div class="row mt-5 list-hover text-center">
-                    @foreach (Furniture furniture in Model.Furnitures.OrderBy(o => o.Name).Take(1))
+                    @foreach (OrderItem order in Model.OrderItems.OrderByDescending(o => o.Id).Take(1))
                     {
-                        <div class="col-lg-12">
-                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
-                                <div class="title-img w-100">
-                                    <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                        //int? orderid = orderItemm.FurnitureId;
+                        foreach (var furniture in Model.Furnitures.Where(f=>f.Id==order.FurnitureId))
+                        {
+                            <div class="col-lg-12">
+                                <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                    <div class="title-img w-100">
+                                        <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
                                         height: 315px !important;
                                         object-fit: contain;
                                         padding: 0;
                                         margin-bottom: 30px;">
-                                    <div class="title-a mt-4 mx-3" style="text-align:center;">
-                                        <a style="text-align:center;">@furniture.Name</a>
-                                        <span>$@furniture.Price</span>
+                                        <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                            <a style="text-align:center;">@furniture.Name</a>
+                                            <span>$@furniture.Price</span>
+                                        </div>
                                     </div>
-                                </div>
-                           </a>
-                        </div>
+                                </a>
+                            </div>
+                        }
                     }
                     </div>
                 </div>
                 <div id="3" class="content_tab">
                     <div class="row mt-5 list-hover text-center">
-                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.Name).Take(1))
+                    @foreach (Furniture furniture in Model.Furnitures.Where(f => f.Trend == true).Take(1))
                     {
                         <div class="col-lg-12">
                             <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
@@ -466,7 +491,7 @@
                 </div>
                 <div id="4" class="content_tab">
                     <div class="row mt-5 list-hover text-center">
-                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.Price).Take(1))
+                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.BestSeller).Take(1))
                     {
                         <div class="col-lg-12">
                             <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
@@ -656,3 +681,12 @@
         </section>
     </main>
     <!-- Main end -->
+
+<script>
+    var succses = document.getElementById("succses");
+    console.log(succses);
+    const myTimeout = setTimeout(myGreeting, 4000);
+    function myGreeting() {
+        document.getElementById("succses").style.display = "none";
+    }
+</script>

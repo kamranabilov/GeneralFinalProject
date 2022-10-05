@@ -3,6 +3,7 @@ using FianlProject.Models;
 using FianlProject.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Differencing;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -35,9 +36,6 @@ namespace FianlProject.Controllers
 				.Include(c=>c.Comments).ThenInclude(c=>c.AppUser)
 				.Include(c => c.Rates).ThenInclude(c=>c.AppUser)
 				.FirstOrDefaultAsync(c => c.Id == id);
-
-			//Medicine medicine = _context.Medicines.Include(m => m.Category).Include(m => m.MedicineImages).Include(m => m.Comments).ThenInclude(x => x.AppUser).Include(x => x.Rates).ThenInclude(x => x.AppUser).FirstOrDefault(m => m.Id == id);
-			//return View(medicine);
 			return View(furniture);
 		}
 
@@ -45,6 +43,7 @@ namespace FianlProject.Controllers
 		public async Task<IActionResult> AddRate(int id, byte point)
 		{
 			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+			if (user == null) return RedirectToAction("Login", "Account");
 
 			Rate Rate = new Rate
 			{
@@ -55,28 +54,71 @@ namespace FianlProject.Controllers
 			};
 			_context.Rates.Add(Rate);
 			_context.SaveChanges();
+			Furniture furniture = _context.Furnitures.FirstOrDefault(c => c.Id == id);
+			List<Rate> rates = _context.Rates.Include(r => r.Furniture).Where(r => r.FurnitureId == id).ToList();
+			int pointrate = 0;
+			foreach (var item in rates)
+			{
+				pointrate += item.Point;
+			}
+			if (rates.Count > 0)
+			{
+				furniture.AvgPoint = pointrate / rates.Count;
+				_context.SaveChanges();
+			}
 			return Json("Oke");
 		}
 
-		public async Task<IActionResult> DeleteRate(int id)
+		public async Task<IActionResult> DeleteRate(int id, int furnitureid)
 		{
 			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
 		
 			if (!ModelState.IsValid) return RedirectToAction("Detail", "Furniture");
+			Furniture furniture = _context.Furnitures.FirstOrDefault(c => c.Id == furnitureid);
 			if (User.IsInRole("Admin"))
 			{
 				Rate rateadmin = _context.Rates.FirstOrDefault(c => c.Id == id);
 				_context.Rates.Remove(rateadmin);
+				_context.SaveChanges();
+				List<Rate> ratesadmin = _context.Rates.Include(r => r.Furniture).Where(r => r.FurnitureId == furnitureid).ToList();
+				int pointrateadmin = 0;
+				if (ratesadmin.Count == 0)
+				{
+					furniture.AvgPoint = 0;
+				}
+				else
+				{
+					foreach (var item in ratesadmin)
+					{
+						pointrateadmin += item.Point;
+					}
+					furniture.AvgPoint = pointrateadmin / ratesadmin.Count;
+				}
 				_context.SaveChanges();
 				return RedirectToAction("Detail", "Furniture", new { id = rateadmin.FurnitureId });
 			}
 		    else if (!_context.Rates.Any(c => c.Id == id && c.AppUserId == user.Id))
 		    {
 				return NotFound();
-			
 			}
 			Rate rate = _context.Rates.FirstOrDefault(c => c.Id == id && c.AppUserId == user.Id);
 			_context.Rates.Remove(rate);
+			_context.SaveChanges();
+			List<Rate> rates = _context.Rates.Include(r => r.Furniture).Where(r => r.FurnitureId == furnitureid).ToList();
+
+			int pointrate = 0;
+			if (rates.Count == 0)
+			{
+				furniture.AvgPoint = 0;
+			}
+			else
+			{
+				foreach (var item in rates)
+				{
+					pointrate += item.Point;
+				}
+				furniture.AvgPoint = pointrate / rates.Count;
+			}
 			_context.SaveChanges();
 			return RedirectToAction("Detail", "Furniture", new { id = rate.FurnitureId });
 		}

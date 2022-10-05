@@ -125,7 +125,7 @@ namespace FianlProject.Controllers
 					basketItem.Quantity++;
 				}
 				_context.SaveChanges();
-
+				//TempData["name"] = "Product added to cart successfully";
 				return PartialView("_basketPartial");
 			}
 			else
@@ -208,6 +208,7 @@ namespace FianlProject.Controllers
 
 			}
 			_context.SaveChanges();
+			//TempData["name"] = "Product added to cart successfully";
 			return PartialView("_basketPartial");
 		}
 		public async Task<IActionResult> removeCartItem(int Id)

@@ -1,6 +1,7 @@
 ﻿using FianlProject.DAL;
 using FianlProject.Models;
 using FianlProject.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
 	[Area("AdminPanel")]
+	[Authorize(Roles ="Admin")]
 	public class DashboardController : Controller
 	{
 		private readonly AppDbContext _context;

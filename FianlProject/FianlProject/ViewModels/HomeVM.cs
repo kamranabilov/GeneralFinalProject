@@ -12,5 +12,7 @@ namespace FianlProject.ViewModels
 		public List<Contact> Contacts { get; set; }
 		public List<About> Abouts { get; set; }
 		public List<Order> Orders { get; set; }
+		public List<Faq> Faqs { get; set; }
+		public List<OrderItem> OrderItems { get; set; }
 	}
 }

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-	[Authorize(Roles = "Admin")]
+	//[Authorize(Roles = "Admin")]
 	public class SettingController : Controller
     {
         private readonly AppDbContext _context;

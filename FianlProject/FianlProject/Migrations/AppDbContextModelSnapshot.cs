@@ -54,6 +54,9 @@ namespace FianlProject.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -254,6 +257,12 @@ namespace FianlProject.Migrations
                     b.Property<string>("Article")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AvgPoint")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BestSeller")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -274,6 +283,9 @@ namespace FianlProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Stock")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Trend")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

@@ -1,5 +1,8 @@
 ﻿using FianlProject.DAL;
+using FianlProject.Extensions;
 using FianlProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -9,13 +12,16 @@ using System.Threading.Tasks;
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
 	[Area("AdminPanel")]
-	//[Authorize(Roles = "Member")]
+	[Authorize(Roles = "Admin")]
 	public class AboutController : Controller
     {
 		private readonly AppDbContext _context;
-		public AboutController(AppDbContext context)
+		private readonly IWebHostEnvironment _env;
+
+		public AboutController(AppDbContext context, IWebHostEnvironment env)
 		{
 			_context = context;
+			_env = env;
 		}
 		public IActionResult Index()
         {
@@ -34,15 +40,32 @@ namespace FianlProject.Areas.AdminPanel.Controllers
 
 		[HttpPost]
 		[AutoValidateAntiforgeryToken]
-		public async Task<IActionResult> Edit(int? id, Setting setting)
+		public async Task<IActionResult> Edit(int? id, About about)
 		{
 			if (id == null || id == 0) return NotFound();
-			if (!ModelState.IsValid) return View();
-			About existed = await _context.Abouts.FirstOrDefaultAsync(x => x.Id == id);
-			if (existed == null) return BadRequest();
-			_context.Entry(existed).CurrentValues.SetValues(existed);
+			About existed = await _context.Abouts.FindAsync(id);
+			if (existed == null) return NotFound();
+			if (!ModelState.IsValid) return View(about);
+			if (about.Photo == null)
+			{
+				string filename = existed.Image;
+				_context.Entry(existed).CurrentValues.SetValues(about);
+				existed.Image = filename;
+			}
+			else
+			{
+				if (!about.Photo.ImageIsOkey(3))
+				{
+					ModelState.AddModelError("Photo", "choose image file");
+					return View(existed);
+				}
+				FileExtension.FileDelete(_env.WebRootPath, "assets/image", existed.Image);
+				_context.Entry(existed).CurrentValues.SetValues(about);
+				existed.Image = await about.Photo.FileCreate(_env.WebRootPath, "assets/image");
+			}
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
+
 		}
 	}
 }

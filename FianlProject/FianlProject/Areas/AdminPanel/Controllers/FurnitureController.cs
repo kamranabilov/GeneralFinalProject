@@ -247,45 +247,58 @@ namespace FianlProject.Areas.AdminPanel.Controllers
 			return View(furniture);
 		}
 
+		//public async Task<IActionResult> Delete(int? id)
+		//{
+		//	if (id == null || id == 0) return NotFound();
+		//	Furniture furniture = await _context.Furnitures.FindAsync(id);
+		//	List<Furnitureimage> furnitureimage = await _context.Furnitureimages.ToListAsync();
+		//	foreach (Furnitureimage item in furnitureimage)
+		//	{
+		//		if (furniture.Id == item.FurnitureId)
+		//		{
+		//			var alternativpath = Path.Combine(_env.WebRootPath, "assets/image/shop", item.Name);
+		//			System.IO.File.Delete(alternativpath);
+		//		}
+		//	}
+		//	if (furniture == null) return NotFound();
+		//	_context.Furnitures.Remove(furniture);
+		//	var rootpath = Path.Combine(_env.WebRootPath, "assets/image/shop/" +
+		//		"", furniture.Image);
+			
+		//	System.IO.File.Delete(rootpath);
+		//	await _context.SaveChangesAsync();
+		//	return RedirectToAction(nameof(Index));
+		//}
+
 		public async Task<IActionResult> Delete(int? id)
 		{
 			if (id == null || id == 0) return NotFound();
 			Furniture furniture = await _context.Furnitures.FindAsync(id);
-			List<Furnitureimage> furnitureimage = await _context.Furnitureimages.ToListAsync();
-			foreach (Furnitureimage item in furnitureimage)
+			if (furniture == null) return NotFound();
+			OrderItem order = await _context.OrderItems.FirstOrDefaultAsync(o => o.FurnitureId == furniture.Id);
+			if (order == null)
 			{
-				if (furniture.Id == item.FurnitureId)
+				List<Furnitureimage> furnitureimages = await _context.Furnitureimages.ToListAsync();
+				foreach (Furnitureimage item in furnitureimages)
 				{
-					var alternativpath = Path.Combine(_env.WebRootPath, "assets/image/shop", item.Name);
-					System.IO.File.Delete(alternativpath);
+					if (furniture.Id == item.FurnitureId)
+					{
+						var alternativpath = Path.Combine(_env.WebRootPath, "assets/image/shop/", item.Name);
+						System.IO.File.Delete(alternativpath);
+					}
 				}
 			}
-			if (furniture == null) return NotFound();
+			else
+			{
+				TempData["orderitem"] = "Order cannot be deleted";
+				return RedirectToAction(nameof(Index));
+			}
+
+
+
 			_context.Furnitures.Remove(furniture);
-			var rootpath = Path.Combine(_env.WebRootPath, "assets/image/shop/" +
-				"", furniture.Image);
-			
-			System.IO.File.Delete(rootpath);
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
 		}
-
-		//public async Task<IActionResult> Index(int? id, int page = 1)
-		//{
-		//	int max = 8;
-		//	if (id != 0 || id != null)
-		//	{
-		//		Category category = await _context.Categories
-		//			.Include(c => c.Furnitures).ThenInclude(c => c.Furnitureimages).Skip((page - 1) * 4).Take(4)
-		//			.FirstOrDefaultAsync(x => x.Id == id);
-		//		double pageCount = Math.Ceiling((double)((decimal)_context.Furnitures.Count() / Convert.ToDecimal(max)));
-		//		ViewBag.CurentPage = page;
-		//		ViewBag.TotalPage = pageCount;
-		//	}
-
-		//	List<Furniture> furnitures = _context.Furnitures.Include(f => f.Categories).Skip((page - 1) * max).Take(max).ToList();
-
-		//	return View(furnitures);
-		//}
 	}
 }

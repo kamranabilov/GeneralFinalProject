@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-	[Authorize(Roles = "Admin")]
+	//[Authorize(Roles = "Admin")]
 	public class SliderController : Controller
     {
         private readonly AppDbContext _context;

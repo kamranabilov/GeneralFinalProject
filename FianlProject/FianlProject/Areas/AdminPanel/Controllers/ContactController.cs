@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace FianlProject.Areas.AdminPanel.Controllers
 {
     [Area("AdminPanel")]
-	//[Authorize(Roles = "Member")]
+	[Authorize(Roles = "Admin")]
 	public class ContactController : Controller
     {
         private readonly AppDbContext _context;

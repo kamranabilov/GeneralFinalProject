@@ -4,6 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
+@{
+    string name = null;
+
+    if (TempData.ContainsKey("name"))
+        name = TempData["name"].ToString();
+}
+<h5 id="succses" style="color:#fff; background-color: #2b7800; text-align: center;">
+    @name
+</h5>
   <!-- Main Start -->
     <section>
         <div class="about">
@@ -55,7 +64,7 @@
                                 <div class="col-12">
                                     <label class="input-label" for="mf-input-text-1d0f4ab4">Description
                                     </label>
-                                    <input asp-for="Description" type="text" class="subject-input" id="mf-input-text-1d0f4ab4">
+                                <input asp-for="Description" placeholder="Write here..." style="padding: 10px 19px 50px 19px;" type="text" class="subject-input" id="mf-input-text-1d0f4ab4">
                                 </div>
                         </div>
                         <div class="elementor-widget">
@@ -145,3 +154,12 @@
         </div>
     </section>
     <!-- Main End -->
+
+<script>
+    var succses = document.getElementById("succses");
+    console.log(succses);
+    const myTimeout = setTimeout(myGreeting, 4000);
+    function myGreeting() {
+        document.getElementById("succses").style.display = "none";
+    }
+</script>

@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20220924130209_createwishlistTable.Designer.cs" />
     <Compile Remove="Migrations\20220924131253_createwishlistTables.cs" />
     <Compile Remove="Migrations\20220924131253_createwishlistTables.Designer.cs" />
+    <Compile Remove="Migrations\20221003125042_addColumnAdminAppUserTable.cs" />
+    <Compile Remove="Migrations\20221003125042_addColumnAdminAppUserTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

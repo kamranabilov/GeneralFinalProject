@@ -20,6 +20,7 @@ namespace FianlProject.Controllers
 
 		public async Task<IActionResult> Index()
 		{
+			ViewBag.Orders = await _context.Orders.ToListAsync();
 			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
 			if (user == null) return NotFound();
 			AppUser name = await _context.Users.Include(n => n.Orders).FirstOrDefaultAsync(n => n.Id == user.Id);
@@ -29,6 +30,7 @@ namespace FianlProject.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Index(AppUser usernew)
 		{
+			ViewBag.Orders =await _context.Orders.ToListAsync();
 			AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
 			if (!ModelState.IsValid) return View("This is error msg");
 			if (usernew == null) return NotFound();
@@ -36,7 +38,7 @@ namespace FianlProject.Controllers
 			user.LastName = usernew.LastName;
 			user.Email = usernew.Email;
 			_context.SaveChanges();
-			TempData["name"] = "Succsses";
+			TempData["name"] = "User management has been successfully replaced";
 			return RedirectToAction(nameof(Index));
 		}
 	}

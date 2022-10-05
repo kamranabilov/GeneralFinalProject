@@ -48,7 +48,7 @@
                 <div class="col-lg-3">
                     <div class="filter-title">
                         <h3>Filter:</h3>
-                    <form method="post" asp-controller="Shop" asp-action="index">
+                    <form method="post" asp-controller="Shop" asp-action="index" asp-route-id="@(ViewBag.CurrentCategory==null?null:ViewBag.CurrentCategory)">
                             <div class="price_slider_wrapper">
                                 <div class="range-slider">
                                     <span class="rangeValues"
@@ -69,76 +69,51 @@
                     <div id="rated_products-2" class="widget woocommerce rated_products">
                         <h3 class="rated-title widget-title">Products By Rating</h3>
                         <ul class="product_list">
-                            @*    @foreach (Rate rate in Model.Rates)
-                            {
-                                <li>
-                                    <a href="#">
-                                        <img width="200" height="200" src="~/assets/image/shop/@rate.Furniture.Image"
-                                         sizes="(max-width: 300px) 100vw, 300px" class=" lazyloaded" alt=""
-                                         data-ll-status="loaded">
-                                        <span class="product-title">@rate.Furniture.Name</span>
-                                    </a>
-                                    <div class="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                                        <span style="width:100%">
-                                        @for (int i = 0; i < Average; i++)
-                                        {
-                                            <i class="fa-solid fa-star"></i>
-                                        }
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </span>
+                            <li>
+                                <a asp-controller="shop" asp-action="index" asp-route-point="5">
+                                <div class="starrating" style="color: #F07F13;">
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
                                     </div>
-                                    <span class="amount">
-                                        $@rate.Furniture.Price
-                                    </span>
-                                </li>
-                            }*@
-
-
-                            <li>
-                                <a href="">
-                                <img width="200" height="200" src="~/assets/image/shop/Desk.jpg"
-                                        sizes="(max-width: 300px) 100vw, 300px" class=" lazyloaded" alt=""
-                                        data-ll-status="loaded">
-                                    <span class="product-title">Xpeed Headset</span>
                                 </a>
-                                <div class="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                                    <span style="width:100%">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </span>
-                                </div>
-                                <span class="amount">
-                                    <del>$100</del>
-                                    $70.00
-                                </span>
+                            </li>
+                             <li>
+                                <a asp-controller="shop" asp-action="index" asp-route-point="4">
+                                <div class="starrating" style="color: #F07F13;">
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                    </div>
+                                </a>
+                            </li>
+                             <li>
+                                <a asp-controller="shop" asp-action="index" asp-route-point="3">
+                                <div class="starrating" style="color: #F07F13;">
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                    </div>
+                                </a>
                             </li>
                             <li>
-                                <a href="">
-                                    <img width="300" height="300" src="~/assets/image/shop/mini-chair_1.jpg"
-                                        sizes="(max-width: 300px) 100vw, 300px" class=" lazyloaded" alt=""
-                                        data-ll-status="loaded">
-                                    <span class="product-title">Mic for Phone</span>
+                                <a asp-controller="shop" asp-action="index" asp-route-point="2">
+                                <div class="starrating" style="color: #F07F13;">
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                    </div>
                                 </a>
-                                <div class="star-rating" role="img" aria-label="Rated 5.00 out of 5">
-                                    <span style="width:100%">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </span>
-                                </div>
-                                <span class="amount">
-                                    $70.00
-                                </span>
                             </li>
+                             <li>
+                                    <a asp-controller="shop" asp-action="index" asp-route-point="1">
+                                         <div class="starrating" style="color: #F07F13;">
+                                            <i class="fa-solid fa-star staron"></i>
+                                        </div>
+                                    </a>
+                             </li>
                         </ul>
                     </div>
                     <div class="product-category">
@@ -170,7 +145,6 @@
                             <div class="media-body before-shop-loop">
                                 <button type="button" data-toggle="dropdown" class="sorting">Sort by</button>
                                 <div class="orderby" name="orderby" aria-label="Shop order">
-                                        <a id="latest" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Latest")">Latest</a>
                                         <a id="a-z" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("A-Z")"> A-Z</a>
                                 <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Z-A")"> Z-A</a>
                                         <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Price by ascending")"> Price by ascending</a>
@@ -250,31 +224,31 @@
 
                                 <div class="col-lg-6">
                                     <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
-                                    <div class="product-m d-flex text-start p-3" style="border: 1px solid #e3e3e3;">
-                                        <div class="thumb d-flex">
-                                            <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                                           href="product-detail.    html">
-                                                <img width="125" height="125" class="aspect__img"
-                                                 src="~/assets/image/shop/@furniture.Image" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="content text-center py-0">
-                                            <span class="rate" style="color: #f07f13; letter-spacing: -3px;">
-                                               @* @for (int i = 0; i < avg; i++)
-                                                {
-                                                     <i class="fa-solid fa-star"></i>
-                                                }*@
-                                            </span>
-                                            <a asp-controller="Wishlist" asp-action="AddWishlist" class="hrt btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"
-                                           data-modal-id="#add-to-cart">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                            <div class="name">
-                                                <a href="product-detail.html">@furniture.Name</a>
+                                        <div class="product-m d-flex text-start p-3" style="border: 1px solid #e3e3e3;">
+                                            <div class="thumb d-flex">
+                                                <a class="aspect aspect--bg-grey aspect--square u-d-block"
+                                               href="product-detail.    html">
+                                                    <img width="125" height="125" class="aspect__img"
+                                                     src="~/assets/image/shop/@furniture.Image" alt="">
+                                                </a>
                                             </div>
-                                            <div class="price">$@furniture.Price</div>
+                                            <div class="content text-center py-0">
+                                                <span class="rate" style="color: #f07f13; letter-spacing: -3px;">
+                                                   @* @for (int i = 0; i < avg; i++)
+                                                    {
+                                                         <i class="fa-solid fa-star"></i>
+                                                    }*@
+                                                </span>
+                                                <a asp-controller="Wishlist" asp-action="AddWishlist" class="hrt btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"
+                                               data-modal-id="#add-to-cart">
+                                                    <i class="fa-regular fa-heart"></i>
+                                                </a>
+                                                <div class="name">
+                                                    <a href="product-detail.html">@furniture.Name</a>
+                                                </div>
+                                                <div class="price">$@furniture.Price</div>
+                                            </div>
                                         </div>
-                                    </div>
                                     </a>
                                 </div>
                             }

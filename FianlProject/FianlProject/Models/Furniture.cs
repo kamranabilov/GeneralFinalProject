@@ -16,6 +16,9 @@ namespace FianlProject.Models
 		public string Article { get; set; }
 		public decimal Price { get; set; }
 		public bool Stock { get; set; }
+		public int BestSeller { get; set; }
+		public bool Trend { get; set; } = false;
+		public int AvgPoint { get; set; }
 		public int FurnitureDescriptionId { get; set; }
 		public FurnitureDescription FurnitureDescription { get; set; }
 		public List<Furnitureimage> Furnitureimages { get; set; }

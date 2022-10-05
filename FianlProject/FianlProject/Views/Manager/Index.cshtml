@@ -1,6 +1,14 @@
 ﻿@model AppUser
 @{
     ViewData["Title"] = "Index";
+    decimal pricount = 0;
+    foreach (Order item in ViewBag.Orders)
+    {
+        if (item.AppUserId==Model.Id)
+        {
+            pricount += item.TotalPrice;
+        }
+    }
 }
 
 @{
@@ -9,18 +17,22 @@
     if (TempData.ContainsKey("name"))
         name = TempData["name"].ToString();
 }
-<h5 id="succses" style="color:green;">
+<h6 id="succses" style="color:#fff; background-color: #2b7800; text-align: center;">
     @name
-</h5>
+</h6>
+
+
+
 
 <main class="w-100 m-auto login">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h1 class="main-heading">Reset Page</h1>
+                <div class="card " >
+                    <div class="card-body" >
+                        <h1 class="main-heading">User management </h1>
                         <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+                        
                         <form method="post" class="mt-2 col-lg-4" enctype="multipart/form-data" style="margin: 150px; width: 50%;">
                             <div style="text-align:start; ">
                                 <div>
@@ -39,7 +51,7 @@
                                     <span class="text-danger" asp-validation-for="Email"></span>
                                 </div>
 
-
+                                <h5 style="background-color: #f07f13; color: #fff; font-size: 20px;"> Total purchase price: $(@pricount)</h5>
                                 <div class="mt-2" style="text-align: center;">
                                     <button class="btn btn-primary" type="submit" style="color: #fff;background-color: #198754;border-color: #198754; font-size: 20px; width: 100%;">
                                         Edit
@@ -47,8 +59,9 @@
                                 </div>
                             </div>
                         </form>
-                        <button class="btn btn-primary" type="submit" style="color: #fff; background-color: #f07f13; font-size: 14px; border-color:none !important;">
+                        <button class="btn btn-primary" type="submit" style="color: #fff; gap: 30px; background-color: #f07f13; font-size: 14px; border-color:none !important;">
                             <a style="color:#fff; text-decoration: none;" asp-action="forgotpassword" asp-controller="Account" class="forget">Reset Password?</a>
+                           
                         </button>
                     </div>
                 </div>
@@ -62,7 +75,7 @@
 <script>
     var succses = document.getElementById("succses");
     console.log(succses);
-    const myTimeout = setTimeout(myGreeting, 2000);
+    const myTimeout = setTimeout(myGreeting, 4000);
     function myGreeting() {
         document.getElementById("succses").style.display = "none";
     }

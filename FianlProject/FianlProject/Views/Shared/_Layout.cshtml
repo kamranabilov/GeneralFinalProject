@@ -66,17 +66,17 @@
                                                         <span>
                                                             Categories:
                                                         </span>
-                                                        <a href="#">Chair</a>
+                                                        <a href="#">Table</a>
                                                     </div>
-                                                    <div class="review">
-                                                        <span class="rate">
+                                                    <div class="review" style="margin: 10px;">
+                                                        <span class="rate" style="margin: 10px;">
                                                             <i class="fa-solid fa-star"></i>
                                                             <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star"></i>
-                                                            <i class="fa-solid fa-star-half-stroke"></i>
-                                                            <i class="fa-solid fa-star-half-stroke"></i>
+                                                            <i class="fa-solid fa-star"></i>  
+
                                                         </span>
-                                                        <a href="#">(3 customer reviews)</a>
+
+                                                        <a href="#"> 2     (customer reviews)</a>
                                                     </div>
                                                     <div class="desc">
                                                         <span>About the product</span>
@@ -136,9 +136,9 @@
                                                             The product is already in the wishlist!
                                                             Browse Wishlist
                                                         </span>
-                                                        <a href="#">
+                                                       @* <a href="#">
                                                             <i class="fa-solid fa-heart"></i>
-                                                        </a>
+                                                        </a>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -273,28 +273,13 @@
                                                 <span>All Categories</span>
                                                 <i class="fa-solid fa-chevron-down"></i>
                                             </a>
-                                            <ul class="dropdown">
-                                                <li>
-                                                    <a asp-controller="shop" asp-action="index">Furniture</a>
-                                                    <i class="fa-solid fa-chevron-right"></i>
-                                                </li>
-                                                <li>
-                                                    <a asp-controller ="shop" asp-action="index">
-                                                        Bedstead</a>
-                                                    <i class="fa-solid fa-chevron-right"></i>
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="shop" asp-action="index">Table</a>
-                                                    <i class="fa-solid fa-chevron-right"></i>
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="shop" asp-action="index">Chair</a>
-                                                    <i class="fa-solid fa-chevron-right"></i>
-                                                </li>
-                                                <li>
-                                                    <a asp-controller="shop" asp-action="index">Sofa</a>
-                                                    <i class="fa-solid fa-chevron-right"></i>
-                                                </li>
+                                            <ul class="dropdown" style="width: 220px;">
+                                                @foreach (Category item in layoutService.GetCategories())
+                                               {
+                                                    <li>
+                                                        <a style="padding: 0; font-size: 15px;" asp-controller="shop" asp-action="index" asp-route-id="@item.Id">@item.Name</a> <i style="right: 0px;top: 4px; font-size: 14px;" class="fa-solid fa-chevron-right"></i>
+                                                    </li>
+                                                }
                                             </ul>
                                         </li>
                                     </ul>
@@ -611,7 +596,6 @@
             var base = window.location.origin;
             var url = `${base}${href}`
             var urlForPartial = `${base}/Cart/GetPartial`
-           
 
             fetch(url).then(res => res.text()).then(data => {
 
@@ -713,19 +697,19 @@
                     $(".wish-lists .wishContainer .wishinROw").empty();
 
                     $(".wish-lists .wishContainer .wishinROw").append(data);
-
+                    location.reload(true)
                 })
 
             })
             setTimeout(function () {
-                //var count = document.getElementById("total_countWishlist");
+                var count = document.getElementById("total_countWishlist");
 
             }, 100);
         })
     });
 </script>
 
- @*wishlist fetch end*@
+@*wishlist fetch end*@
 
  @*ModalPartialView Start*@
 

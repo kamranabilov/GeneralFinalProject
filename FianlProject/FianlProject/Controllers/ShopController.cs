@@ -21,9 +21,15 @@ namespace FianlProject.Controllers
 		{
 			_context = context;
 		}
-		public async Task<IActionResult> Index(int? id, string sortingOrder, int pagimax, int pagimin, int page = 1)
+		public async Task<IActionResult> Index(int? id, string sortingOrder, int pagimax, int pagimin, int point, int page = 1)
 		{
 			int max = 8;
+			HomeVM hvm = new HomeVM
+			{
+				Categories = _context.Categories.Include(c => c.Furnitures).ToList(),
+				Furnitures = _context.Furnitures.Include(m => m.Rates).Include(f => f.Categories).Skip((page - 1) * 4).Take(4).ToList()
+			};
+
 			if (id != 0 || id != null)
 			{
 				if (!string.IsNullOrEmpty(sortingOrder))
@@ -93,6 +99,15 @@ namespace FianlProject.Controllers
 					};
 					return View(filter);
 
+				}
+
+
+				if (point != 0)
+				{
+					List<Furniture> existed = _context.Furnitures.Where(f=>f.AvgPoint==point).ToList();
+				
+					hvm.Furnitures = existed;
+					return View(hvm);
 				}
 			}
 			HomeVM homeVM = new HomeVM

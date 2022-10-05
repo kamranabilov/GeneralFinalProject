@@ -23,7 +23,7 @@
 
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div style="background: #181824" class="navbar-brand-wrapper d-flex justify-content-center">
+            <div style="background: #f07f13" class="navbar-brand-wrapper d-flex justify-content-center">
                 <div  class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
                     <a  class="navbar-brand brand-logo" asp-area="AdminPanel" asp-controller="Dashboard" >
                         <img style="width: 100%" src="~/assets/image/logo/@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower() == "headerlogo")?.Value" alt="logo" />
@@ -34,9 +34,9 @@
                     </button>
                 </div>
             </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:gold">
-                <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item dropdown me-1 g-3" style="gap: 20px;">
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end" style="background-color:#f07f13;">
+                <ul class="navbar-nav navbar-nav-right" style="background-color: #f07f13 !important;">
+                    <li class="nav-item dropdown me-1 g-3" style="gap: 20px; background-color: #f07f13;">
                        @* <a asp-area="AdminPanel" asp-controller="Order" class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown">
                             <i class="mdi mdi-checkbox-marked-circle mx-0"></i>
                             <span style="background: #fff; width:20px; height: 20px; top: 0px;" class="count">@layoutService.GetOrders().Count()</span>
@@ -64,15 +64,9 @@
                     </li>
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                            <img src="~/admin/images/faces/face23.jpg" alt="profile" />
-                            <span class="nav-profile-name">Antonalli Ruccozo</span>
+                            <img style="color: #fff;" src="~/admin/images/Administrator-male-skin-type-7-48.png" alt="profile" />
+                            <span class="nav-profile-name" style="color: #fff;">By Drector</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item">
-                                <i class="mdi mdi-settings text-primary"></i>
-                                Settings
-                            </a>
-                        </div>
                     </li>
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -83,9 +77,9 @@
         <!-- partial -->
         <div class="container-fluid page-body-wrapper ">
             <!-- partial:partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas" style="background: #181824; " id="sidebar">
-                <ul class="nav" >
-                    <li class="nav-item" >
+            <nav class="sidebar sidebar-offcanvas" style="background: #f07f13; " id="sidebar">
+                <ul class="nav" style="color: #fff;">
+                    <li class="nav-item" style="color: #fff;">
                         <a class="nav-link" style="color: #fff !important" asp-area="AdminPanel" asp-controller="Dashboard">
                             <i class="mdi mdi-cube menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
@@ -99,19 +93,28 @@
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu" >
-                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Slider" asp-action="index">Slider</a></li>
-                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="category" asp-action="index">Category</a></li>
-                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Furniture" asp-action="index">Furniture</a></li>
-                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Setting" asp-action="index">Setting</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Manager" asp-action="index">Manager</a></li>
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="About" asp-action="index">About</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Faq" asp-action="index">Faq</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Slider" asp-action="index">Slider</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Furniture" asp-action="index">Furniture</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="category" asp-action="index">Category</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Seller" asp-action="index">Seller</a></li>
                                 <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Order" asp-action="index">Order</a></li>
+                                <li class="nav-item"> <a style="color: #fff !important" class="nav-link" asp-controller="Setting" asp-action="index">Setting</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color: #fff !important" href="pages/icons/mdi.html">
+                        <a class="nav-link" href="pages/icons/mdi.html" style="color: #4d83ff !important">
                             <i class="mdi mdi-emoticon menu-icon"></i>
                             <span class="menu-title">Icons</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documentation/documentation.html" style="color: #4d83ff !important">
+                            <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                            <span class="menu-title">Documentation</span>
                         </a>
                     </li>
                 </ul>

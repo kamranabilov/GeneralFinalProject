@@ -43,6 +43,7 @@ namespace FianlProject.Controllers
 			};
 			await _context.Contacts.AddAsync(contact);
 			await _context.SaveChangesAsync();
+			TempData["name"] = "The message was sent successfully";
 			return RedirectToAction(nameof(Index));
 
 		}

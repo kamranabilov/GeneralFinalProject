@@ -19,18 +19,16 @@ namespace FianlProject.Controllers
 		private readonly RoleManager<IdentityRole> _roleManager;
 		private readonly AppDbContext _context;
 		private readonly IHttpContextAccessor _http;
-		//private readonly EmailService _emailService;
 
 
 		public AccountController
-			(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context, IHttpContextAccessor http /*EmailService emailService*/)
+			(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context, IHttpContextAccessor http)
 		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 			_roleManager = roleManager;
 			_context = context;
 			_http = http;
-			//_emailService = emailService;
 		}
 
 		public IActionResult Register()
@@ -48,12 +46,13 @@ namespace FianlProject.Controllers
                 ModelState.AddModelError(string.Empty, "Please check the terms");
                 return View();
             }
-            AppUser user = new AppUser
-            {
-                FirstName = register.FirstName,
-                LastName = register.LastName,
-                UserName = register.UserName,
-                Email = register.Email
+			AppUser user = new AppUser
+			{
+				FirstName = register.FirstName,
+				LastName = register.LastName,
+				UserName = register.UserName,
+				Email = register.Email,
+				Admin = false
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, register.Password);
@@ -91,7 +90,7 @@ namespace FianlProject.Controllers
 			smtp.Port = 587;
 			smtp.EnableSsl = true;
 
-			smtp.Credentials = new NetworkCredential("kamrangab@code.edu.az", "Samsungg16");
+			smtp.Credentials = new NetworkCredential("kamrangab@code.edu.az", "Samsungg1");
 			smtp.Send(mail);
 			TempData["Verify"] = true;
 			return RedirectToAction("Index", "Home");
@@ -130,7 +129,7 @@ namespace FianlProject.Controllers
 				}
 				return View();
 			}
-
+			TempData["name"] = "Successfully entered";
 			return RedirectToAction("Index", "Home");
 
 		}
@@ -191,7 +190,7 @@ namespace FianlProject.Controllers
 			smtp.Port = 587;
 			smtp.EnableSsl = true;
 
-			smtp.Credentials = new NetworkCredential("kamrangab@code.edu.az", "Samsungg16");
+			smtp.Credentials = new NetworkCredential("kamrangab@code.edu.az", "Samsungg1");
 			smtp.Send(mail);
 			return RedirectToAction("index", "home");
 		}

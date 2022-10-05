@@ -38,7 +38,7 @@ namespace FianlProject
 			services.AddIdentity<AppUser, IdentityRole>(opt =>
 			{
 				opt.User.RequireUniqueEmail = true;
-                //opt.SignIn.RequireConfirmedEmail = true;
+                opt.SignIn.RequireConfirmedEmail = true;
                 opt.User.AllowedUserNameCharacters = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890_";
 
 				opt.Password.RequiredUniqueChars = 3; // en azi 1 tekrar olunmayin herif olmalidir
@@ -56,12 +56,6 @@ namespace FianlProject
 			services.AddScoped<LayoutService>();
 
 			services.AddHttpContextAccessor();
-
-            //services.AddTransient(typeof(EmailService));
-
-            //var emailConfig = _configuration.GetSection("EmailConfig").Get<EmailConfig>();
-
-            //services.AddSingleton(emailConfig);
 
 			services.AddControllers().AddNewtonsoftJson(options =>
 		    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

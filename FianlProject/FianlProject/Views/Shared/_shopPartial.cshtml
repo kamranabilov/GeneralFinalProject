@@ -6,7 +6,7 @@
             <div class="product-m">
                 <div class="thumb">
                     <a class="aspect aspect--bg-grey aspect--square u-d-block"
-                   href="product-detail.    html">
+                        asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
                         <img width="222" height="300" class="aspect__img"
                          src="~/assets/image/shop/@furniture.Image" alt="">
                     </a>
@@ -24,9 +24,9 @@
                             </a>
                         }
                         <a asp-controller="shop" asp-action="ModalShopView" asp-route-id="@furniture.Id" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                       id="viewbtn"
-                       class="btn--e-brand d-flex" data-modal="modal"
-                       data-modal-id="#add-to-cart">
+                           id="viewbtn"
+                           class="btn--e-brand d-flex" data-modal="modal"
+                           data-modal-id="#add-to-cart">
                             <i class="fa-regular fa-eye"></i>
                         </a>
                         <a asp-controller="wishlist" asp-action="AddWishlist" class="btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"

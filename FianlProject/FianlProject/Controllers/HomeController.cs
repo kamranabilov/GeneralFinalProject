@@ -28,7 +28,8 @@ namespace FianlProject.Controllers
 				Categories = await _context.Categories.Include(c => c.Furnitures).ToListAsync(),
 				Contacts = await _context.Contacts.ToListAsync(),
 				Rates = await _context.Rates.ToListAsync(),
-				Orders = await _context.Orders.ToListAsync()
+				Orders = await _context.Orders.ToListAsync(),
+				OrderItems=await _context.OrderItems.ToListAsync(),
 			};
 
 

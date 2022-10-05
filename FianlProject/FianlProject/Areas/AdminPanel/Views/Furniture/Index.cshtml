@@ -4,19 +4,29 @@
 }
 
 <div class="main-panel">
-    <div style="text-align: center">
-        <a class="btn btn-success" asp-area="AdminPanel" asp-controller="Furniture" asp-action="create">
+    <div style="text-align: center; color: #fff;">
+        <a style="color: #fff;" class="btn btn-success" asp-area="AdminPanel" asp-controller="Furniture" asp-action="create">
             Create New Furniture
         </a>
     </div>
+
+    @{
+    string name = null;
+
+        if (TempData.ContainsKey("orderitem"))
+        name = TempData["orderitem"].ToString();
+}
+    <h3 id="succses" style="color:#000; background-color: #f8d7da; text-align: center;">
+    @name
+</h3>
     @{
         if (TempData["FileName"]!= null)
         {
-                                <div class="alert alert-danger">@TempData["FileName"]</div>
+                                        <div class="alert alert-danger">@TempData["FileName"]</div>
         }
     }
 
-    <div class="table-responsive pt-3">
+    <div class="table-responsive">
         <table class="table table-bordered" style="text-align: center">
             <thead class="table table-info" style="text-align: center">
                 <tr>
@@ -111,5 +121,14 @@
         </nav>
     </div>
 </div>
+
+<script>
+    var succses = document.getElementById("succses");
+    console.log(succses);
+    const myTimeout = setTimeout(myGreeting, 4000);
+    function myGreeting() {
+        document.getElementById("succses").style.display = "none";
+    }
+</script>
 
 

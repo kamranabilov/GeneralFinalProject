@@ -28,7 +28,7 @@ namespace FianlProject.Services
 
 		public Furniture GetFurnitures()
 		{
-			Furniture furnitures = _context.Furnitures.FirstOrDefault(x=>x.Id == 80);
+			Furniture furnitures = _context.Furnitures.FirstOrDefault(x=>x.Id == 81);
 			return furnitures;
 		}
 

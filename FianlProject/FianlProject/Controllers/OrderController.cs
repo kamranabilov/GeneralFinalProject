@@ -10,6 +10,8 @@ using FianlProject.ViewModels;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FianlProject.Controllers
 {
@@ -104,13 +106,21 @@ namespace FianlProject.Controllers
 					FurnitureId = item.Furniture.Id,
 					Order = order
 				};
+				List<Furniture> furnitures = _context.Furnitures.ToList();
+				foreach (var furniture in furnitures)
+				{
+					if (furniture.Id == item.FurnitureId)
+					{
+						furniture.BestSeller += item.Quantity;
+					}
+				}
 				_context.OrderItems.Add(orderItem);
 			}
 			_context.BasketItems.RemoveRange(model.BasketItems);
 			_context.Orders.Add(order);
 			_context.SaveChanges();
 			TempData["Succeeded"] = true;
-
+			TempData["name"] = "Your order has been successfully confirmed";
 			return RedirectToAction("index", "home");
 		}
 	}

@@ -337,3 +337,8 @@ F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\View
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Account\ResetPassword.cshtml.g.cs
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Views\Manager\Index.cshtml.g.cs
 F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\About\Index.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\About\Edit.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\Manager\Index.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\Faq\Index.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\Faq\Edit.cshtml.g.cs
+F:\1.1.FinalProject\FianlProject\FianlProject\obj\Debug\netcoreapp3.1\Razor\Areas\AdminPanel\Views\Seller\Index.cshtml.g.cs

@@ -5,6 +5,15 @@
     WishlistVM wishlist =await layoutService.GetWishlist();
 }
 
+@{
+    string name = null;
+
+    if (TempData.ContainsKey("name"))
+        name = TempData["name"].ToString();
+}
+<h5 id="succses" style="color:#fff; background-color: #2b7800; text-align: center;">
+    @name
+</h5>
 
     <!-- Main start -->
 
@@ -28,8 +37,8 @@
         </section>
         <section class="wishlist">
             <div class="container">
-            <div class="row d-md-block">
-                    <div class="col-lg-12 col-sm-6">
+            <div class="row d-md-block wish-lists">
+                <div class="col-lg-12 col-sm-6 ">
                        @* <h2">My wishlist on MarketPress</h2>*@
                         <div class="title-form">
                             <input type="text" value="My wishlist on MarketPress" name="wishlist_name">
@@ -72,7 +81,11 @@
                                     </th>
                                 </tr>
                             </thead>
-                            @await Html.PartialAsync("_WishlistPartialView", layoutService)
+                            <div class="wishContainer"> 
+                                <div class="wishinROw"> 
+                                    @await Html.PartialAsync("_WishlistPartialView",layoutService)
+                                </div>
+                            </div>
                         </table>
                     </div>
                 </div>
@@ -82,4 +95,12 @@
     </main>
 
     <!-- main end -->
+<script>
+    var succses = document.getElementById("succses");
+    console.log(succses);
+    const myTimeout = setTimeout(myGreeting, 5000);
+    function myGreeting() {
+        document.getElementById("succses").style.display = "none";
+    }
+</script>
 
