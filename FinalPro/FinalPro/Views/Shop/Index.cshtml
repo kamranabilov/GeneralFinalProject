@@ -1,0 +1,296 @@
+﻿@model HomeVM
+@inject FianlProject.Services.LayoutService layoutService
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+@*@{
+    int ratingcount = 0;
+    int countpoint = 0;
+}
+
+@foreach (var item in Model.Rates)
+{
+    ratingcount++;
+    countpoint += item.Point;
+}
+
+@{
+    int Average = 0;
+    if (Model.Rates.Count > 0)
+    {
+        Average = countpoint / ratingcount;
+    }
+
+}*@
+ <!-- Main start -->
+    <section>
+        <div class="about">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-sm-12 g-4">
+                        <div class="about-title">
+                            <span>
+                                <a asp-controller="home" asp-action="index">Home </a>
+                            </span>
+                            >
+                            <span> Shop</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="filter">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="filter-title">
+                        <h3>Filter:</h3>
+                    <form method="post" asp-controller="Shop" asp-action="index" asp-route-id="@(ViewBag.CurrentCategory==null?null:ViewBag.CurrentCategory)">
+                            <div class="price_slider_wrapper">
+                                <div class="range-slider">
+                                    <span class="rangeValues"
+                                        style="display: inline-block; color: #999; padding-top: 20px; padding-left: 50px; font-size: 15px"></span>
+                                <input value="100" min="100" max="1000" name="pagimin" step="50" type="range">
+                                <input value="1000" min="100" max="1000" name="pagimax" step="50" type="range">
+                                </div>
+                                <div class="price_slider_amount" data-step="10">
+                                    <button type="submit" class="button">Filter</button>
+                                    <div class="price_label" style="">
+                                        Price:
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                     </form>
+                    </div>
+                    <div id="rated_products-2" class="widget woocommerce rated_products">
+                        <h3 class="rated-title widget-title">Products By Rating</h3>
+                        <ul class="product_list">
+                            <li>
+                                <a asp-controller="shop" asp-action="index" asp-route-point="5">
+                                <div class="starrating" style="color: #F07F13;">
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                    </div>
+                                </a>
+                            </li>
+                             <li>
+                                <a asp-controller="shop" asp-action="index" asp-route-point="4">
+                                <div class="starrating" style="color: #F07F13;">
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                    </div>
+                                </a>
+                            </li>
+                             <li>
+                                <a asp-controller="shop" asp-action="index" asp-route-point="3">
+                                <div class="starrating" style="color: #F07F13;">
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="shop" asp-action="index" asp-route-point="2">
+                                <div class="starrating" style="color: #F07F13;">
+                                        <i class="fa-solid fa-star staron"></i>
+                                        <i class="fa-solid fa-star staron"></i>
+                                    </div>
+                                </a>
+                            </li>
+                             <li>
+                                    <a asp-controller="shop" asp-action="index" asp-route-point="1">
+                                         <div class="starrating" style="color: #F07F13;">
+                                            <i class="fa-solid fa-star staron"></i>
+                                        </div>
+                                    </a>
+                             </li>
+                        </ul>
+                    </div>
+                    <div class="product-category">
+                        <h3 class="category-title">Product categories</h3>
+                        <ul class="category-list">
+                            @foreach (Category item in Model.Categories)
+                        {
+                            <li class="list-item">
+                                <a asp-controller="shop" asp-action="index" asp-route-id="@item.Id">
+                                    @item.Name
+                                    <span class="count">(@layoutService.GetFurnitureCategory(item.Id))</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    </div>
+                    <div id="block-2" class="widget widget_block media_image">
+                        <figure class="block-image size-full">
+                            <img width="255" height="475"
+                             src="~/assets/image/shop/@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower() == "shopbanner")?.Value"
+                                alt="" class="wp-image-2899 lazyloaded" data-ll-status="loaded">
+                        </figure>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="products-header">
+                        <h5 class="products-header_title page-title">Shop</h5>
+                        <div class="media filter-content">
+                            <div class="media-body before-shop-loop">
+                                <button type="button" data-toggle="dropdown" class="sorting">Sort by</button>
+                                <div class="orderby" name="orderby" aria-label="Shop order">
+                                        <a id="a-z" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("A-Z")"> A-Z</a>
+                                <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Z-A")"> Z-A</a>
+                                        <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Price by ascending")"> Price by ascending</a>
+                                <a id="z-a" style="display:block; text-decoration: none;" asp-controller="shop" asp-action="index" asp-route-sortingOrder="@("Price by descending")">Price by descending</a>
+                                 </div>
+                            </div>
+                            <div class="media">
+                                <h6>View</h6>
+                                <ul class="nav nav-tabs view-nav" id="myTab" role="tablist">
+                                    <li class="nav-item" id="tab1">
+                                        <a id="1" class="nav-link btn_link active_link">
+                                            <i class="fa-solid fa-table-cells"></i>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" id="tab1">
+                                        <a id="2" class="nav-link btn_link">
+                                            <i class="fa-solid fa-bars"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="1" style="display: block;" class="shop_content">
+                        <div class="row is-grid-active">
+                        @await Html.PartialAsync("_shopPartial", Model.Furnitures)
+                        <nav class="pagination">
+                            <ul id="myDIV" class="page-numbers">
+                                @if (ViewBag.CurentPage > 1)
+                                {
+                                    <li class="page-item " style="width: 55px;">
+                                        <a class="page-link page-numbers current btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Prev</a>
+                                    </li>
+                                }
+                                @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                                {
+                                    <li class="page-item">
+                                        @if (i != ViewBag.CurentPage)
+                                        {
+                                            <a id="myPage" class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                        }
+                                        else{
+                                            <a style="background-color:blue;color:wheat" id="myPage" class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                        }
+                                    </li>
+                                }
+                                @if (ViewBag.CurentPage < ViewBag.TotalPage)
+                                {
+                                    <li class="page-item" style="width: 55px;">
+                                        <a class="page-link page-numbers btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Next</a>
+                                    
+                                    </li>
+                                }
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div id="2" class="shop_content">
+                        <div class="row is-grid-active">
+                            @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(c=>c.Name).Take(6))
+                            {
+                                @*int ratingCount = 0;
+                                int countPoint = 0;
+                                int avg = 0;
+                                    @if (furniture.Rates.Count > 0)
+                                    {
+                                        @foreach (var item in furniture.Rates)
+                                        {
+                                            ratingCount++;
+                                            countPoint += item.Point;
+                                        }
+
+                                        avg = countPoint / ratingCount;
+
+                                    }*@
+
+                                <div class="col-lg-6">
+                                    <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                        <div class="product-m d-flex text-start p-3" style="border: 1px solid #e3e3e3;">
+                                            <div class="thumb d-flex">
+                                                <a class="aspect aspect--bg-grey aspect--square u-d-block"
+                                               href="product-detail.    html">
+                                                    <img width="125" height="125" class="aspect__img"
+                                                     src="~/assets/image/shop/@furniture.Image" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="content text-center py-0">
+                                                <span class="rate" style="color: #f07f13; letter-spacing: -3px;">
+                                                   @* @for (int i = 0; i < avg; i++)
+                                                    {
+                                                         <i class="fa-solid fa-star"></i>
+                                                    }*@
+                                                </span>
+                                                <a asp-controller="Wishlist" asp-action="AddWishlist" class="hrt btn--e-brand d-flex wishlistFetch" asp-route-id="@furniture.Id" data-modal="modal"
+                                               data-modal-id="#add-to-cart">
+                                                    <i class="fa-regular fa-heart"></i>
+                                                </a>
+                                                <div class="name">
+                                                    <a href="product-detail.html">@furniture.Name</a>
+                                                </div>
+                                                <div class="price">$@furniture.Price</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                            <nav class="pagination">
+                                <ul id="myDIV" class="page-numbers">
+                                    @if (ViewBag.CurentPage > 1)
+                                    {
+                                        <li class="page-item " style="width: 55px;">
+                                            <a class="page-link page-numbers current btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Prev</a>
+                                        </li>
+                                    }
+                                    @for (int i = 1; i <= ViewBag.TotalPage; i++)
+                                    {
+                                        <li class="page-item">
+                                            @if (i != ViewBag.CurentPage)
+                                            {
+                                                <a id="myPage" class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                            }
+                                            else
+                                            {
+                                                <a style="background-color:blue;color:wheat" id="myPage" class="page-link page-numbers btnn " asp-controller="shop" asp-action="index" asp-route-page="@i">@i</a>
+                                            }
+                                        </li>
+                                    }
+                                    @if (ViewBag.CurentPage < ViewBag.TotalPage)
+                                    {
+                                        <li class="page-item" style="width: 55px;">
+                                            <a class="page-link page-numbers btnn" asp-controller="shop" asp-action="index" asp-route-page="ViewBag.CurentPage-1">Next</a>
+
+                                        </li>
+                                    }
+
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main end -->
+
+
+
+

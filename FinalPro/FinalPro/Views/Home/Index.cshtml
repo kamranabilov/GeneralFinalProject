@@ -1,0 +1,692 @@
+﻿@model HomeVM
+@inject FianlProject.Services.LayoutService layoutService
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+@{
+    string name = null;
+
+    if (TempData.ContainsKey("name"))
+        name = TempData["name"].ToString();
+}
+<h6 id="succses" style="color:#fff; background-color: #2b7800; text-align: center;">
+    @name
+</h6>
+ <!-- Main start -->
+    <main>
+        <section>
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner" >
+                    @foreach (Slider slider in Model.Sliders.OrderBy(o => o.Order))
+				    {
+                    <div class="carousel-item @(slider.Order == 1 ? "active": "")" style="z-index: -1;">
+						    <img src="~/assets/image/slider/@slider.Image" class="d-block w-100" alt="...">
+						    <div class="carousel-caption d-none d-md-block title-crs">
+							    <h5 data-aos="fade-right" data-aos-duration="1000">@slider.Discount</h5>
+							    <h1 data-aos="fade-down" data-aos-duration="1500">
+								    @slider.Title <br data-aos="fade-right"
+									       data-aos-duration="3000">@slider.Desc
+							    </h1>
+							    <a href="@slider.ButtonUrl" data-aos="zoom-out-left" data-aos-duration="1800" style="margin-top: 20px;">
+								    View
+								    collections
+							    </a>
+						    </div>
+					    </div>
+				    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </section>
+        <section class="shop-now">
+            <div class="container-fluid pt-5 pb-3">
+                <div class="row px-lg-5 ">
+                    <div class="col-lg-7 col-12 col-sm-6 col-md-4">
+                        <div class="need mb-30">
+                        <a href="#"><img src="~/assets/image/featuer/@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower() == "shopimg1")?.Value" class="img-fluid" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-12 col-sm-6 col-md-4">
+                        <div class="need2 mb-30">
+                        <a href="#"><img src="~/assets/image/featuer/@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower() == "shopimg2")?.Value" class="img-fluid" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="new-arrivals">
+            <div class="container pt-5 pb-3">
+                <div class="content-header">
+                    <h2 class="content-title">New Arrivals</h2>
+                    <ul class="nav nav-tabs nav-tab">
+                        <li class="nav_tab">
+                            <a id="1" class="nav-link btnnav contentshow">On Sell</a>
+                        </li>
+                        <li class="nav_tab">
+                            <a id="2" class="nav-link btnnav">Hot Sell</a>
+                        </li>
+                        <li class="nav_tab">
+                            <a id="3" class="nav-link btnnav">Trend</a>
+                        </li>
+                        <li class="nav_tab">
+                            <a id="4" class="nav-link btnnav">Best Sell</a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="1" style="display: block;" class="arrival_content">
+                    <div class="row justify-content-center product-wrap g-2">
+                    @foreach (Furniture furniture in Model.Furnitures.OrderBy(o => o.Name).Take(4))
+                    {
+                            <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                                    <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                    <div class="card" id="demo">
+                                        <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="    width: 320px !important;
+                                                height: 315px !important;
+                                                object-fit: contain;
+                                                padding: 0;
+                                                margin-bottom: 30px;">
+                                        <div class="card-body text-center">
+                                            <span class="product-categories">
+                                                <a style="text-decoration: none;">@furniture.Categories.Name</a>
+                                            </span>
+                                            <a class="product-title" style="color: #000; font-size: 20px;">@furniture.Name</a>
+                                            <span class="price">
+                                                <span class="Price-amount amount"><bdi>
+                                                        <span class="Price-currencySymbol">$</span>@furniture.Price</bdi>
+                                                </span>
+                                            </span>
+                                            <div class="hover-area text-center" id="text">
+                                                <a style="text-decoration:none; background-color: red; color: green; position:relative;" class="wishlistFetch" asp-controller="wishlist" asp-action="AddWishlist" asp-route-id="@furniture.Id">
+                                                    <i style="font-size: 18px; position: absolute;
+                                                                        top: -425px;
+                                                                        right: -200px;"
+                                                   class="fa-regular fa-heart">
+                                                    </i>
+                                                </a>
+                                                <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id" class="add-to-cart" style="">
+                                                    <i class="fa-solid fa-basket-shopping">
+                                                    </i> Select to option
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </a>
+                            </div>
+                    }
+                    </div>
+                </div>
+                <div id="2" class="arrival_content">
+                    <div class="row justify-content-center product-wrap g-2">
+                    @foreach (OrderItem orderItem in Model.OrderItems.OrderByDescending(o => o.Id).Take(4))
+                    {
+                        int? orderid = orderItem.FurnitureId;
+                        @foreach (var furniture in Model.Furnitures.Where(f=>f.Id==orderItem.FurnitureId))
+                        {
+                            <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                  <div class="card" id="demo">
+                                <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="    width: 320px !important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                <div class="card-body text-center">
+                                    <span class="product-categories">
+                                        <a >@furniture.Categories.Name</a>
+                                    </span>
+                                    <a class="product-title">@furniture.Name</a>
+                                    <span class="price">
+                                        <span class="Price-amount amount">
+                                            <bdi>
+                                                <span class="Price-currencySymbol">$</span>@furniture.Price
+                                            </bdi>
+                                        </span>
+                                    </span>
+                                    <div class="hover-area text-center" id="text">
+                                        <a style="text-decoration:none; color: red; position:relative;" class="wishlistFetch" asp-controller="wishlist" asp-action="AddWishlist" asp-route-id="@furniture.Id">
+                                            <i style="font-size: 18px; position: absolute;
+                                                                top: -425px;
+                                                                right: -200px;"
+                                           class="fa-regular fa-heart">
+                                            </i>
+                                        </a>
+                                        <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id" class="add-to-cart" style="">
+                                            <i class="fa-solid fa-basket-shopping">
+                                            </i> Select to option
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        }
+                    }
+                    </div>
+                </div>
+                <div id="3" class="arrival_content">
+                    <div class="row justify-content-center product-wrap g-2">
+                    @foreach (Furniture furniture in Model.Furnitures.Where(f=>f.Trend==true).Take(4))
+                    {
+                        <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                 <div class="card" id="demo">
+                                <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="                                          width: 320px !important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                <div class="card-body text-center">
+                                    <span class="product-categories">
+                                        <a >@furniture.Categories.Name</a>
+                                    </span>
+                                    <a class="product-title">@furniture.Name</a>
+                                    <span class="price">
+                                        <span class="Price-amount amount">
+                                            <bdi>
+                                                <span class="Price-currencySymbol">$</span>@furniture.Price
+                                            </bdi>
+                                        </span>
+                                    </span>
+                                    <div class="hover-area text-center" id="text">
+                                        <a style="text-decoration:none; color: red; position:relative;" class="wishlistFetch" asp-controller="wishlist" asp-action="AddWishlist" asp-route-id="@furniture.Id">
+                                            <i style="font-size: 18px; position: absolute;
+                                                                top: -425px;
+                                                                right: -200px;"
+                                           class="fa-regular fa-heart">
+                                            </i>
+                                        </a>
+                                        <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id" class="add-to-cart" style="">
+                                            <i class="fa-solid fa-basket-shopping">
+                                            </i> Select to option
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    }
+                    </div>
+                </div>
+                <div id="4" class="arrival_content">
+                    <div class="row justify-content-center product-wrap g-2">
+                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.BestSeller).Take(4))
+                    {
+                        <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id">
+                                <div class="card" id="demo">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="..." style="    width: 320px !important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                    <div class="card-body text-center">
+                                        <span class="product-categories">
+                                            <a >@furniture.Categories.Name</a>
+                                        </span>
+                                        <a class="product-title" href="#">@furniture.Name</a>
+                                        <span class="price">
+                                            <span class="Price-amount amount">
+                                                <bdi>
+                                                    <span class="Price-currencySymbol">$</span>@furniture.Price
+                                                </bdi>
+                                            </span>
+                                        </span>
+                                        <div class="hover-area text-center" id="text">
+                                            <a style="text-decoration:none; color: red; position:relative;" class="wishlistFetch" asp-controller="wishlist" asp-action="AddWishlist" asp-route-id="@furniture.Id">
+                                                <i style="font-size: 18px; position: absolute;
+                                                                top: -425px;
+                                                                right: -200px;"
+                                               class="fa-regular fa-heart">
+                                                </i>
+                                            </a>
+                                            <a asp-controller="Furniture" asp-action="Detail" asp-route-id="@furniture.Id" class="add-to-cart" style="">
+                                                <i class="fa-solid fa-basket-shopping">
+                                                </i> Select to option
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="free-delivery">
+            <div class="container">
+                <div class="row delivery mt-5">
+                    <div class="col-lg-2 col-12 col-sm-6">
+                        <div class="card text-center cursor-pointer">
+                            <div class="box-wrapper">
+                                <div class="box-icon">
+                                    <span class="box-animation">
+                                        <i class="fa-solid fa-car"></i>
+                                    </span>
+                                </div>
+                                <div class="box-content">
+                                    <h3 class="box-title">
+                                        <span>
+                                            Free Delivery </span>
+                                    </h3>
+                                    <p class="box-description">
+                                        from $78 </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-12 col-sm-6">
+                        <div class="card text-center">
+                            <div class="box-wrapper">
+                                <div class="box-icon">
+                                    <span class="box-animation">
+                                        <i class="fa-solid fa-people-group"></i>
+                                    </span>
+                                </div>
+                                <div class="box-content">
+                                    <h3 class="box-title">
+                                        <span>
+                                            99% Customer </span>
+                                    </h3>
+                                    <p class="box-description">
+                                        feedbacks </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-12 col-sm-6">
+                        <div class="card text-center">
+                            <div class="box-wrapper">
+                                <div class="box-icon">
+                                    <span class="box-animation">
+                                        <i class="fa-solid fa-turn-down"></i>
+                                    </span>
+                                </div>
+                                <div class="box-content">
+                                    <h3 class="box-title">
+                                        <span>
+                                            10 Days </span>
+                                    </h3>
+                                    <p class="box-description">
+                                        for free return </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-12 col-sm-6">
+                        <div class="card text-center">
+                            <div class="box-wrapper">
+                                <div class="box-icon">
+                                    <span class="box-animation">
+                                        <i class="fa-solid fa-sack-dollar"></i>
+                                    </span>
+                                </div>
+                                <div class="box-content">
+                                    <h3 class="box-title">
+                                        <span>
+                                            Payment</span>
+                                    </h3>
+                                    <p class="box-description">
+                                        secure system</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-12 col-sm-6">
+                        <div class="card text-center">
+                            <div class="box-wrapper">
+                                <div class="box-icon">
+                                    <span class="box-animation">
+                                        <i class="fa-solid fa-headset"></i>
+                                    </span>
+                                </div>
+                                <div class="box-content">
+                                    <h3 class="box-title">
+                                        <span>
+                                            24/7</span>
+                                    </h3>
+                                    <p class="box-description">
+                                        online supports</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="offer">
+            <div class="container mt-4">
+                <div data-aos="zoom-in" class="context">
+                    <span class="sale text-center">New <br> Chair</span>
+                    <img src="~/assets/image/chair-slider/@layoutService.getSettings().FirstOrDefault(s=>s.Key.Trim().ToLower()=="offerimg")?.Value" class="img-fluid" alt="">
+                    <div data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500" class="join">
+                        <span class="now">Join now & earn rewards <br> on every order. </span>
+                        <span class="join-price">$340.00 </span>
+                    </div>
+                         <a data-aos="fade-up" data-aos-duration="4000" asp-controller="Furniture" asp-action="detail" asp-route-id="@layoutService.GetFurnitures().Id" style="cursor: pointer;                            position: absolute;
+                        bottom: 155px;
+                        right: 200px;
+                        color: #fff;
+                        font-size: 12px;
+                        background-color: #f07f13;
+                        border-radius: 1px;
+                        padding: 19px 45px;
+                         text-decoration: none;
+                        margin-right: 110px;
+                        text-transform: uppercase;
+                        outline: none;">Buy Now</a>
+                </div>
+            </div>
+        </section>
+        <section class="recently">
+            <div class="container pt-5 pb-3">
+                <div class="content-header">
+                    <h2 class="content-title">Recently Added</h2>
+                    <ul class="nav nav-tabs nav-tab">
+                        <li class="nav-item">
+                            <a id="1" class="nav-link navbtn active_show">On Sell</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="2" class="nav-link navbtn">Hot Sell</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="3" class="nav-link navbtn">Trend</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="4" class="nav-link navbtn">Best Sell</a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="1" style="display: block;" class="content_tab">
+                    <div class="row mt-5 list-hover">
+                        @foreach (Furniture furniture in Model.Furnitures.OrderBy(o=>o.Name).Take(6))
+                    {
+                        <div class="col-lg-2 col-12 col-sm-6 ">
+                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                <div class="title-img w-100">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                    <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                        <a style="text-align:center;">@furniture.Name</a>
+                                        <span>$@furniture.Price</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                        
+                    </div>
+                </div>
+                <div id="2" class="content_tab">
+                    <div class="row mt-5 list-hover text-center">
+                    @foreach (OrderItem order in Model.OrderItems.OrderByDescending(o => o.Id).Take(1))
+                    {
+                        //int? orderid = orderItemm.FurnitureId;
+                        foreach (var furniture in Model.Furnitures.Where(f=>f.Id==order.FurnitureId))
+                        {
+                            <div class="col-lg-12">
+                                <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                    <div class="title-img w-100">
+                                        <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                        <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                            <a style="text-align:center;">@furniture.Name</a>
+                                            <span>$@furniture.Price</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+                    </div>
+                </div>
+                <div id="3" class="content_tab">
+                    <div class="row mt-5 list-hover text-center">
+                    @foreach (Furniture furniture in Model.Furnitures.Where(f => f.Trend == true).Take(1))
+                    {
+                        <div class="col-lg-12">
+                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                <div class="title-img w-100">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                    <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                        <a style="text-align:center;">@furniture.Name</a>
+                                        <span>$@furniture.Price</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    </div>
+                </div>
+                <div id="4" class="content_tab">
+                    <div class="row mt-5 list-hover text-center">
+                    @foreach (Furniture furniture in Model.Furnitures.OrderByDescending(o => o.BestSeller).Take(1))
+                    {
+                        <div class="col-lg-12">
+                            <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id">
+                                <div class="title-img w-100">
+                                    <img src="~/assets/image/shop/@furniture.Image" class="img-fluid" alt="..." style="width: 320px !                                           important;
+                                        height: 315px !important;
+                                        object-fit: contain;
+                                        padding: 0;
+                                        margin-bottom: 30px;">
+                                    <div class="title-a mt-4 mx-3" style="text-align:center;">
+                                        <a style="text-align:center;">@furniture.Name</a>
+                                        <span>$@furniture.Price</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="category-top">
+            <div class="container">
+                <h2>
+                    Top Categories This Week
+                </h2>
+            @{
+                int count = 0;
+            }
+                <div class="row heavy mt-1">
+                    <div class="col-lg-6">
+                            @foreach (Category category in Model.Categories)
+                    {
+                                count++;
+                                if(count == 1)
+                                 {
+                                      <div class="feature-product">
+                                          <img src="~/assets/image/category/@category.Image" class="img-fluid" alt="Heavy Duty Anti">
+                                           <div class="product-info mt-5">
+                                                <h4 class="product-title1 large" style="margin-left: 130px; margin-bottom: 0px;">
+                                                    <a href="">@category.Name</a>
+                                                 </h4>
+                                                <h4 class="product-title2 large">
+                                                     @*<strong><a href="">New Design</a></strong>*@
+                                                 </h4>
+                                            </div>
+                                      </div>
+                                                break;
+                                  }
+                            }
+                    </div>
+                    <div class="col-lg-6 xs-padding-0">
+                        <div class="row xs-margin-0">
+
+                               @foreach (Category category in Model.Categories.OrderByDescending(o=>o.Id).Take(4))
+                        {
+                                    @*count++;
+                                    if(count > 1 && count < 7)*@
+                                     {
+                                         <div class="col-md-6">
+                                                 <div class="feature-product1">
+                                                      <img src="~/assets/image/category/@category.Image" class="img-fluid" style="position:relative; top: 80px; left: 80px;" alt="">
+                                                      <div class="feature-info">
+                                                            <h4 class="product-title-1" style="margin-left: 90px; margin-bottom: 5px">
+                                                            <a href="">@category.Name</a>
+                                                            </h4>
+                                                            <h4 class="product-title-2">
+                                                                <strong>
+                                                                   @* <a href=""></a>*@
+                                                                </strong>
+                                                            </h4>
+                                                      </div>
+                                                 </div>
+                                           </div>
+                                     }
+                              }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="popular">
+            <div class="container">
+                <h3 class="heading-title">Popular Products</h3>
+                <div class="row justify-content-center product-wrap g-2 mt-2">
+                    @foreach (Furniture furniture in Model.Furnitures.OrderBy(o=>o.Name).Take(4))
+                   {
+                        int ratingCount = 0;
+                        int countPoint = 0;
+                        int avg = 0;
+                        @if (furniture.Rates.Count > 0)
+                        {
+                        @foreach (var item in furniture.Rates)
+                        {
+                        ratingCount++;
+                        countPoint += item.Point;
+                        }
+
+                        avg = countPoint / ratingCount;
+
+                        }
+
+                         <div class="col-lg-3 col-12 col-sm-6 col-md-4 boxs">
+                                <a asp-controller="furniture" asp-action="detail" asp-route-id="@furniture.Id" class="text-decoration-none">
+                                    <div class="card">
+
+                                        <span class="rate" style="letter-spacing: 0;">
+                                            @for (int i = 0; i < avg; i++)
+                                            {
+                                                <i class="fa-solid fa-star"></i>
+                                            }
+
+                                    <i class="fa-solid fa-heart" style=" right: -100px;top: 3px; position: absolute;"></i>
+                                        </span>
+                                <img src="~/assets/image/shop/@furniture.Image" class="card-img-top img-fluid" alt="...">
+                                            <div class="card-body text-center">
+                                                <span class="product-popular">
+                                                    <a>@furniture.Name</a>
+                                            </span>
+                                            <a class="popular-title" href="#">@furniture.Article</a>
+                                            <span class="price">
+                                                <span class="Price-amount amount">
+                                                    $@furniture.Price
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                   }
+                </div>
+            </div>
+        </section>
+        <section style="margin-top: 110px;" class="brand">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="brand-content clearfix">
+                            <a href="">
+                                <img src="~/assets/image/brand/brand-1.jpg" class="img-fluid" alt="">
+                            </a>
+                            <a href="">
+                                <img src="~/assets/image/brand/brand-2.jpg" class="img-fluid" alt="">
+                            </a>
+                            <a href="">
+                                <img src="~/assets/image/brand/brand-3.jpg" class="img-fluid" alt="">
+                            </a>
+                            <a href="">
+                                <img src="~/assets/image/brand/brand-4.jpg" class="img-fluid" alt="">
+                            </a>
+                            <a href="">
+                                <img src="~/assets/image/brand/brand-5.jpg" class="img-fluid" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="update">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="update-content">
+                            <h3 class="up-title">
+                                <span>
+                                    Newsletter & Get Updates
+                                </span>
+                            </h3>
+                            <p class="up-description">
+                                Sign up for our newsletter to get up-to-date from us
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="up-inp">
+                            <form action="#" method="POST" class="newsletter newsLetter-v3" data-link="test"
+                                novalidate="true">
+                                <label for="newsletter-email"></label>
+                                <input class="news" type="email" name="EMAIL" id="newsletter-email"
+                                    placeholder="Enter Your Mail Here .....">
+                                <input type="submit" class="mailchimp-btn" value="submit">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Main end -->
+
+<script>
+    var succses = document.getElementById("succses");
+    console.log(succses);
+    const myTimeout = setTimeout(myGreeting, 4000);
+    function myGreeting() {
+        document.getElementById("succses").style.display = "none";
+    }
+</script>
